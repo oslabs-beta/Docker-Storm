@@ -1,13 +1,16 @@
 import express from 'express';
 import cors from 'cors';
+import userRouter from './routes/userApi.js';
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/user', userRouter);
 app.use('/*', (req, res) => {
     return res.sendStatus(404);
 });
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err, req, res, _next) => {
     const defaultErr = {
         log: `GLOBAL ERROR HANDLER: caught unknown middleware error${err.toString()}`,
@@ -22,4 +25,4 @@ app.use((err, req, res, _next) => {
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`);
 });
-module.exports = app;
+export default app;
