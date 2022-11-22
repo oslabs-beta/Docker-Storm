@@ -1,12 +1,13 @@
-"use strict";
-const { Pool } = require('pg');
+import pkg from 'pg';
+const { Pool } = pkg;
 const PG_URI = 'postgres://fehkjvko:W4u1aDnKyCZaUaMZ37OyLZTP1UelhjRR@heffalump.db.elephantsql.com/fehkjvko';
 const pool = new Pool({
     connectionString: PG_URI,
 });
-module.exports = {
-    query: (text, params, callback) => {
+const db = {
+    query: (text, params) => {
         console.log('executed query', text);
-        return pool.query(text, params, callback);
+        return pool.query(text, params);
     },
 };
+export default db;

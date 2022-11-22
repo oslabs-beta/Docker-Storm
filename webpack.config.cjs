@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
@@ -15,11 +16,13 @@ module.exports = {
       template: './dist/client/index.html'
     })
   ],
-
+  
   resolve: {
     extensions: ['.js', '.jsx'],    
   },
   
+  mode: process.env.NODE_ENV,
+
   module: {
     rules: [
       {
@@ -28,7 +31,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', ['@babel/preset-react', {"runtime": "automatic"}]]
+            presets: ['@babel/preset-env', ['@babel/preset-react', {'runtime': 'automatic'}]]
           }
         }
       },
@@ -50,9 +53,13 @@ module.exports = {
   },
   
   devServer: {
+    static: {
+      directory: path.join(__dirname, './dist'),
+      publicPath: '/',
+    },
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/': 'http://localhost:3001',
     }
   }
 
