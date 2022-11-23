@@ -3,8 +3,29 @@ import db from '../models/dockerStormModel.js';
 const userController = {
     verifyUser: async (req, res, next) => {
         const { username, password } = req.body;
-        const queryStr = '';
-        //bcrypt.compareSync();
+        const queryStr = 'SELECT * FROM users WHERE username = $1';
+        try {
+            db.query(queryStr, [username])
+                .then((data) => {
+                const validPassword = bcrypt.compareSync(password, data.rows[0].password);
+                if (validPassword)
+                    return next();
+                else {
+                    return next({
+                        log: 'Error caught in userController.verifyUser',
+                        status: 400,
+                        message: 'Missing username or password in request',
+                    });
+                }
+            });
+        }
+        catch {
+            return next({
+                log: 'Error caught in userController.verifyUser',
+                status: 400,
+                message: 'Missing username or password in request',
+            });
+        }
     },
     createUser: async (req, res, next) => {
         const { username } = req.body;
