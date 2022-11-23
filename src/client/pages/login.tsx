@@ -1,5 +1,5 @@
-import React from 'react';
-import {useState, useContext} from 'react'; 
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -10,6 +10,8 @@ import {useState, useContext} from 'react';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [invalid, setInvalid] = useState(false);
+  const navigate = useNavigate();
 
   function confirmCredentials(){
     const body = {
@@ -24,9 +26,14 @@ const Login = () => {
     })
       .then((result) => {
         if(result.status === 200)
-          alert('success');
-        else
-          alert('Invalid Password!');
+          navigate('/app');
+        else {
+          setInvalid(true);
+          setUsername('');
+          setPassword('');
+        }
+
+          
       })
       .catch((err) => {
         console.log(err);
@@ -44,6 +51,7 @@ const Login = () => {
         onChange={input => setPassword(input.target.value)} 
         placeholder="password"></input>
       <button type="submit" onClick={confirmCredentials}>LOGIN</button>
+      {invalid && <p>Invalid username/password please try again</p>}
     </form>
   );
 };
