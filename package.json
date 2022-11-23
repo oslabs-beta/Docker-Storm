@@ -4,7 +4,6 @@
   "description": "",
   "main": "./dist/client/index.jsx",
   "type": "module",
-
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
     "start": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon dist/server/server.js",

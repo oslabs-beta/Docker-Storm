@@ -7,9 +7,18 @@ const userController = {
         try {
             db.query(queryStr, [username])
                 .then((data) => {
-                const validPassword = bcrypt.compareSync(password, data.rows[0].password);
-                if (validPassword)
-                    return next();
+                if (data.rows.length === 1) {
+                    const validPassword = bcrypt.compareSync(password, data.rows[0].password);
+                    if (validPassword)
+                        return next();
+                    else {
+                        return next({
+                            log: 'Error caught in userController.verifyUser',
+                            status: 400,
+                            message: 'Missing username or password in request',
+                        });
+                    }
+                }
                 else {
                     return next({
                         log: 'Error caught in userController.verifyUser',
@@ -28,7 +37,7 @@ const userController = {
         }
     },
     createUser: async (req, res, next) => {
-        const { username } = req.body;
+        const { username, role } = req.body;
         try {
             if (!username || !res.locals.password) {
                 return next({
@@ -37,8 +46,8 @@ const userController = {
                     message: 'Missing username or password in request',
                 });
             }
-            const queryStr = 'INSERT INTO users (username, password) VALUES ($1, $2);';
-            db.query(queryStr, [username, res.locals.password])
+            const queryStr = 'INSERT INTO users (username, password, role) VALUES ($1, $2, $3);';
+            db.query(queryStr, [username, res.locals.password, role])
                 .then(() => { return next(); })
                 .catch((err) => {
                 return next({

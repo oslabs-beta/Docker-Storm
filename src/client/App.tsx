@@ -1,9 +1,15 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './pages/login.jsx';
 import React from 'react';
 
-const App = () => {
+const App = (): JSX.Element => {
 
   return (
-    <div>hello world</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login />}/>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
