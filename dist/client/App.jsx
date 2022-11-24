@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React from 'react';
 const App = () => {
-    return (<BrowserRouter>
+    return (<HashRouter>
       <Routes>
         <Route path='/' element={<Login />}/>
       </Routes>
-    </BrowserRouter>);
+    </HashRouter>);
 };
 export default App;

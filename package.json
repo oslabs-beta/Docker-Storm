@@ -2,13 +2,15 @@
   "name": "docker-storm",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/client/index.jsx",
+  "main": "dist/client/electron/index.cjs",
   "type": "module",
   "scripts": {
     "dev": "webpack-dev-server --mode development --open --hot",
+    "electron": "electron .",
     "start": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon dist/server/server.js",
     "build": "NODE_ENV=production webpack",
-    "server": "NODE_ENV=production nodemon dist/server/server.js"
+    "server": "NODE_ENV=production nodemon dist/server/server.js",
+    "s:e": "NODE_ENV=development webpack --config webpack.electron.config.cjs --mode development && electron ."
   },
   "repository": {
     "type": "git",
@@ -23,8 +25,9 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
+    "electron": "^21.3.0",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
-    "node-fetch": "^3.2.10",
     "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -45,6 +48,7 @@
     "babel-loader": "^9.0.0",
     "cors": "^2.8.5",
     "css-loader": "^6.7.1",
+    "electron": "^21.3.1",
     "eslint": "^8.28.0",
     "eslint-plugin-react": "^7.31.10",
     "file-loader": "^6.2.0",
