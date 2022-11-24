@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   resolve: {
-    extensions: ['.cts','.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js']
   },
   devtool: 'inline-source-map',
   entry: './dist/client/electron/index.cjs',

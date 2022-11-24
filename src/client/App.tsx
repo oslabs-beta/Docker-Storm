@@ -1,13 +1,21 @@
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React from 'react';
+import RenderViews from './RenderViews.jsx';
 
 const App: React.FC = (): JSX.Element => {
 
+
   return (
+<<<<<<< HEAD
     <HashRouter>
       <Routes>
+=======
+    <BrowserRouter>
+      <Routes>8
+>>>>>>> dev
         <Route path='/' element={<Login />}/>
+        <Route path='/app/*' element={<RenderViews/>}/>
       </Routes>
     </HashRouter>
   );
