@@ -1,4 +1,7 @@
-const electron = require('electron');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const electron = require("electron");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // setup IPC Bridge
 // global reference to mainWindow (necessary to prevent mainWindow from being garbage collected)
@@ -14,7 +17,7 @@ function createMainWindow() {
         },
         show: false,
     });
-    mainWindow.loadURL('http://localhost:8082'); //change to localhost:8082
+    mainWindow.loadURL('http://localhost:8080'); //change to localhost:8080
     mainWindow.on("ready-to-show", () => mainWindow.show());
     // mainWindow.on('closed', () => {
     //   mainWindow = null;
@@ -46,4 +49,4 @@ electron.app.on('ready', createMainWindow);
 // electron.ipcMain.handle('email-event', async (_: any, args: any) => {
 //   return await emailEvent(args);
 // });
-export default mainWindow;
+module.exports = {};

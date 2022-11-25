@@ -10,6 +10,4 @@ const App = () => {
       </Routes>
     </HashRouter>);
 };
-
-export default App;</></>);
-};
+export default App;

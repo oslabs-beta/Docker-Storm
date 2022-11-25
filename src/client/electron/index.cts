@@ -21,7 +21,7 @@ function createMainWindow() {
   });
   
 
-  mainWindow.loadURL('http://localhost:8082'); //change to localhost:8082
+  mainWindow.loadURL('http://localhost:8080'); //change to localhost:8080
   mainWindow.on("ready-to-show", () => mainWindow.show());
 
 
@@ -64,5 +64,4 @@ electron.app.on('ready', createMainWindow);
 // electron.ipcMain.handle('email-event', async (_: any, args: any) => {
 //   return await emailEvent(args);
 // });
-
-export default mainWindow;
+module.exports = {};
