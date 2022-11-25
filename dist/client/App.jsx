@@ -4,7 +4,7 @@ import React from 'react';
 import RenderViews from './RenderViews.jsx';
 const App = () => {
     return (<BrowserRouter>
-      <Routes>8
+      <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/app/*' element={<RenderViews />}/>
       </Routes>

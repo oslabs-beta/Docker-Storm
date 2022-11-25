@@ -8,7 +8,7 @@ const App = (): JSX.Element => {
 
   return (
     <BrowserRouter>
-      <Routes>8
+      <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/app/*' element={<RenderViews/>}/>
       </Routes>
