@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 // import db from '../models/dockerStormModel.js';
 import * as dotenv from 'dotenv';
 dotenv.config({ override: true });
+let idCounter = 0;
 const grafanaController = {
     createDB(req, res, next) {
         const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
@@ -30,6 +31,8 @@ const grafanaController = {
         });
     },
     getDashByUid(req, res, next) {
+        console.log('Here GETDASH!');
+        dotenv.config({ override: true });
         fetch(`http://localhost:3000/api/dashboards/uid/${process.env.GRAFANA_DASHBOARD_ID}`, {
             method: 'GET',
             headers: {
@@ -41,30 +44,37 @@ const grafanaController = {
             .then((data) => data.json())
             .then((dashboard) => {
             res.locals.dashboard = dashboard;
+            console.log('DASH: ', dashboard);
             return next();
         });
     },
     createPanel(req, res, next) {
-        const { title, expression, graphType } = req.body;
-        const panel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${graphType}Template.json`, 'utf-8'));
-        panel.title = title;
-        panel.targets[0].expr = expression;
-        console.log(panel);
-        res.locals.panel = panel;
+        console.log('here CREATEPANEL');
+        const { panels } = req.body;
+        //const {title, expression, graphType} = req.body;
+        const panelsArray = [];
+        panels.forEach((panel) => {
+            const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
+            newPanel.title = panel.title;
+            newPanel.targets[0].expr = panel.expression;
+            newPanel.id = idCounter++;
+            panelsArray.push(newPanel);
+        });
+        res.locals.panels = panelsArray;
         return next();
     },
     updateDB(req, res, next) {
-        //console.log(panel);
-        const { panel } = res.locals;
+        console.log('Here UPDATEDB!');
+        const { panels } = res.locals;
         const body = res.locals.dashboard;
-        //console.log(body);
+        console.log(body.dashboard.panels);
         if (!('panels' in body.dashboard)) {
-            panel.id = 0;
-            body.dashboard['panels'] = [panel];
+            console.log('no panels', panels);
+            body.dashboard['panels'] = [...panels];
         }
         else {
-            panel.id = body.dashboard.panels.length;
-            body.dashboard['panels'].push(panel);
+            console.log('existing panels');
+            body.dashboard['panels'].push(...panels);
         }
         fetch('http://localhost:3000/api/dashboards/db/', {
             method: 'POST',
@@ -80,6 +90,14 @@ const grafanaController = {
             console.log(result);
             return next();
         });
+    },
+    initDB(req, res, next) {
+        console.log('Here!');
+        //    if(!process.env.GRAFANA_DASHBOARD_ID){
+        return next();
+        // }  else {
+        //   return res.status(200).json('successful');
+        // }
     }
 };
 export default grafanaController;

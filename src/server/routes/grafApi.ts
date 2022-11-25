@@ -3,7 +3,11 @@ import grafanaController from '../controllers/grafanaController.js';
 
 const router = express.Router();
   
-router.post('/', grafanaController.createDB, (req, res) => {
+router.get('/', grafanaController.createDB, (req, res) => {
+  return res.status(200).json('successful');
+});
+
+router.post('/init', grafanaController.initDB, grafanaController.createDB, grafanaController.getDashByUid, grafanaController.createPanel, grafanaController.updateDB, (req, res) => {
   return res.status(200).json('successful');
 });
 

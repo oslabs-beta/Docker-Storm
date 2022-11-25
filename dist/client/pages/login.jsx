@@ -7,6 +7,16 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
+    // async function intializeDashboard() {
+    //   await fetch('/graf/init', {
+    //     method: 'POST',
+    //     body: {
+    //     }
+    //   });
+    // }
+    // useEffect(() => {
+    //   intializeDashboard();
+    // }, []);
     function confirmCredentials() {
         const body = {
             username: username,
