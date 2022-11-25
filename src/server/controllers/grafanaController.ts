@@ -69,7 +69,14 @@ const grafanaController: GrafanaController = {
   },
 
   createPanel(req, res, next){
+    const {title, expression, graphType} = req.body;
+
     const panel = JSON.parse(fs.readFileSync('./grafana/jsonTemplates/gaugeTemplate.json', 'utf-8'));
+
+    panel.title = title;
+    panel.targets[0].expr = expression;
+
+    console.log(panel);
     
     res.locals.panel = panel;
     return next();
@@ -82,12 +89,16 @@ const grafanaController: GrafanaController = {
     const {panel} = res.locals;
 
     const body = res.locals.dashboard;
-    console.log(body);
+    //console.log(body);
 
-    if(!('panels' in body.dashboard))
+    if(!('panels' in body.dashboard)){
+      panel.id = 0;
       body.dashboard['panels'] = [panel];
-    else
+    }
+    else{
+      panel.id = body.dashboard.panels.length;
       body.dashboard['panels'].push(panel);
+    }
 
     fetch('http://localhost:3000/api/dashboards/db/', {
       method: 'POST',

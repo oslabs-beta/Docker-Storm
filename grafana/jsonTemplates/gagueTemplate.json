@@ -66,14 +66,5 @@
     }
   ],
   "title": "Panel Title",
-  "type": "gauge",
-
-  "transformations": [
-    {
-      "id": "labelsToFields",
-      "options": {
-        "valueLabel": "job"
-      }
-    }
-  ]
+  "type": "gauge"
 }
