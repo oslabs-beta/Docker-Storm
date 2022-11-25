@@ -1,48 +1,14 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
-        "type": "dashboard"
-      }
-    ]
+  "dashboard": {
+    "id": null,
+    "uid": null,
+    "title": "TEST",
+    "tags": [ "Docker", "Swarm", "Containers" ],
+    "timezone": "browser",
+    "schemaVersion": 37,
+    "version": 0,
+    "refresh": "25s"
   },
-  "description": "Management tool to access and mange your Docker Swarms",
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": 2,
-  "links": [],
-  "liveNow": true,
-  "panels": [],
-  "schemaVersion": 37,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "browser",
-  "title": "TEST",
-  "uid": "UR98a_dVk",
-  "version": 1,
-  "weekStart": ""
+  "message": "Made changes to xyz",
+  "overwrite": false
 }

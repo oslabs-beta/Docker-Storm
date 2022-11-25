@@ -3,6 +3,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 // import db from '../models/dockerStormModel.js';
 import * as dotenv from 'dotenv';
+import { Result } from 'electron';
 dotenv.config();
 
 interface GrafanaController {
@@ -10,30 +11,38 @@ interface GrafanaController {
     updateDB: (req: Request, res: Response, next: NextFunction) => void;
 }
 
+interface ResultObj {
+    // id: number;
+    // slug: string;
+    status: string;
+    // uid: string;
+    // url: string;
+    // version: number;
+    message: string;
+}
+
 
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
-    const dash = JSON.parse(fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8'));
+    const dash = (fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8'));
 
-    fetch('http://localhost:3000/api/dashboards/db', {
+    fetch('http://localhost:3000/api/dashboards/db/', {
       method: 'POST',
-      body: JSON.stringify(dash),
+      body: dash,
       headers: {
         'Content-type': 'application/json',
         'accept': 'application/json',
-        'authorization': `Bearer ${process.env.GRAPHANA_API_KEY}`
+        'authorization': `Bearer ${process.env.GRAFANA_API_KEY}`
       },
     }).then((data) => data.json())
+      .then((result) => {return result as ResultObj;})
       .then((result) => {
-        console.log(result);
+        console.log('Run!', result.status);
         return next();
       })
-      .catch((err) => next(err));
-
-
-
-        
-    
+      .catch((err) => {
+        console.log(err);
+      });        
   },
 
   updateDB(req, res, next) {
