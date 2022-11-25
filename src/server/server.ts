@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import initRouter from './routes/initApi.js';
 import userRouter from './routes/userApi.js';
+import grafanaRouter from './routes/grafApi.js';
+
 const app = express();
 
 const PORT = 3001;
@@ -12,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userRouter);
 app.use('/init', initRouter);
+app.use('/graf', grafanaRouter);
 
 app.use('/*', (req: Request, res: Response) => {
   return res.sendStatus(404);
