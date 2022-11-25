@@ -71,7 +71,8 @@ const grafanaController: GrafanaController = {
   createPanel(req, res, next){
     const {title, expression, graphType} = req.body;
 
-    const panel = JSON.parse(fs.readFileSync('./grafana/jsonTemplates/gaugeTemplate.json', 'utf-8'));
+    const panel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${graphType}Template.json`, 'utf-8'));
+
 
     panel.title = title;
     panel.targets[0].expr = expression;
