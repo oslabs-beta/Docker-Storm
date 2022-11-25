@@ -3,9 +3,8 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  //entry: './dist/client/index.jsx',
+  entry: './dist/client/index.jsx',
   //entry: './src/client/index.tsx',
-  entry: './dist/test.cjs',
   
   output: {
     path: path.join(__dirname, '/dist'),
