@@ -13,7 +13,7 @@ const router = express.Router();
 // initializes db or gets the ID of the already created dashboard 
 // adds the 3 start up gauges to the metrics page by default
 router.post('/init', grafanaController.createDB, grafanaController.getDashByUid, grafanaController.createPanel, grafanaController.updateDB, (req, res) => {
-  return res.status(200).json('successful');
+  return res.status(200).json({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
 });
 
 

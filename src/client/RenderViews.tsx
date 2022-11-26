@@ -5,8 +5,12 @@ import Metrics from './pages/metrics.jsx';
 import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 
+interface Props {
+  ApiKey: string;
+}
 
-const RenderViews = () => {
+
+const RenderViews = ({ApiKey}) => {
 
   return (
     <>
@@ -43,7 +47,7 @@ const RenderViews = () => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings/>}/>
-          <Route path='/metrics' element={<Metrics/>}/>
+          <Route path='/metrics' element={<Metrics ApiKey={ApiKey} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>
         </Routes>

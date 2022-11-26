@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
-// import db from '../models/dockerStormModel.js';
 import * as dotenv from 'dotenv';
 dotenv.config({override: true});
 
@@ -33,8 +32,9 @@ let idCounter = 0;
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
     if(process.env.GRAFANA_DASHBOARD_ID) {
-      return res.sendStatus(200);
+      return res.status(200).send({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
     }
+
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
 
     fetch('http://localhost:3000/api/dashboards/db/', {

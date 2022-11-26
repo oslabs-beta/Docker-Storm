@@ -1,9 +1,10 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import RenderViews from './RenderViews.jsx';
 const App = () => {
-    async function intializeDashboard() {
+    const [apiKey, setApiKey] = useState('');
+    function intializeDashboard() {
         const body = {
             panels: [
                 { title: 'Ram Usage',
@@ -20,21 +21,30 @@ const App = () => {
                 }
             ]
         };
-        await fetch('/graf/init', {
+        fetch('/graf/init', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(body),
+        })
+            .then((data) => data.json())
+            .then((result) => {
+            return result.ApiKey;
+        })
+            .then((key) => {
+            setApiKey(key);
         });
     }
     useEffect(() => {
+        if (apiKey)
+            return;
         intializeDashboard();
-    }, []);
+    }, [apiKey]);
     return (<HashRouter>
       <Routes>
         <Route path='/' element={<Login />}/>
-        <Route path='/app/*' element={<RenderViews />}/>
+        <Route path='/app/*' element={<RenderViews ApiKey={apiKey}/>}/>
       </Routes>
     </HashRouter>);
 };
