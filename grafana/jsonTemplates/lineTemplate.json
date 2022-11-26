@@ -1,0 +1,108 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "WPF5XbO4k"
+  },
+  "fieldConfig": {
+    "defaults": {
+      "color": {
+        "mode": "palette-classic"
+      },
+      "custom": {
+        "axisCenteredZero": false,
+        "axisColorMode": "series",
+        "axisGridShow": true,
+        "axisLabel": "Placeholder",
+        "axisPlacement": "left",
+        "barAlignment": 0,
+        "drawStyle": "line",
+        "fillOpacity": 0,
+        "gradientMode": "none",
+        "hideFrom": {
+          "legend": false,
+          "tooltip": false,
+          "viz": false
+        },
+        "lineInterpolation": "linear",
+        "lineStyle": {
+          "fill": "solid"
+        },
+        "lineWidth": 1,
+        "pointSize": 6,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "showPoints": "auto",
+        "spanNulls": false,
+        "stacking": {
+          "group": "A",
+          "mode": "none"
+        },
+        "thresholdsStyle": {
+          "mode": "off"
+        }
+      },
+      "decimals": 0,
+      "mappings": [],
+      "thresholds": {
+        "mode": "percentage",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          }
+        ]
+      },
+      "unit": "percent"
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": 2,
+  "interval": "10",
+  "maxDataPoints": 999999,
+  "options": {
+    "legend": {
+      "calcs": [],
+      "displayMode": "list",
+      "placement": "bottom",
+      "showLegend": true
+    },
+    "timezone": [
+      "Africa/Bamako"
+    ],
+    "tooltip": {
+      "mode": "single",
+      "sort": "none"
+    }
+  },
+  "pluginVersion": "9.2.6",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "WPF5XbO4k"
+      },
+      "editorMode": "code",
+      "expr": "",
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A"
+    }
+  ],
+  "title": "Placeholder",
+  "transformations": [
+    {
+      "id": "labelsToFields",
+      "options": {
+        "valueLabel": "job"
+      }
+    }
+  ],
+  "type": "timeseries"
+}
