@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
-// import db from '../models/dockerStormModel.js';
 import * as dotenv from 'dotenv';
-import { Result } from 'electron';
 dotenv.config({override: true});
 
 interface GrafanaController {
@@ -23,9 +21,20 @@ interface ResultObj {
     message: string;
 }
 
+interface Panel {
+    title: string;
+    expression: string;
+    graphType: string;
+}
+
+let idCounter = 0;
 
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
+    if(process.env.GRAFANA_DASHBOARD_ID) {
+      return res.status(200).send({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
+    }
+
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
 
     fetch('http://localhost:3000/api/dashboards/db/', {
@@ -53,6 +62,8 @@ const grafanaController: GrafanaController = {
   },
 
   getDashByUid(req, res, next) {
+    console.log('Here GETDASH!');
+    dotenv.config({override: true});
     fetch(`http://localhost:3000/api/dashboards/uid/${process.env.GRAFANA_DASHBOARD_ID}`, {
       method: 'GET',
       headers: {
@@ -64,42 +75,48 @@ const grafanaController: GrafanaController = {
       .then((data) => data.json())
       .then((dashboard) => {
         res.locals.dashboard = dashboard;
+        console.log('DASH: ', dashboard);
         return next();
       });
   },
 
   createPanel(req, res, next){
-    const {title, expression, graphType} = req.body;
+    console.log('here CREATEPANEL');
+    const {panels} = req.body;
+    //const {title, expression, graphType} = req.body;
+    const panelsArray: Record<string, unknown>[] = [];
 
-    const panel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${graphType}Template.json`, 'utf-8'));
-
-
-    panel.title = title;
-    panel.targets[0].expr = expression;
-
-    console.log(panel);
+    panels.forEach((panel: Panel) => {
+      const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
+      newPanel.title = panel.title;
+      newPanel.targets[0].expr = panel.expression;
+      newPanel.id = idCounter++;
+      
+      panelsArray.push(newPanel);
+    });
     
-    res.locals.panel = panel;
+    res.locals.panels = panelsArray;
     return next();
   },
   
   
   updateDB(req, res, next) {
-    //console.log(panel);
+    console.log('Here UPDATEDB!');
 
-    const {panel} = res.locals;
+    const {panels} = res.locals;
 
     const body = res.locals.dashboard;
-    //console.log(body);
 
+    console.log(body.dashboard.panels);
     if(!('panels' in body.dashboard)){
-      panel.id = 0;
-      body.dashboard['panels'] = [panel];
+      console.log('no panels', panels);
+      body.dashboard['panels'] = [...panels];
     }
     else{
-      panel.id = body.dashboard.panels.length;
-      body.dashboard['panels'].push(panel);
+      console.log('existing panels');
+      body.dashboard['panels'].push(...panels);
     }
+
 
     fetch('http://localhost:3000/api/dashboards/db/', {
       method: 'POST',
@@ -115,7 +132,7 @@ const grafanaController: GrafanaController = {
         console.log(result);
         return next();
       });
-  }
+  },
 };
 
 
