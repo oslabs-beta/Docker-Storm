@@ -7,6 +7,8 @@ interface UserController {
     verifyUser: (req: Request, res: Response, next: NextFunction) => void;
     createUser: (req: Request, res: Response, next: NextFunction) => void;
     encrypt: (req: Request, res: Response, next: NextFunction) => void;
+    updateUser: (req: Request, res: Response, next: NextFunction) => void;
+    deleteUser: (req: Request, res: Response, next: NextFunction) => void;
 
 }
 
@@ -16,7 +18,10 @@ interface UserController {
 const userController: UserController = {
 
   verifyUser: async (req, res, next) => {
-    const { username, password } = req.body;
+    const { password } = req.body;
+
+    const username = req.body.username || req.cookies.username;
+
     const queryStr = 'SELECT * FROM users WHERE username = $1';
 
     try {
@@ -81,12 +86,41 @@ const userController: UserController = {
     }
   },
 
+  // if we are creating new password it will be newPassword
+  // if we are just verifying password it will be password
   encrypt: async (req, res, next) => {
-    
-    const { password } = req.body;
+    const password = req.body.newPassword || req.body.password;
+
     const saltFactor = bcrypt.genSaltSync(10);
     res.locals.password = bcrypt.hashSync(password, saltFactor);
     return next();
+  },
+
+  updateUser: (req, res, next) => {
+    const username = req.cookies.username;
+    const password = res.locals.password;
+
+    const queryString = 'UPDATE users SET password=($1) WHERE username=($2);';
+    
+    db.query(queryString, [password, username])
+      .then(() => next());
+    
+  },
+
+  // UPDATE users SET password='asdf' WHERE username='shay';
+
+  deleteUser: (req, res, next) => {
+    const { username } = req.body;
+
+    const queryStr = 'DELETE FROM users WHERE username=($1);';
+
+    db.query(queryStr, [username])
+      .then(() => {
+        return next();
+      })
+      .catch((err) => {
+        return next(err);
+      });
   }
 };
 

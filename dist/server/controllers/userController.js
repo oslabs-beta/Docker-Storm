@@ -2,7 +2,8 @@ import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
 const userController = {
     verifyUser: async (req, res, next) => {
-        const { username, password } = req.body;
+        const { password } = req.body;
+        const username = req.body.username || req.cookies.username;
         const queryStr = 'SELECT * FROM users WHERE username = $1';
         try {
             db.query(queryStr, [username])
@@ -65,11 +66,32 @@ const userController = {
             });
         }
     },
+    // if we are creating new password it will be newPassword
+    // if we are just verifying password it will be password
     encrypt: async (req, res, next) => {
-        const { password } = req.body;
+        const password = req.body.newPassword || req.body.password;
         const saltFactor = bcrypt.genSaltSync(10);
         res.locals.password = bcrypt.hashSync(password, saltFactor);
         return next();
+    },
+    updateUser: (req, res, next) => {
+        const username = req.cookies.username;
+        const password = res.locals.password;
+        const queryString = 'UPDATE users SET password=($1) WHERE username=($2);';
+        db.query(queryString, [password, username])
+            .then(() => next());
+    },
+    // UPDATE users SET password='asdf' WHERE username='shay';
+    deleteUser: (req, res, next) => {
+        const { username } = req.body;
+        const queryStr = 'DELETE FROM users WHERE username=($1);';
+        db.query(queryStr, [username])
+            .then(() => {
+            return next();
+        })
+            .catch((err) => {
+            return next(err);
+        });
     }
 };
 export default userController;
