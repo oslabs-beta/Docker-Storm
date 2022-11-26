@@ -1,29 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
-// interface Props {
-// }
-  
   
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
   const navigate = useNavigate();
-
-  // async function intializeDashboard() {
-  //   await fetch('/graf/init', {
-  //     method: 'POST',
-  //     body: {
-
-  //     }
-  //   });
-  // }
-  
-  // useEffect(() => {
-  //   intializeDashboard();
-  // }, []);
 
   function confirmCredentials(){
     const body = {

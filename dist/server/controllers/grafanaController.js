@@ -6,6 +6,9 @@ dotenv.config({ override: true });
 let idCounter = 0;
 const grafanaController = {
     createDB(req, res, next) {
+        if (process.env.GRAFANA_DASHBOARD_ID) {
+            return res.sendStatus(200);
+        }
         const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
         fetch('http://localhost:3000/api/dashboards/db/', {
             method: 'POST',
@@ -91,13 +94,5 @@ const grafanaController = {
             return next();
         });
     },
-    initDB(req, res, next) {
-        console.log('Here!');
-        //    if(!process.env.GRAFANA_DASHBOARD_ID){
-        return next();
-        // }  else {
-        //   return res.status(200).json('successful');
-        // }
-    }
 };
 export default grafanaController;

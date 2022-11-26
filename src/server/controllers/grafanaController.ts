@@ -10,7 +10,6 @@ interface GrafanaController {
     updateDB: (req: Request, res: Response, next: NextFunction) => void;
     getDashByUid: (req: Request, res: Response, next: NextFunction) => void;
     createPanel: (req: Request, res: Response, next: NextFunction) => void;
-    initDB: (req: Request, res: Response, next: NextFunction) => void;    
 }
 
 interface ResultObj {
@@ -33,6 +32,9 @@ let idCounter = 0;
 
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
+    if(process.env.GRAFANA_DASHBOARD_ID) {
+      return res.sendStatus(200);
+    }
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
 
     fetch('http://localhost:3000/api/dashboards/db/', {
@@ -131,15 +133,6 @@ const grafanaController: GrafanaController = {
         return next();
       });
   },
-
-  initDB(req, res, next) {
-    console.log('Here!');
-    //    if(!process.env.GRAFANA_DASHBOARD_ID){
-    return next();
-    // }  else {
-    //   return res.status(200).json('successful');
-    // }
-  }
 };
 
 
