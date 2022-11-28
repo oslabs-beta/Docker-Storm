@@ -24,11 +24,8 @@
           "viz": false
         },
         "lineInterpolation": "linear",
-        "lineStyle": {
-          "fill": "solid"
-        },
         "lineWidth": 1,
-        "pointSize": 6,
+        "pointSize": 5,
         "scaleDistribution": {
           "type": "linear"
         },
@@ -42,10 +39,9 @@
           "mode": "off"
         }
       },
-      "decimals": 0,
       "mappings": [],
       "thresholds": {
-        "mode": "percentage",
+        "mode": "absolute",
         "steps": [
           {
             "color": "green",
@@ -64,8 +60,8 @@
     "y": 0
   },
   "id": 2,
-  "interval": "10",
-  "maxDataPoints": 999999,
+  "interval": "5",
+  "maxDataPoints": 900,
   "options": {
     "legend": {
       "calcs": [],
@@ -74,14 +70,13 @@
       "showLegend": true
     },
     "timezone": [
-      "Africa/Bamako"
+      "browser"
     ],
     "tooltip": {
       "mode": "single",
       "sort": "none"
     }
   },
-  "pluginVersion": "9.2.6",
   "targets": [
     {
       "datasource": {
@@ -89,7 +84,7 @@
         "uid": "WPF5XbO4k"
       },
       "editorMode": "code",
-      "expr": "",
+      "expr": "placeholder",
       "legendFormat": "__auto",
       "range": true,
       "refId": "A"

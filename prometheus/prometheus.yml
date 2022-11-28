@@ -17,13 +17,6 @@ rule_files:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  - job_name: 'docker'
-         # metrics_path defaults to '/metrics'
-         # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['localhost:9091']
-
   - job_name: 'Manager1'
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
