@@ -1,3 +1,5 @@
 node_modules
 prometheus/data
+prometheus/.DS_Store
+.DS_Store
 .env
