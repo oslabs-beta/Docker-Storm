@@ -91,10 +91,9 @@ const grafanaController: GrafanaController = {
       newPanel.title = panel.title;
       newPanel.targets[0].expr = panel.expression;
       newPanel.id = idCounter++;
-      
       panelsArray.push(newPanel);
     });
-    
+
     res.locals.panels = panelsArray;
     return next();
   },

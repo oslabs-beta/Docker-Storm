@@ -92,6 +92,21 @@ const userController = {
             .catch((err) => {
             return next(err);
         });
+    },
+    getAllUsers: (req, res, next) => {
+        const queryString = 'SELECT username, role FROM users;';
+        db.query(queryString, [])
+            .then((result) => {
+            res.locals.allUsers = result.rows;
+            return next();
+        })
+            .catch((err) => {
+            return next({
+                log: 'Error caught in getAllUsers',
+                status: 400,
+                message: { err: err }
+            });
+        });
     }
 };
 export default userController;

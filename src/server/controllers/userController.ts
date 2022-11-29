@@ -3,12 +3,16 @@ import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
 
 
+
+type ResponseObject = (req: Request, res: Response, next: NextFunction) => void;
+
 interface UserController {
-    verifyUser: (req: Request, res: Response, next: NextFunction) => void;
-    createUser: (req: Request, res: Response, next: NextFunction) => void;
-    encrypt: (req: Request, res: Response, next: NextFunction) => void;
-    updateUser: (req: Request, res: Response, next: NextFunction) => void;
-    deleteUser: (req: Request, res: Response, next: NextFunction) => void;
+    verifyUser: ResponseObject;
+    createUser: ResponseObject;
+    encrypt: ResponseObject;
+    updateUser: ResponseObject;
+    deleteUser: ResponseObject;
+    getAllUsers: ResponseObject;
 
 }
 
@@ -121,6 +125,25 @@ const userController: UserController = {
       .catch((err) => {
         return next(err);
       });
+  },
+
+
+  getAllUsers: (req,res,next) => {
+
+    const queryString = 'SELECT username, role FROM users;';
+    db.query(queryString, [])
+      .then((result) => {
+        res.locals.allUsers = result.rows;
+        return next();
+      })
+      .catch((err: Error) => {
+        return next({
+          log: 'Error caught in getAllUsers',
+          status: 400,
+          message: {err: err}
+        });
+      });
+
   }
 };
 
