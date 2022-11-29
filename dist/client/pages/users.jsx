@@ -5,6 +5,9 @@ const Users = () => {
     const [role, setRole] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [missingField, setMissingField] = useState(false);
+    const [matchPassword, setMatchPassword] = useState(false);
+    const [uniqueUser, setUniqueUser] = useState(false);
     const addUsersToArray = (arr) => {
         setUserList(arr);
     };
@@ -16,7 +19,15 @@ const Users = () => {
         });
     };
     const addNewUser = () => {
-        if (!username || !role || !password || !confirmPassword || password !== confirmPassword) {
+        setMissingField(false);
+        setMatchPassword(false);
+        setUniqueUser(false);
+        if (!username || !role || !password || !confirmPassword) {
+            setMissingField(true);
+            return;
+        }
+        if (password !== confirmPassword) {
+            setMatchPassword(true);
             return;
         }
         const body = {
@@ -26,6 +37,9 @@ const Users = () => {
         };
         fetch('/user/signup', {
             method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
             body: JSON.stringify(body)
         }).then((response) => {
             if (response.status === 200) {
@@ -35,13 +49,19 @@ const Users = () => {
                     role: role
                 };
                 newUserList.push(newUser);
+                // unsure if there isn't a better way to this 
                 setUserList(newUserList);
+                setUsername('');
+                setRole('');
+                setPassword('');
+                setConfirmPassword('');
+                setMissingField(false);
+                setMatchPassword(false);
+                setUniqueUser(false);
             }
-        }).then(() => {
-            setUsername('');
-            setRole('');
-            setPassword('');
-            setConfirmPassword('');
+            else {
+                setUniqueUser(true);
+            }
         });
     };
     useEffect(() => {
@@ -62,6 +82,9 @@ const Users = () => {
         <input type="text" placeholder="Confirm Password" value={confirmPassword} onChange={input => setConfirmPassword(input.target.value)}/>
         <button type="submit" onClick={addNewUser}>Add New User</button>
       </form>
+      {missingField && <div>Please fill out all fields before submitting</div>}
+      {matchPassword && <div>Passwords do not match</div>}
+      {uniqueUser && <div>Username already taken, please choose another username</div>}
     </>);
 };
 export default Users;
