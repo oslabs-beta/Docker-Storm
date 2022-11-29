@@ -2,12 +2,12 @@
   "dashboard": {
     "id": null,
     "uid": null,
-    "title": "TEST",
+    "title": "Docker Storm",
     "tags": [ "Docker", "Swarm", "Containers" ],
     "timezone": "browser",
     "schemaVersion": 37,
     "version": 0,
-    "refresh": "25s"
+    "refresh": "5s"
   },
   "message": "Made changes to xyz",
   "overwrite": false

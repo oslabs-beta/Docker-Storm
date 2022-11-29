@@ -1,15 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const electron = require("electron")
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+import { app, BrowserWindow } from 'electron';
 
 // setup IPC Bridge
 
 // global reference to mainWindow (necessary to prevent mainWindow from being garbage collected)
-let mainWindow;
+let mainWindow: BrowserWindow;
 
 function createMainWindow() {
-  mainWindow = new electron.BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1300,
     height: 300,
     webPreferences: {
@@ -22,7 +19,7 @@ function createMainWindow() {
   
 
   mainWindow.loadURL('http://localhost:8080'); //change to localhost:8080
-  mainWindow.on("ready-to-show", () => mainWindow.show());
+  mainWindow.on('ready-to-show', () => mainWindow.show());
 
 
   // mainWindow.on('closed', () => {
@@ -31,7 +28,7 @@ function createMainWindow() {
 }
 
 
-electron.app.on('ready', createMainWindow);
+app.on('ready', createMainWindow);
     
 // // MacOS Specific function
 // electron.app.on('window-all-closed', function () {

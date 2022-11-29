@@ -4,7 +4,7 @@ import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
 import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
-const RenderViews = ({ ApiKey }) => {
+const RenderViews = (props) => {
     return (<>
       <h1>DOCKER STORM</h1>
       <div className="navbar">
@@ -39,7 +39,7 @@ const RenderViews = ({ ApiKey }) => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings />}/>
-          <Route path='/metrics' element={<Metrics ApiKey={ApiKey}/>}/>
+          <Route path='/metrics' element={<Metrics ApiKey={props.ApiKey}/>}/>
           <Route path='/users' element={<Users />}/>
           <Route path='/swarms' element={<Swarms />}/>
         </Routes>

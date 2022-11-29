@@ -17,31 +17,7 @@ rule_files:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  - job_name: 'docker'
-         # metrics_path defaults to '/metrics'
-         # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['localhost:9091']
-
-  - job_name: 'Manager1'
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['192.168.64.7:9100']
-
-
-  - job_name: 'Worker1'
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['192.168.64.8:9100']
-  
-  - job_name: 'Worker2'
-      # metrics_path defaults to '/metrics'
-      # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['192.168.64.9:9100']
+  - job_name: 'file_sd_targets'
+    file_sd_configs:
+    - files:
+      - 'targets.json'
