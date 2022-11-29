@@ -5,6 +5,8 @@ import cookieController from '../controllers/cookieController.js';
 
 const router = express.Router();
 
+//need a get request for a list of users?
+
 router.post('/login', userController.verifyUser, cookieController.setCookie,(req, res) => {
   return res.status(200).json('successful');
 });
