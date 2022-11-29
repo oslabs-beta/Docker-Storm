@@ -5,10 +5,10 @@ import cookieController from '../controllers/cookieController.js';
 
 const router = express.Router();
 
-
 router.get('/all', userController.getAllUsers, (req,res) => {
   return res.status(200).json(res.locals.allUsers);
 } );
+
 
 router.post('/login', userController.verifyUser, cookieController.setCookie,(req, res) => {
   return res.status(200).json('successful');
