@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Machine Ram Usage",
+        "expression": "100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))",
+        "graphType": "line",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Running Containers",
+        "expression": "swarm_manager_tasks_total{state='running'}",
+        "graphType": "stat",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Node Status",
+        "expression": "swarm_manager_nodes",
+        "graphType": "state",
+        "role" : "overall"
+    }
+]

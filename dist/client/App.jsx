@@ -17,8 +17,9 @@ const App = () => {
         })
             .then(data => { return data.json(); });
         console.log('Panels:', panelList);
-        const ramPanel = await fetch('/metric/genRamPanel').then(data => { return data.json(); });
-        panelList.panels.push(ramPanel);
+        const staticPanels = await fetch('/metric/genStaticPanels').then(data => { return data.json(); });
+        console.log('We made it!: ', staticPanels);
+        panelList.panels.push(...staticPanels);
         console.log('Updated Panels: ', panelList);
         fetch('/graf/init', {
             method: 'POST',
