@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 export type Job = {
   job: string
+  role: Role
 };
+
+export type Role = 'Manager' | 'Daemon' | 'Worker' | 'Overall'
 
 export type Target = {
   targets: string[],
@@ -10,7 +13,7 @@ export type Target = {
 
 export type TargetsArray = Target[];
 
-export type JobArray = string[];
+export type JobArray = Job[];
 
 export type TargetIpArray = string[];
 
@@ -20,4 +23,5 @@ export type PanelObject = {
   title: string;
   expression: string;
   graphType: 'gauge' | 'line';
+  role: Role;
 }

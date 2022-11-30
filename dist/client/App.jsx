@@ -5,33 +5,31 @@ import RenderViews from './RenderViews.jsx';
 import '../../resources/styles.css';
 const App = () => {
     const [apiKey, setApiKey] = useState('');
-    function intializeDashboard() {
-        fetch('/metric')
-            .then(data => data.json())
-            .then(data => {
-            const jobNames = data.jobs;
-            fetch('/metric/genPanel', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({ panelTitles: jobNames, panelType: 'gauge', expr: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=<jobname>}[1m])) * 100)' }),
-            })
-                .then(data => data.json())
-                .then(data => {
-                console.log(data);
-                fetch('/graf/init', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(data),
-                })
-                    .then((data) => data.json())
-                    .then((result) => {
-                    setApiKey(result.ApiKey);
-                });
-            });
+    async function intializeDashboard() {
+        const jobsList = await fetch('/metric').then(data => { return data.json(); });
+        console.log('Jobs: ', jobsList);
+        const panelList = await fetch('/metric/genPanel', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ panelTitles: jobsList.jobs, panelType: 'gauge', expr: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=<jobname>}[1m])) * 100)' }),
+        })
+            .then(data => { return data.json(); });
+        console.log('Panels:', panelList);
+        const ramPanel = await fetch('/metric/genRamPanel').then(data => { return data.json(); });
+        panelList.panels.push(ramPanel);
+        console.log('Updated Panels: ', panelList);
+        fetch('/graf/init', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(panelList),
+        })
+            .then((data) => data.json())
+            .then((result) => {
+            setApiKey(result.ApiKey);
         });
     }
     useEffect(() => {

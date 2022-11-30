@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { Job, JobArray, Target, TargetIpArray, TargetsArray, ResponseObject, PanelObject } from '../../types.js';
+import { Job, JobArray, Target, TargetIpArray, TargetsArray, ResponseObject, PanelObject, Role } from '../../types.js';
 import fs from 'fs';
 
 interface MetricsController {
     getListOfTargets: ResponseObject;
     generatePanelBody: ResponseObject;
+    generateRamUsage: ResponseObject;
 }
 
 const metricsController: MetricsController = {
@@ -14,12 +15,13 @@ const metricsController: MetricsController = {
     const targetsArray: TargetIpArray = [];
 
     targets.forEach((target: Target) => {
-      jobsArray.push(target.labels.job);
+      jobsArray.push(target.labels);
       targetsArray.push(target.targets[0]);
     });
 
     res.locals.jobs = jobsArray;
     res.locals.targets = targetsArray;
+    console.log(res.locals.jobs);
     return next();
   },
 
@@ -27,20 +29,38 @@ const metricsController: MetricsController = {
     const {panelType, panelTitles, expr} = req.body;
     const panelObjects: PanelObject[] = [];
     
-    panelTitles.forEach((title: string) => {
-      const panelExpr = expr.replace(', job=<jobname>}', `, job='${title}'}`);
-      panelObjects.push(
-        {
-          title: title,
-          expression: panelExpr,
-          graphType: panelType
-        }
-      );
+    panelTitles.forEach((job: Job) => {
+      const title: string = job.job;
+      const role: Role = job.role;
+
+      if(role === 'Manager' || role === 'Worker'){
+        const panelExpr = expr.replace(', job=<jobname>}', `, job='${title}'}`);
+        panelObjects.push(
+          {
+            title,
+            expression: panelExpr,
+            graphType: panelType,
+            role
+          }
+        );
+      }
     });
 
     res.locals.panels = {'panels': panelObjects};
     return next();
-  }
+  },
+
+  generateRamUsage(req: Request, res: Response, next: NextFunction){
+    const panelObj: PanelObject = {
+      title: 'Machine Ram Usage',
+      expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
+      graphType: 'line',
+      role: 'Overall'
+    };
+
+    res.locals.ramPanel = panelObj;
+    return next();
+  },
 };
 
 
