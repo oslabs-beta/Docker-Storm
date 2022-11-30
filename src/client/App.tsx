@@ -2,8 +2,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
-import './styles.css'; 
-import { json } from 'stream/consumers';
+import '../../resources/styles.css';
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
