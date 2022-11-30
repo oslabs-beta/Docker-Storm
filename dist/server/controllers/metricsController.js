@@ -5,23 +5,29 @@ const metricsController = {
         const jobsArray = [];
         const targetsArray = [];
         targets.forEach((target) => {
-            jobsArray.push(target.labels.job);
+            jobsArray.push(target.labels);
             targetsArray.push(target.targets[0]);
         });
         res.locals.jobs = jobsArray;
         res.locals.targets = targetsArray;
+        console.log(res.locals.jobs);
         return next();
     },
     generatePanelBody(req, res, next) {
         const { panelType, panelTitles, expr } = req.body;
         const panelObjects = [];
-        panelTitles.forEach((title) => {
-            const panelExpr = expr.replace(', job=<jobname>}', `, job='${title}'}`);
-            panelObjects.push({
-                title: title,
-                expression: panelExpr,
-                graphType: panelType
-            });
+        panelTitles.forEach((job) => {
+            const title = job.job;
+            const role = job.role;
+            if (role === 'Manager' || role === 'Worker') {
+                const panelExpr = expr.replace(', job=<jobname>}', `, job='${title}'}`);
+                panelObjects.push({
+                    title,
+                    expression: panelExpr,
+                    graphType: panelType,
+                    role
+                });
+            }
         });
         res.locals.panels = { 'panels': panelObjects };
         return next();
