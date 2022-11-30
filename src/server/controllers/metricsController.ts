@@ -5,7 +5,7 @@ import fs from 'fs';
 interface MetricsController {
     getListOfTargets: ResponseObject;
     generatePanelBody: ResponseObject;
-    generateRamUsage: ResponseObject;
+    generateStaticPanels: ResponseObject;
 }
 
 const metricsController: MetricsController = {
@@ -50,15 +50,11 @@ const metricsController: MetricsController = {
     return next();
   },
 
-  generateRamUsage(req: Request, res: Response, next: NextFunction){
-    const panelObj: PanelObject = {
-      title: 'Machine Ram Usage',
-      expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
-      graphType: 'line',
-      role: 'Overall'
-    };
+  generateStaticPanels(req: Request, res: Response, next: NextFunction){
+    const staticPanelsArray: PanelObject[] = JSON.parse(fs.readFileSync('./grafana/staticPanels.json', 'utf-8'));
 
-    res.locals.ramPanel = panelObj;
+    console.log(staticPanelsArray);
+    res.locals.staticPanels = staticPanelsArray;
     return next();
   },
 };

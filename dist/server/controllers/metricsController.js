@@ -32,14 +32,10 @@ const metricsController = {
         res.locals.panels = { 'panels': panelObjects };
         return next();
     },
-    generateRamUsage(req, res, next) {
-        const panelObj = {
-            title: 'Machine Ram Usage',
-            expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
-            graphType: 'line',
-            role: 'Overall'
-        };
-        res.locals.ramPanel = panelObj;
+    generateStaticPanels(req, res, next) {
+        const staticPanelsArray = JSON.parse(fs.readFileSync('./grafana/staticPanels.json', 'utf-8'));
+        console.log(staticPanelsArray);
+        res.locals.staticPanels = staticPanelsArray;
         return next();
     },
 };
