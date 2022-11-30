@@ -35,16 +35,12 @@ const metricsController = {
     generateRamUsage(req, res, next) {
         const panelObj = {
             title: 'Machine Ram Usage',
-            expression: 'expression: \'100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))\'',
+            expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
             graphType: 'line',
             role: 'Overall'
         };
-        res.locals.ramPanel = { 'panels': [panelObj] };
+        res.locals.ramPanel = panelObj;
         return next();
     },
-    generateOverallCpu(req, res, next) {
-        res.locals.cpuPanel = {};
-        return next();
-    }
 };
 export default metricsController;

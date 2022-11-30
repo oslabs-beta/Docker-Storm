@@ -11,12 +11,8 @@ router.post('/genPanel', metricsController.generatePanelBody, (req, res) => {
   return res.status(200).json(res.locals.panels);
 });
 
-router.post('/genRamPanel', metricsController.generateRamUsage, (req, res) => {
+router.get('/genRamPanel', metricsController.generateRamUsage, (req, res) => {
   return res.status(200).json(res.locals.ramPanel);
-});
-
-router.post('/genOverallCpuPanel', metricsController.generateOverallCpu, (req, res) => {
-  return res.status(200).json(res.locals.cpuPanel);
 });
 
 export default router;
