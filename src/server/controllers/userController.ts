@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
+import { ResponseObject } from '../../types.js';
 
 
 
-type ResponseObject = (req: Request, res: Response, next: NextFunction) => void;
 
 interface UserController {
     verifyUser: ResponseObject;

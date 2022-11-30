@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import db from '../models/dockerStormModel.js';
+import { ResponseObject } from '../../types.js';
 
 
 
 interface InitController {
-    initializeDatabase: (req: Request, res: Response, next: NextFunction) => void;
+    initializeDatabase: ResponseObject;
 }
 
 
