@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { Job, JobArray, Target, TargetIpArray, TargetsArray, ResponseObject, PanelObject, Role } from '../../types.js';
 import fs from 'fs';
+import { nextTick } from 'process';
 
 interface MetricsController {
     getListOfTargets: ResponseObject;
     generatePanelBody: ResponseObject;
+    generateRamUsage: ResponseObject;
+    generateOverallCpu: ResponseObject;
 }
 
 const metricsController: MetricsController = {
@@ -46,6 +49,24 @@ const metricsController: MetricsController = {
     });
 
     res.locals.panels = {'panels': panelObjects};
+    return next();
+  },
+
+  generateRamUsage(req: Request, res: Response, next: NextFunction){
+    const panelObj: PanelObject = {
+      title: 'Machine Ram Usage',
+      expression: 'expression: \'100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))\'',
+      graphType: 'line',
+      role: 'Overall'
+    };
+
+    res.locals.ramPanel = {'panels': [panelObj]};
+    return next();
+  },
+
+  generateOverallCpu(req: Request, res: Response, next: NextFunction){
+
+    res.locals.cpuPanel = {};
     return next();
   }
 };
