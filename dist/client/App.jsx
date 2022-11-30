@@ -2,6 +2,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, { useEffect, useState } from 'react';
 import RenderViews from './RenderViews.jsx';
+import './styles.css';
 const App = () => {
     const [apiKey, setApiKey] = useState('');
     function intializeDashboard() {
