@@ -23,7 +23,7 @@ const App = () => {
                 { title: 'Overall CPU Usage',
                     expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
                     graphType: 'gauge'
-                }
+                },
             ]
         };
         fetch('/graf/init', {
@@ -35,17 +35,12 @@ const App = () => {
         })
             .then((data) => data.json())
             .then((result) => {
-            return result.ApiKey;
-        })
-            .then((key) => {
-            setApiKey(key);
+            setApiKey(result.ApiKey);
         });
     }
     useEffect(() => {
-        if (apiKey)
-            return;
         intializeDashboard();
-    }, [apiKey]);
+    }, []);
     return (<HashRouter>
       <Routes>
         <Route path='/' element={<Login />}/>

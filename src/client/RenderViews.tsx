@@ -10,7 +10,7 @@ interface Props {
 }
 
 
-const RenderViews = ({ApiKey}) => {
+const RenderViews = (props: Props) => {
 
   return (
     <>
@@ -47,7 +47,7 @@ const RenderViews = ({ApiKey}) => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings/>}/>
-          <Route path='/metrics' element={<Metrics ApiKey={ApiKey} />}/>
+          <Route path='/metrics' element={<Metrics ApiKey={props.ApiKey} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>
         </Routes>
