@@ -9,7 +9,7 @@ let mainWindow;
 function createMainWindow() {
     mainWindow = new electron.BrowserWindow({
         width: 1300,
-        height: 300,
+        height: 800,
         webPreferences: {
             // preload: path.join(__dirname, '../electron/preload.js'),
             webSecurity: false,
