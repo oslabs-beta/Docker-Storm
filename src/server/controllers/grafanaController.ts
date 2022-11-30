@@ -2,13 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
+import { ResponseObject } from '../../types.js';
 dotenv.config({override: true});
 
 interface GrafanaController {
-    createDB: (req: Request, res: Response, next: NextFunction) => void;
-    updateDB: (req: Request, res: Response, next: NextFunction) => void;
-    getDashByUid: (req: Request, res: Response, next: NextFunction) => void;
-    createPanel: (req: Request, res: Response, next: NextFunction) => void;
+    createDB: ResponseObject;
+    updateDB: ResponseObject;
+    getDashByUid: ResponseObject;
+    createPanel: ResponseObject;
 }
 
 interface ResultObj {
@@ -83,8 +84,8 @@ const grafanaController: GrafanaController = {
   createPanel(req, res, next){
     console.log('here CREATEPANEL');
     const {panels} = req.body;
-    //const {title, expression, graphType} = req.body;
     const panelsArray: Record<string, unknown>[] = [];
+
 
     panels.forEach((panel: Panel) => {
       const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
@@ -108,11 +109,9 @@ const grafanaController: GrafanaController = {
 
     console.log(body.dashboard.panels);
     if(!('panels' in body.dashboard)){
-      console.log('no panels', panels);
       body.dashboard['panels'] = [...panels];
     }
     else{
-      console.log('existing panels');
       body.dashboard['panels'].push(...panels);
     }
 
