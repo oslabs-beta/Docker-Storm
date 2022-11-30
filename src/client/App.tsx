@@ -8,39 +8,32 @@ const App: React.FC = (): JSX.Element => {
   
 
   function intializeDashboard() {
-    const body = {
-      panels : [
-        {title: 'Ram Usage',
-          expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
-          graphType: 'gauge'
-        },
-
-        {title: 'Ram Usage Line Graph',
-          expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
-          graphType: 'line'
-        },
-        
-        {title: 'Manager 1 CPU Usage',
-          expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=\'Manager1\'}[1m])) * 100)',
-          graphType: 'gauge'
-        },
-      
-        {title: 'Overall CPU Usage',
-          expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
-          graphType: 'gauge'
-        },
-      ]
-    };
-    fetch('/graf/init', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(body),
-    })
-      .then((data) => data.json())
-      .then((result) => {
-        setApiKey(result.ApiKey);
+    fetch('/metric')
+      .then(data => data.json())
+      .then(data => {
+        const jobNames = data.jobs;
+        fetch('/metric/genPanel', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({panelTitles: jobNames, panelType: 'gauge', expr: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=<jobname>}[1m])) * 100)'}),
+        })
+          .then(data => data.json())
+          .then(data => {
+            console.log(data);
+            fetch('/graf/init', {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(data),
+            })
+              .then((data) => data.json())
+              .then((result) => {
+                setApiKey(result.ApiKey);
+              });
+          });
       });
   }
   
@@ -59,3 +52,29 @@ const App: React.FC = (): JSX.Element => {
 };
 
 export default App;
+
+
+
+// const body = {
+//   panels : [
+//     {title: 'Ram Usage',
+//       expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
+//       graphType: 'gauge'
+//     },
+
+//     {title: 'Ram Usage Line Graph',
+//       expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
+//       graphType: 'line'
+//     },
+        
+//     {title: 'Manager 1 CPU Usage',
+//       expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=\'Manager1\'}[1m])) * 100)',
+//       graphType: 'gauge'
+//     },
+      
+//     {title: 'Overall CPU Usage',
+//       expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
+//       graphType: 'gauge'
+//     },
+//   ]
+// };
