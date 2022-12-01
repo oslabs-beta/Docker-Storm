@@ -9,41 +9,49 @@ interface Props {
   ApiKey: string;
 }
 
+const clickedStyle = {
+  color: '#ffffff',
+  borderLeft: '#e1e4e6 8px solid',
+
+
+}
 
 const RenderViews = (props: Props) => {
 
   return (
     <>
-      <h1>DOCKER STORM</h1>
-      <div className="navbar">
-        <div className="links">
-          <ul>
-            <li>
-              <Link to='/app/settings'>
-                <p>Settings</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/users'>
-                <p>Users</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/swarms'>
-                <p>Swarms</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/metrics'>
-                <p>Metrics</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/'>
-                <p>Logout</p>
-              </Link>
-            </li>
-          </ul>
+      <div id="all-seeing-div">
+        <div className="navbar">
+          <h1>DOCKER STORM</h1>
+          <div className="links">
+            <ul>
+              <li>
+                <Link to='/app/settings'>
+                  Settings
+                </Link>
+              </li>
+              <li>
+                <Link to='/app/users'>
+                  Users
+                </Link>
+              </li>
+              <li>
+                <Link to='/app/swarms'>
+                  Swarms
+                </Link>
+              </li>
+              <li>
+                <Link to='/app/metrics'>
+                  Metrics
+                </Link>
+              </li>
+              <li>
+                <Link to='/'>
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
         <Routes>
           <Route path='/settings' element={<Settings/>}/>
@@ -56,6 +64,7 @@ const RenderViews = (props: Props) => {
 
 
 
+        
       </div>
     </>
   );

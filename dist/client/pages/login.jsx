@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/mac.png';
-import waves from '../../../resources/waves.png';
+import Background from '../../../resources/Background.png';
 const Login = () => {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState('n');
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
     function confirmCredentials() {
@@ -37,12 +37,14 @@ const Login = () => {
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
           <button className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
-          {invalid && <p className="error-p">Invalid username/password please try again</p>}
+          <div id="error-div">
+            {invalid && <p className="error-p">Invalid username/password please try again</p>}
+          </div>
         </form>
       </div>
 
       <div id="right-div" className="half-n-half">
-        <div id="waves-div" style={{ backgroundImage: `url(${waves})` }}>
+        <div id="waves-div" style={{ backgroundImage: `url(${Background})` }}>
           <img src={mac} id="mac-img" alt="mac"/>
           {/* <img src={waves} id="waves-img" alt="waves" /> */}
         </div>

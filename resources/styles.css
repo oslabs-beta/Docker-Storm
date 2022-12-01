@@ -1,6 +1,38 @@
+/* --------------------------------------------------- Font Imports --------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&family=Roboto:wght@100;400;500&display=swap');
+
+
+
+
+
+/* --------------------------------------------------- Root Classes --------------------------------------------------- */
+
+
+:root {
+    --Nunito: 'Nunito', sans-serif;
+    --Roboto: 'Roboto', sans-serif;
+    --light-blue: #4C82FE;
+}
+
+
+
+
+/* --------------------------------------------------- App CSS --------------------------------------------------- */
+
+
 body {
     margin: 0 0;
 }
+
+/* --------------------------------------------------- Headers CSS --------------------------------------------------- */
+
+h1 {
+    font-family: var(--Nunito)
+}
+
+
+/* --------------------------------------------------- Login Page CSS --------------------------------------------------- */
 
 
 #login-big-div {
@@ -16,9 +48,8 @@ body {
     align-items: center;
 }
 
-#left-div {
-}
 
+/* ----------------- Login Left Div CSS ----------------- */
 #login-form {
     display: flex;
     flex-direction: column;
@@ -47,7 +78,7 @@ input {
     font-size: 16px;
     letter-spacing: 3px;
     margin-top: 30px;
-    background-color: #4C82FE;
+    background-color: var(--light-blue);
     color: #ffffff;
     border-radius: 25px;
 }
@@ -56,15 +87,22 @@ input {
     background-color: #88acfc;
 }
 
+/* Bandaid solution. Refactor pl0x */
+#error-div {
+    position: relative;
+    padding-left: 14px
+}
+
 .error-p {
     color: #cf1515;
     font-size: 14px;
 }
 
-/* Right div CSS*/
+
+/* ----------------- Login Right Div CSS ----------------- */
 
 #right-div {
-    background-color: #13507A;
+    background-color: #2D4A70;
 }
 
 #waves-div {
