@@ -33,7 +33,7 @@ let idCounter = 0;
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
     if(process.env.GRAFANA_DASHBOARD_ID) {
-      return res.status(200).send({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
+      return res.status(200).send({dashId: process.env.GRAFANA_DASHBOARD_ID});
     }
 
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');

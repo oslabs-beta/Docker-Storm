@@ -6,7 +6,7 @@ import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 
 interface Props {
-  ApiKey: string;
+  dashId: string;
 }
 
 
@@ -47,7 +47,7 @@ const RenderViews = (props: Props) => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings/>}/>
-          <Route path='/metrics' element={<Metrics ApiKey={props.ApiKey} />}/>
+          <Route path='/metrics' element={<Metrics dashId={props.dashId} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>
         </Routes>
