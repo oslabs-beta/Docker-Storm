@@ -23,8 +23,7 @@
     {
         "title": "Remaining Disk Space",
         "expression": "(node_filesystem_avail_bytes{mountpoint='/',fstype!='rootfs'})",
-        "graphType": "stat",
+        "graphType": "disk",
         "role" : "overall"
     }
-    
 ]

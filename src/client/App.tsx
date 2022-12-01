@@ -53,9 +53,9 @@ const App: React.FC = (): JSX.Element => {
   
   useEffect(() => {
     
+    intializeDashboard();
     if(!apiKey || !pgUri) return;
     console.log('in use effect', apiKey);
-    intializeDashboard();
   }, [apiKey]);
   
 
