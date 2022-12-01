@@ -2,11 +2,10 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
-
+import InitialSetup from './pages/initialSetup.jsx';
 import 'whatwg-fetch';
 
 
-import InitialSetup from './pages/initialSetup.jsx';
 import '../../resources/styles.css';
 
 
@@ -14,6 +13,7 @@ import '../../resources/styles.css';
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [pgUri, setPgUri] = useState('');
+  const [dashId, setDashId] = useState('');
 
 
   async function intializeDashboard() {
@@ -46,15 +46,16 @@ const App: React.FC = (): JSX.Element => {
       body: JSON.stringify(panelList),
     })
       .then((data) => data.json())
-      .then((result:any) => {
-        setApiKey(result.ApiKey);
+      .then((result) => {
+        setDashId(result.dashId);
       });
   }
   
   useEffect(() => {
-    
+    console.log('useeffect ran');
     if(!apiKey || !pgUri) return;
     console.log('in use effect', apiKey);
+    
     intializeDashboard();
   }, [apiKey]);
   
@@ -76,7 +77,7 @@ const App: React.FC = (): JSX.Element => {
           setPgUri={setPgUri}
           pgUri={pgUri}
         />}/>
-        <Route path='/app/*' element={<RenderViews ApiKey={apiKey}/>}/>
+        <Route path='/app/*' element={<RenderViews dashId={dashId}/>}/>
       </Routes>
     </HashRouter>
   );
