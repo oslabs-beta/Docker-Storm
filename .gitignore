@@ -1,5 +1,8 @@
 node_modules
+coverage
 prometheus/data
 prometheus/.DS_Store
 .DS_Store
 .env
+package-lock
+dist

@@ -2,7 +2,7 @@ import React from 'react';
 
 
 interface Props {
-  ApiKey: string;
+  dashId: string;
 }
 const Metrics = (props: Props) => {
 
