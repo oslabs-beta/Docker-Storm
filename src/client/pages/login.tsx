@@ -2,14 +2,17 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/mac.png';
 import waves from '../../../resources/waves.png';
-import InitialSetup from './initialSetup.jsx';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { DefaultDeserializer } from 'v8';
 
 interface Props {
   setApiKey: (value: string) => void;
   apiKey: string;
   setPgUri: (value: string) => void;
   pgUri: string;
+}
+interface ResponseObject {
+  db: string;
+  key: string;
 }
   
 // could maybe use cacheing to prevent need to fetch env file every time
@@ -21,40 +24,37 @@ const Login = (props: Props) => {
 
 
 
-  const setKeys =  (apiKey, pgUri) => {
+  const setKeys = (apiKey, pgUri) => {
     props.setPgUri(pgUri);
     props.setApiKey(apiKey);
   };
 
-  const confirmCredentials = () => {
+  const confirmCredentials = async () => {
     const body = {
       username: username,
       password: password
     };
     
-    fetch('/user/login', {
+    const result = await fetch('/user/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body),
-    })
-      .then((data) => data.json())
-      .then(async (result) => {
-        // check if response is valid and we successfully logged in
-        if(Object.keys(result).length === 2) {
-          setKeys(result.key, result.db);
-          if(props.apiKey && props.pgUri) {
-            navigate('/app');
-          } else {
-            navigate('/setup');
-          }
+    });
 
-        // if response not valid - username/password was incorrect 
-        } else {
-          setInvalid(true);
-          setUsername('');
-          setPassword('');
-        }
-      });
+    if(result.status !== 200) {
+      setInvalid(true);
+      setUsername('');
+      setPassword('');
+      return;
+    }
+    const data: ResponseObject = await result.json();
+
+    setKeys(data.key, data.db);
+    if(data.key && data.db) {
+      navigate('/app');
+    } else {
+      navigate('/setup');
+    }
 
   };
 

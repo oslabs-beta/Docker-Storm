@@ -12,35 +12,30 @@ const Login = (props) => {
         props.setPgUri(pgUri);
         props.setApiKey(apiKey);
     };
-    const confirmCredentials = () => {
+    const confirmCredentials = async () => {
         const body = {
             username: username,
             password: password
         };
-        fetch('/user/login', {
+        const result = await fetch('/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
-        })
-            .then((data) => data.json())
-            .then(async (result) => {
-            // check if response is valid and we successfully logged in
-            if (Object.keys(result).length === 2) {
-                setKeys(result.key, result.db);
-                if (props.apiKey && props.pgUri) {
-                    navigate('/app');
-                }
-                else {
-                    navigate('/setup');
-                }
-                // if response not valid - username/password was incorrect 
-            }
-            else {
-                setInvalid(true);
-                setUsername('');
-                setPassword('');
-            }
         });
+        if (result.status !== 200) {
+            setInvalid(true);
+            setUsername('');
+            setPassword('');
+            return;
+        }
+        const data = await result.json();
+        setKeys(data.key, data.db);
+        if (data.key && data.db) {
+            navigate('/app');
+        }
+        else {
+            navigate('/setup');
+        }
     };
     return (<div id="login-big-div">
 

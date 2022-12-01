@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const InitialSetup = (props) => {
     const [currentApi, setCurrentApi] = useState(props.apiKey);
     const [currentPgUri, setCurrentPgUri] = useState(props.pgUri);
+    const [validInput, setValidInput] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (props.apiKey && props.pgUri)
+            navigate('/app');
+    }, []);
     // request to either create or edit the .env
     const handleSubmit = () => {
+        if (!currentApi || !currentPgUri) {
+            setValidInput(true);
+            return;
+        }
         const body = {
             apiKey: currentApi,
             pgUri: currentPgUri
@@ -14,6 +25,8 @@ const InitialSetup = (props) => {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(body),
+        }).then(() => {
+            navigate('/app');
         });
     };
     // render when there is no graf api key in the .env file
@@ -30,6 +43,7 @@ const InitialSetup = (props) => {
         {!props.apiKey && renderApiKey()}
         {!props.pgUri && renderPgUri()}
         <button onClick={handleSubmit}>SUBMIT</button>
+        {validInput && <div>Please fill out field(s) before submitting</div>}
       </form>
 
 

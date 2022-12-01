@@ -1,4 +1,7 @@
 import db from '../models/dockerStormModel.js';
+import fs from 'fs';
+import * as dotenv from 'dotenv';
+dotenv.config({ override: true });
 const initController = {
     initializeDatabase: async (req, res, next) => {
         console.log('in controller');
@@ -19,7 +22,21 @@ const initController = {
             });
         });
     },
+    // apiKey
+    // pgUri
+    //GRAFANA_API_KEY
     updateEnv: (req, res, next) => {
+        const f = fs.readFileSync('./.env', 'utf-8');
+        if (!process.env.GRAFANA_API_KEY) {
+            const str = `\nGRAFANA_API_KEY = '${req.body.apiKey}'`;
+            fs.appendFileSync('./.env', str, 'utf-8');
+        }
+        if (!process.env.POSTGRES_URI) {
+            const str = `\nPOSTGRES_URI = '${req.body.pgUri}'`;
+            fs.appendFileSync('./.env', str, 'utf-8');
+        }
+        dotenv.config({ override: true });
+        console.log(process.env.GRAFANA_API_KEY);
         return next();
     }
 };
