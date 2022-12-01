@@ -19,6 +19,8 @@ const InitialSetup = (props) => {
             apiKey: currentApi,
             pgUri: currentPgUri
         };
+        props.setApiKey(currentApi);
+        props.setPgUri(currentApi);
         fetch('/user/env', {
             method: 'POST',
             headers: {
