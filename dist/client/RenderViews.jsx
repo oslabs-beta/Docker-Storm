@@ -5,6 +5,11 @@ import Metrics from './pages/metrics.jsx';
 import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 import logo from '../../resources/logo-white.png';
+import settingsIcon from '../../resources/icons/settings-icon.png';
+import userIcon from '../../resources/icons/user-icon.png';
+import swarmIcon from '../../resources/icons/swarm-icon.png';
+import metricsIcon from '../../resources/icons/metrics-icon.png';
+import logoutIcon from '../../resources/icons/logout-icon.png';
 const clickedStyle = {
     color: '#ffffff',
     borderLeft: '#e1e4e6 8px solid',
@@ -19,26 +24,31 @@ const RenderViews = (props) => {
             <ul>
               <li>
                 <Link to='/app/settings'>
+                  <img className="menu-icon" src={settingsIcon} alt=""/>
                   Settings
                 </Link>
               </li>
               <li>
                 <Link to='/app/users'>
+                  <img className="menu-icon" src={userIcon} alt=""/>
                   Users
                 </Link>
               </li>
               <li>
                 <Link to='/app/swarms'>
+                  <img className="menu-icon" src={swarmIcon} alt=""/>
                   Swarms
                 </Link>
               </li>
               <li>
                 <Link to='/app/metrics'>
+                  <img className="menu-icon" src={metricsIcon} alt=""/>
                   Metrics
                 </Link>
               </li>
               <li>
                 <Link to='/'>
+                  <img className="menu-icon" src={logoutIcon} alt=""/>
                   Logout
                 </Link>
               </li>

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Shay from '../../../resources/million-dollar-smile.png';
+import settingsIcon from '../../../resources/icons/settings-icon.png';
 
 
 
@@ -55,8 +56,10 @@ const Settings = () => {
             </div>
           </div>
           <div id="setting-right">
-            <span className="page-title-span"><h2 className='page-title dark-text'>Settings</h2></span>
-            <h3>Change Account Settings</h3>
+            
+              <h2 className='page-title dark-text'><span className="page-title-span">
+              <img className="title-icon dark-icon" src={settingsIcon} alt="" />Settings</span></h2>
+            <h3>Change Your Account Settings</h3>
             <form id="fake-form" action="">
               <input type="text" placeholder='Name' />
               <input type="text" placeholder='Email'  />

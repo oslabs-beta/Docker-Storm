@@ -384,3 +384,45 @@ h3 {
     padding-bottom: 30px;
     width: 200px;
 }
+
+.menu-icon {
+    position: relative;
+    top: 5px;
+    left: -7px;
+    width: 34px;
+    filter: brightness(0) invert(1);
+}
+
+.menu-icon {
+    position: relative;
+    top: 5px;
+    left: -7px;
+    width: 34px;
+    filter: brightness(0) invert(1);
+    padding-left: 20px;
+    margin-right: 15px
+}
+
+
+#add-user-form {
+    margin-top: -20px;
+    padding-bottom: 20px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+/* title icons */
+
+.title-icon {
+    width: 50px;
+    position: relative;
+    padding-right: 20px;
+    top: 10px;
+    left: -10px
+}
+
+.light-icon {
+    filter: brightness(0) invert(1);
+}

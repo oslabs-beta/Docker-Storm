@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import userIcon from '../../../resources/icons/user-icon.png';
+
 
 interface User {
   username: string,
@@ -107,7 +109,8 @@ const Users = () => {
     <>
       <div className="page-wrapper">
         <div className="page-inner-wrapper-div" id="top-inner-wrapper-div">
-          <span className="page-title-span"><h2 className='page-title dark-text'>Users</h2></span>
+          <h2 className='page-title dark-text'><span className="page-title-span">
+              <img className="title-icon dark-icon" src={userIcon} alt="" />Users</span></h2>
           <form id="add-user-form" onSubmit={e => e.preventDefault()}>
             <input type="text" 
               placeholder="Username" 
