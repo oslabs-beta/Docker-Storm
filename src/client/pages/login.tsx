@@ -5,9 +5,9 @@ import waves from '../../../resources/waves.png';
 import { DefaultDeserializer } from 'v8';
 
 interface Props {
-  setApiKey: (value: string) => void;
+  setApiKey: (arg: string) => void;
   apiKey: string;
-  setPgUri: (value: string) => void;
+  setPgUri: (arg: string) => void;
   pgUri: string;
 }
 interface ResponseObject {
@@ -24,7 +24,7 @@ const Login = (props: Props) => {
 
 
 
-  const setKeys = (apiKey, pgUri) => {
+  const setKeys = (apiKey: string, pgUri: string) => {
     props.setPgUri(pgUri);
     props.setApiKey(apiKey);
   };

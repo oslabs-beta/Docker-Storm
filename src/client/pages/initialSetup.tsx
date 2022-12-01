@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { renderMatches, useNavigate } from 'react-router-dom';
 
 interface Props {
-    setApiKey: (string) => void;
-    setPgUri: (string) => void;
+    setApiKey: (value: string) => void;
+    setPgUri: (value: string) => void;
     apiKey: string;
     pgUri: string;
   
