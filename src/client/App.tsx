@@ -30,7 +30,7 @@ const App: React.FC = (): JSX.Element => {
         {title: 'Overall CPU Usage',
           expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
           graphType: 'gauge'
-        },
+        },,
       ]
     };
     window.fetch('/graf/init', {

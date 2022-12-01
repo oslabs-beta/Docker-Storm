@@ -26,9 +26,9 @@ Object.defineProperty(exports, "__esModule", ({
 const electron_1 = __webpack_require__(/*! electron */ "electron");
 // setup IPC Bridge
 // global reference to mainWindow (necessary to prevent mainWindow from being garbage collected)
-let mainWindow;
+var mainWindow;
 function createMainWindow() {
-  mainWindow = new electron_1.BrowserWindow({
+  mainWindow = new electron_1_1.BrowserWindow({
     width: 1300,
     height: 300,
     webPreferences: {
