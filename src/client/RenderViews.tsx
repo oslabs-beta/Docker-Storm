@@ -36,8 +36,8 @@ const RenderViews = (props: Props) => {
               <li>
                 <Link 
                   to='/app/settings'
-                  style={select === '/app/settings' ? clickedStyle : null}
-                  onClick={() => setSelect('/app/settings')}
+                  // style={select === '/app/settings' ? clickedStyle : null}
+                  // onClick={() => setSelect('/app/settings')}
                 >
                   Settings
                 </Link>

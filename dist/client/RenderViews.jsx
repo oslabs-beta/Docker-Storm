@@ -18,7 +18,7 @@ const RenderViews = (props) => {
           <div className="links">
             <ul>
               <li>
-                <Link to='/app/settings' style={select === '/app/settings' ? clickedStyle : null} onClick={() => setSelect('/app/settings')}>
+                <Link to='/app/settings'>
                   Settings
                 </Link>
               </li>
