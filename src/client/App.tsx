@@ -47,7 +47,8 @@ const App: React.FC = (): JSX.Element => {
     })
       .then((data) => data.json())
       .then((result) => {
-        setDashId(result.dashId);
+        console.log('RESULT HERE', result);
+        setDashId(result.ApiKey);
       });
   }
   
