@@ -67,7 +67,7 @@ const Settings = () => {
               <input type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
               <input type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
               <input type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
-              <div id="submit-div"><button type="submit" id="settings-submit-btn" className="blue-button" onClick={() => changePassword()}>Change Password</button></div>
+              <div id="submit-div"><button type="submit" id="settings-submit-btn" className="blue-button" onClick={() => changePassword()}>Change Account Settings</button></div>
             </form>
           </div>
         </div>

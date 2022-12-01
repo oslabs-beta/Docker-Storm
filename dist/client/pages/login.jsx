@@ -3,34 +3,41 @@ import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/mac.png';
 import Background from '../../../resources/Background.png';
 import logo from '../../../resources/logo-black.png';
-const Login = () => {
+// could maybe use cacheing to prevent need to fetch env file every time
+const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('n');
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
-    function confirmCredentials() {
+    const setKeys = (apiKey, pgUri) => {
+        props.setPgUri(pgUri);
+        props.setApiKey(apiKey);
+    };
+    const confirmCredentials = async () => {
         const body = {
             username: username,
             password: password
         };
-        fetch('/user/login', {
+        const result = await fetch('/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
-        })
-            .then((result) => {
-            if (result.status === 200)
-                navigate('/app');
-            else {
-                setInvalid(true);
-                setUsername('');
-                setPassword('');
-            }
-        })
-            .catch((err) => {
-            console.log(err);
         });
-    }
+        if (result.status !== 200) {
+            setInvalid(true);
+            setUsername('');
+            setPassword('');
+            return;
+        }
+        const data = await result.json();
+        setKeys(data.key, data.db);
+        if (data.key && data.db) {
+            navigate('/app');
+        }
+        else {
+            navigate('/setup');
+        }
+    };
     return (<div id="login-big-div">
 
       <div id="left-div" className="half-n-half">
@@ -51,7 +58,6 @@ const Login = () => {
           {/* <img src={waves} id="waves-img" alt="waves" /> */}
         </div>
       </div>
-
     </div>);
 };
 export default Login;

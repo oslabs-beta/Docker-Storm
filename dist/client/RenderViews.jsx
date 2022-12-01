@@ -47,7 +47,7 @@ const RenderViews = (props) => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings />}/>
-          <Route path='/metrics' element={<Metrics ApiKey={props.ApiKey}/>}/>
+          <Route path='/metrics' element={<Metrics dashId={props.dashId}/>}/>
           <Route path='/users' element={<Users />}/>
           <Route path='/swarms' element={<Swarms />}/>
         </Routes>
