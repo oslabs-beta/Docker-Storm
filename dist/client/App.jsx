@@ -11,6 +11,10 @@ const App = () => {
                     expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
                     graphType: 'gauge'
                 },
+                { title: 'Ram Usage Line Graph',
+                    expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
+                    graphType: 'line'
+                },
                 { title: 'Manager 1 CPU Usage',
                     expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=\'Manager1\'}[1m])) * 100)',
                     graphType: 'gauge'
@@ -18,7 +22,7 @@ const App = () => {
                 { title: 'Overall CPU Usage',
                     expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
                     graphType: 'gauge'
-                }
+                },
             ]
         };
         fetch('/graf/init', {
@@ -30,17 +34,12 @@ const App = () => {
         })
             .then((data) => data.json())
             .then((result) => {
-            return result.ApiKey;
-        })
-            .then((key) => {
-            setApiKey(key);
+            setApiKey(result.ApiKey);
         });
     }
     useEffect(() => {
-        if (apiKey)
-            return;
         intializeDashboard();
-    }, [apiKey]);
+    }, []);
     return (<HashRouter>
       <Routes>
         <Route path='/' element={<Login />}/>

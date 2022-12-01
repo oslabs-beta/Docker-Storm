@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const electron = require("electron");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+const electron_1 = require("electron");
 // setup IPC Bridge
 // global reference to mainWindow (necessary to prevent mainWindow from being garbage collected)
 let mainWindow;
 function createMainWindow() {
-    mainWindow = new electron.BrowserWindow({
+    mainWindow = new electron_1.BrowserWindow({
         width: 1300,
         height: 300,
         webPreferences: {
@@ -18,12 +16,12 @@ function createMainWindow() {
         show: false,
     });
     mainWindow.loadURL('http://localhost:8080'); //change to localhost:8080
-    mainWindow.on("ready-to-show", () => mainWindow.show());
+    mainWindow.on('ready-to-show', () => mainWindow.show());
     // mainWindow.on('closed', () => {
     //   mainWindow = null;
     // });
 }
-electron.app.on('ready', createMainWindow);
+electron_1.app.on('ready', createMainWindow);
 // // MacOS Specific function
 // electron.app.on('window-all-closed', function () {
 //   // Common for application and their menu bar to stay active until use quits explicitly 

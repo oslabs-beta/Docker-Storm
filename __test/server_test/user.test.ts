@@ -1,14 +1,22 @@
 import { afterAll, beforeAll } from '@jest/globals';
 import db from '../../src/server/models/dockerStormModel';
 import { describe, it } from '@jest/globals';
+import 'whatwg-fetch';
+
 
 const userOne = {
-  username: 'KevinTest',
-  password: 'asdf',
-  role: 'testrole'
+  username: 'TestUser',
+  password: 'TestPassword',
+  role: 'TestRole'
 };
 
-beforeAll(async () => {
+const userOneChanged = {
+  username: 'TestUser',
+  password: 'TestPasswordChanged',
+  role: 'TestRole'
+};
+
+beforeAll( async() => {
   const createTest = `CREATE TABLE IF NOT EXISTS users(
     "id" SERIAL NOT NULL,
     "username" text NOT NULL,
@@ -18,49 +26,68 @@ beforeAll(async () => {
     UNIQUE("username"))`;
 
   await db.query(createTest, []);
-
 });
 
-afterAll(async() => {
-  console.log('afterEach');
-  const deleteTest = 'DELETE FROM users WHERE username=$1';
-  await db.query(deleteTest, [userOne.username]);
-})
 
-describe('User Creation, Login, and Deletion', () => {  
-  it('should create a user to the database', () => {
-    // const createUser = 'INSERT INTO users (username, password, role) VALUES ($1, $2, $3);';
-    // db.query(createUser, [userOne.username, userOne.password, userOne.role]);
-    fetch('localhost:8080/user/signup', {//need a route here to get list of users 
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(userOne)
-    });
-      // .then((data) => data.json())
-      // .then((result) => {
-      //   return;
-      // });
+// afterAll(async() => {
+//   const deleteTest = 'DELETE FROM users WHERE username=$1';
+//   await db.query(deleteTest, [userOne.username]);
+// });
+
+describe('User Creation, Updating, and Deletion', () => {  
+  it('should add user to the database', async () => {
+    const createUser = 'INSERT INTO users (username, password, role) VALUES ($1, $2, $3);';
+    await db.query(createUser, [userOne.username, userOne.password, userOne.role]);
+    await fetch('http://localhost:8080/user/all')
+      .then((data) => data.json())
+      .then((result) => {
+        const arrayOfUsers : string[] = [];
+        result.forEach((element) => {
+          arrayOfUsers.push(element.username);
+        });
+        expect(arrayOfUsers).toContain(userOne.username);          
+      });  
   });
 
-  // it('should save a user with hashed_password and salt attributes', async () => {
-  //   try {
-  //     fetch('localhost:8080/user/signup', {//need a route here to get list of users 
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-type': 'application/json'
-  //     },
-  //     body: JSON.stringify(userOne)
-  //   })
-  //       let result = await new User({ username: "sam", email: "sam@ed.info", password: 'qwer213'}).save()
-  //       expect(Object.keys(result._doc)).toEqual(expect.arrayContaining( ['salt', 'hashed_password']))
-  //   }
-  //   catch (err) {
-  //       throw new Error(err)
-  //   }
-  // })
-});   
+  // it('should update the password of a user', async () => {
+  //   const currentPassword = userOne.password;
+  //   const changePassword = 'UPDATE users SET password=($1) WHERE username=($2);';
+  //   await db.query(changePassword,[userOneChanged.password, userOne.username]);
+  //   await fetch('http://localhost:8080/user/all')
+  //     .then((data) => data.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //       const updatedUser = 'Select From users WHERE username=$1'
+  //       db.query(updatedUser, [userOne.username]);
+  //       const newPassword = await.db.query
+  //       const arrayOfPasswords : string[] = [];
+  //       result.forEach((element) => {
+  //         arrayOfPasswords.push(element.password);
+  //       });
+  //       console.log(arrayOfPasswords);
+  //       expect(updatedUser.password).not.toEqual(currentPassword);          
+  //     }); 
+
+    
+  // });
+
+  it('should delete user from the database', async () => {
+    const deleteTest = 'DELETE FROM users WHERE username=$1';
+    await db.query(deleteTest, [userOne.username]);
+    await fetch('http://localhost:8080/user/all')
+      .then((data) => data.json())
+      .then((result) => {
+        const arrayOfUsers : string[] = [];
+        result.forEach((element) => {
+          arrayOfUsers.push(element.username);
+        });
+        expect(arrayOfUsers).not.toContain(userOne.username);          
+      });  
+  });
+});
+
+
+
 
 // //change password
 

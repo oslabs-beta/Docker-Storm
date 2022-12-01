@@ -2,6 +2,8 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
+import 'whatwg-fetch';
+
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
@@ -14,19 +16,24 @@ const App: React.FC = (): JSX.Element => {
           expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
           graphType: 'gauge'
         },
-    
+
+        {title: 'Ram Usage Line Graph',
+          expression: '100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))',
+          graphType: 'line'
+        },
+        
         {title: 'Manager 1 CPU Usage',
           expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=\'Manager1\'}[1m])) * 100)',
           graphType: 'gauge'
         },
-            
+      
         {title: 'Overall CPU Usage',
           expression: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\'}[1m])) * 100)',
           graphType: 'gauge'
-        }
+        },
       ]
     };
-    fetch('/graf/init', {
+    window.fetch('/graf/init', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -34,19 +41,14 @@ const App: React.FC = (): JSX.Element => {
       body: JSON.stringify(body),
     })
       .then((data) => data.json())
-      .then((result) => {
-        return result.ApiKey;
-      })
-      .then((key) => {
-        setApiKey(key);
+      .then((result:any) => {
+        setApiKey(result.ApiKey);
       });
-      
   }
-    
+  
   useEffect(() => {
-    if(apiKey) return;
     intializeDashboard();
-  }, [apiKey]);
+  }, []);
 
   return (
     <HashRouter>
