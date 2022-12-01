@@ -37,7 +37,7 @@ const App = () => {
     useEffect(() => {
         if (!apiKey || !pgUri)
             return;
-        console.log('render');
+        console.log('in use effect', apiKey);
         intializeDashboard();
     }, [apiKey]);
     return (<HashRouter>

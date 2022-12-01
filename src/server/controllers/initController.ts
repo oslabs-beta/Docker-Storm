@@ -52,7 +52,6 @@ const initController: InitController = {
     }
 
     dotenv.config({override: true});
-    console.log(process.env.GRAFANA_API_KEY);
     
 
 

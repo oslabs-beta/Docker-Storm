@@ -36,7 +36,6 @@ const initController = {
             fs.appendFileSync('./.env', str, 'utf-8');
         }
         dotenv.config({ override: true });
-        console.log(process.env.GRAFANA_API_KEY);
         return next();
     }
 };

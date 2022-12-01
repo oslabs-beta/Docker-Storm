@@ -31,11 +31,18 @@ const InitialSetup = (props) => {
     };
     // render when there is no graf api key in the .env file
     const renderApiKey = () => {
-        return (<input type='text' placeholder='Grafana Api Key' onChange={input => setCurrentApi(input.target.value)} value={currentApi}/>);
+        return (<div>
+        Please enter your Grafana Api Key
+        <input type='text' placeholder='Grafana Api Key' onChange={input => setCurrentApi(input.target.value)} value={currentApi}/>
+      </div>);
     };
     // render when there is no pg uri in .env file
     const renderPgUri = () => {
-        return (<input type='text' placeholder='PG URI' onChange={input => setCurrentPgUri(input.target.value)} value={currentPgUri}/>);
+        return (<div>
+        Please enter your PG URI
+      
+        <input type='text' placeholder='PG URI' onChange={input => setCurrentPgUri(input.target.value)} value={currentPgUri}/>
+      </div>);
     };
     return (<div>
 
