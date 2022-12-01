@@ -18,5 +18,13 @@
         "expression": "swarm_manager_nodes",
         "graphType": "state",
         "role" : "overall"
+    },
+
+    {
+        "title": "Remaining Disk Space",
+        "expression": "(node_filesystem_avail_bytes{mountpoint='/',fstype!='rootfs'})",
+        "graphType": "stat",
+        "role" : "overall"
     }
+    
 ]
