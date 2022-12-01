@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/mac.png';
 import waves from '../../../resources/waves.png';
-const Login = () => {
+// could maybe use cacheing to prevent need to fetch env file every time
+const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
-    function confirmCredentials() {
+    const setKeys = (apiKey, pgUri) => {
+        props.setPgUri(pgUri);
+        props.setApiKey(apiKey);
+    };
+    const confirmCredentials = () => {
         const body = {
             username: username,
             password: password
@@ -17,19 +22,26 @@ const Login = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
-            .then((result) => {
-            if (result.status === 200)
-                navigate('/app');
+            .then((data) => data.json())
+            .then(async (result) => {
+            // check if response is valid and we successfully logged in
+            if (Object.keys(result).length === 2) {
+                setKeys(result.key, result.db);
+                if (props.apiKey && props.pgUri) {
+                    navigate('/app');
+                }
+                else {
+                    navigate('/setup');
+                }
+                // if response not valid - username/password was incorrect 
+            }
             else {
                 setInvalid(true);
                 setUsername('');
                 setPassword('');
             }
-        })
-            .catch((err) => {
-            console.log(err);
         });
-    }
+    };
     return (<div id="login-big-div">
 
       <div id="left-div" className="half-n-half">
@@ -47,7 +59,6 @@ const Login = () => {
           {/* <img src={waves} id="waves-img" alt="waves" /> */}
         </div>
       </div>
-
     </div>);
 };
 export default Login;

@@ -18,6 +18,9 @@ const initController = {
                 message: err,
             });
         });
+    },
+    updateEnv: (req, res, next) => {
+        return next();
     }
 };
 export default initController;

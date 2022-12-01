@@ -107,6 +107,11 @@ const userController = {
                 message: { err: err }
             });
         });
+    },
+    checkEnv: (req, res, next) => {
+        res.locals.dbUri = process.env.POSTGRES_URI || '';
+        res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
+        return next();
     }
 };
 export default userController;

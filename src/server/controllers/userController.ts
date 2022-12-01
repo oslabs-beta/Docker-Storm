@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
+import * as dotenv from 'dotenv';
 import { ResponseObject } from '../../types.js';
 
 
@@ -13,6 +14,7 @@ interface UserController {
     updateUser: ResponseObject;
     deleteUser: ResponseObject;
     getAllUsers: ResponseObject;
+    checkEnv: ResponseObject;
 
 }
 
@@ -144,6 +146,12 @@ const userController: UserController = {
         });
       });
 
+  },
+
+  checkEnv: (req, res, next) => {
+    res.locals.dbUri = process.env.POSTGRES_URI || '';  
+    res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
+    return next();
   }
 };
 

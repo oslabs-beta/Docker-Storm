@@ -6,6 +6,7 @@ import { ResponseObject } from '../../types.js';
 
 interface InitController {
     initializeDatabase: ResponseObject;
+    updateEnv: ResponseObject;
 }
 
 
@@ -31,6 +32,10 @@ const initController: InitController = {
           message: err,
         });
       });
+  },
+
+  updateEnv: (req, res, next) => {
+    return next();
   }
 };
 
