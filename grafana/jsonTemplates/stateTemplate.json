@@ -1,0 +1,70 @@
+{
+  "id": 2,
+  "type": "stat",
+  "title": "Placeholder",
+  "transformations": [
+    {
+      "id": "labelsToFields",
+      "options": {
+        "valueLabel": "state"
+      }
+    }
+  ],
+  "datasource": {
+    "uid": "WPF5XbO4k",
+    "type": "prometheus"
+  },
+  "pluginVersion": "9.2.6",
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          }
+        ]
+      },
+      "color": {
+        "mode": "thresholds"
+      }
+    },
+    "overrides": []
+  },
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": ""
+    },
+    "orientation": "auto",
+    "textMode": "auto",
+    "colorMode": "value",
+    "graphMode": "area",
+    "justifyMode": "center"
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "WPF5XbO4k"
+      },
+      "editorMode": "code",
+      "expr": "expr",
+      "hide": false,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A"
+    }
+  ],
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  }
+}

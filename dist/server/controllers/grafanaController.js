@@ -53,7 +53,6 @@ const grafanaController = {
     createPanel(req, res, next) {
         console.log('here CREATEPANEL');
         const { panels } = req.body;
-        //const {title, expression, graphType} = req.body;
         const panelsArray = [];
         panels.forEach((panel) => {
             const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
@@ -71,11 +70,9 @@ const grafanaController = {
         const body = res.locals.dashboard;
         console.log(body.dashboard.panels);
         if (!('panels' in body.dashboard)) {
-            console.log('no panels', panels);
             body.dashboard['panels'] = [...panels];
         }
         else {
-            console.log('existing panels');
             body.dashboard['panels'].push(...panels);
         }
         fetch('http://localhost:3000/api/dashboards/db/', {

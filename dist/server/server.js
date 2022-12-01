@@ -3,6 +3,7 @@ import cors from 'cors';
 import initRouter from './routes/initApi.js';
 import userRouter from './routes/userApi.js';
 import grafanaRouter from './routes/grafApi.js';
+import metricRouter from './routes/metricApi.js';
 import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = 3001;
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use('/user', userRouter);
 app.use('/init', initRouter);
 app.use('/graf', grafanaRouter);
+app.use('/metric', metricRouter);
 app.use('/*', (req, res) => {
     return res.sendStatus(404);
 });

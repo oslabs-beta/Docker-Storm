@@ -1,12 +1,27 @@
 import request from 'supertest';
 import db from '../../src/server/models/dockerStormModel';
 
+
 const server = 'http://localhost:8080';
 
 const userOne = {
   username: 'TestUser',
   password: 'TestPassword',
   role: 'TestRole'
+
+const server = 'http://localhost:8080';
+
+const userOne = {
+  username: 'KevinTest',
+  password: 'asdf',
+  role: 'testrole'
+};
+
+const userOneChanged = {
+  username: 'KevinTest',
+  password: 'asdfgh',
+  role: 'testrole'
+
 };
 
 beforeAll(async () => {
@@ -28,7 +43,11 @@ afterAll(async() => {
   await db.query(deleteTest, [userOne.username]);
 });
 
+
 describe('Route Testing', () => {
+
+describe('Route Integration', () => {
+
   describe('Upon Initiating App', () => {
     it('responds with 200 status and the login page', () => {
       return request(server)
@@ -81,6 +100,7 @@ describe('Route Testing', () => {
     });
   }); 
   
+
   describe('Getting User List', () => {
     it('responds by providing user list', () => {
       return request(server)
@@ -88,4 +108,6 @@ describe('Route Testing', () => {
         .expect(200);
     });
   }); 
+
+
 });

@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { ResponseObject } from '../../types.js';
 
 
 interface CookieController {
-    setCookie: (req: Request, res: Response, next: NextFunction) => void;
+    setCookie: ResponseObject;
 }
 
 

@@ -1,6 +1,7 @@
 import { afterAll, beforeAll } from '@jest/globals';
 import db from '../../src/server/models/dockerStormModel';
 import { describe, it } from '@jest/globals';
+
 import 'whatwg-fetch';
 
 
@@ -17,6 +18,7 @@ const userOneChanged = {
 };
 
 beforeAll( async() => {
+
   const createTest = `CREATE TABLE IF NOT EXISTS users(
     "id" SERIAL NOT NULL,
     "username" text NOT NULL,
@@ -26,6 +28,7 @@ beforeAll( async() => {
     UNIQUE("username"))`;
 
   await db.query(createTest, []);
+
 });
 
 
@@ -89,26 +92,6 @@ describe('User Creation, Updating, and Deletion', () => {
 
 
 
-// //change password
-
-// //
-// // })
-// // it('should login a user to the database', () => {
-// //   const loginUser = 'SELECT INTO users (username, password, role) VALUES ($1, $2, $3);';
-// //   db.query(loginUser, [userOne.username, userOne.password, userOne.role]);
-// // });    
-// // it('should login a user to the test database', () => {
-// //   return request(server)
-// //     .post('/')
-// //     .expect(200);
-// // });
-
-// // it('should delete a user in the database', () => {
-// //   return request(server)
-// //     .delete('/')
-// //     .expect(200);
 
 
 
-
-// //crud functionality should suffice for now
