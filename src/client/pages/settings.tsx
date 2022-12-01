@@ -33,7 +33,7 @@ const Settings = () => {
 
   return (
     <div>
-      <p>UPDATE PASSWORD</p>
+      <p data-testid="update-pw"> UPDATE PASSWORD</p>
       <form onSubmit={(e) => e.preventDefault()}>
         <input type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
         <input type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />

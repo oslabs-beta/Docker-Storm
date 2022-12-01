@@ -2,8 +2,14 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
+
+import 'whatwg-fetch';
+
+
 import InitialSetup from './pages/initialSetup.jsx';
 import '../../resources/styles.css';
+
+
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
@@ -24,13 +30,15 @@ const App: React.FC = (): JSX.Element => {
       .then(data => {return data.json();});
   
     console.log('Panels:', panelList);
-  
-    const ramPanel = await fetch('/metric/genRamPanel').then(data => {return data.json();});
-    panelList.panels.push(ramPanel);
-  
+
+    const staticPanels = await fetch('/metric/genStaticPanels').then(data => {return data.json();});
+    console.log('We made it!: ', staticPanels);
+    panelList.panels.push(...staticPanels);
+
     console.log('Updated Panels: ', panelList);
   
     fetch('/graf/init', {
+
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -38,7 +46,7 @@ const App: React.FC = (): JSX.Element => {
       body: JSON.stringify(panelList),
     })
       .then((data) => data.json())
-      .then((result) => {
+      .then((result:any) => {
         setApiKey(result.ApiKey);
       });
   }
@@ -75,7 +83,4 @@ const App: React.FC = (): JSX.Element => {
 };
 
 export default App;
-
-
-
 
