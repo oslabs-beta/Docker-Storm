@@ -2,11 +2,10 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
-
+import InitialSetup from './pages/initialSetup.jsx';
 import 'whatwg-fetch';
 
 
-import InitialSetup from './pages/initialSetup.jsx';
 import '../../resources/styles.css';
 
 
@@ -52,7 +51,7 @@ const App: React.FC = (): JSX.Element => {
   }
   
   useEffect(() => {
-    
+    console.log('useeffect ran');
     if(!apiKey || !pgUri) return;
     console.log('in use effect', apiKey);
     intializeDashboard();
