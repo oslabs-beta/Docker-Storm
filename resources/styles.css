@@ -31,13 +31,15 @@
     font-size: 16px;
     letter-spacing: 3px;
     margin-top: 30px;
-    background-color: var(--light-blue);
+    background-color: #88acfc;
+    /* #88acfc */
     color: #ffffff;
     border-radius: 25px;
 }
 
 .blue-button:hover {
-    background-color: #88acfc;
+    background-color: var(--light-blue);
+    cursor: pointer;
 }
 
 h1 {
@@ -193,6 +195,7 @@ input {
 .links ul li:hover{
     border-left: #4C82FE 5px solid;
     padding-left: 15px;
+    transition-duration: 0.4s;
 }
 
 
