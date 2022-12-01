@@ -76,7 +76,6 @@ const grafanaController: GrafanaController = {
       .then((data) => data.json())
       .then((dashboard) => {
         res.locals.dashboard = dashboard;
-        console.log('DASH: ', dashboard);
         return next();
       });
   },
@@ -107,7 +106,6 @@ const grafanaController: GrafanaController = {
 
     const body = res.locals.dashboard;
 
-    console.log(body.dashboard.panels);
     if(!('panels' in body.dashboard)){
       body.dashboard['panels'] = [...panels];
     }
@@ -127,7 +125,6 @@ const grafanaController: GrafanaController = {
     })
       .then((data) => data.json())
       .then((result) => {
-        console.log(result);
         return next();
       });
   },
