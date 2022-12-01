@@ -3,6 +3,8 @@ import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
 import '../../resources/styles.css';
+import Background from '../../resources/Background.png';
+
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
@@ -48,10 +50,12 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <HashRouter>
-      <Routes>
+      <div id ="background-div" style={{ backgroundImage: `url(${Background})`}}>
+      <Routes >
         <Route path='/' element={<Login />}/>
         <Route path='/app/*' element={<RenderViews ApiKey={apiKey}/>}/>
       </Routes>
+      </div>
     </HashRouter>
   );
 };

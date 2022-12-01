@@ -6,17 +6,55 @@
 
 
 
-/* --------------------------------------------------- Root Classes --------------------------------------------------- */
+/* --------------------------------------------------- Root / Global Classes --------------------------------------------------- */
 
 
 :root {
     --Nunito: 'Nunito', sans-serif;
     --Roboto: 'Roboto', sans-serif;
     --light-blue: #4C82FE;
+    --soft-black: #121212;
+    --dark-grey: #959595;
 }
 
+.white-text {
+    color: #ffffff;
+}
 
+.dark-text {
+    color: var(--soft-black);
+}
 
+.blue-button {
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin-top: 30px;
+    background-color: var(--light-blue);
+    color: #ffffff;
+    border-radius: 25px;
+}
+
+.blue-button:hover {
+    background-color: #88acfc;
+}
+
+h1 {
+    font-family: var(--Roboto);
+}
+
+p {
+    font-family: var(--Nunito)
+}
+
+h3 {
+    color: #3a3a3a;
+}
+
+.centered {
+    text-align: center;
+}
 
 /* --------------------------------------------------- App CSS --------------------------------------------------- */
 
@@ -25,11 +63,14 @@ body {
     margin: 0 0;
 }
 
+
+#background-div {
+    height: 100vh;
+}
+
+
 /* --------------------------------------------------- Headers CSS --------------------------------------------------- */
 
-h1 {
-    font-family: var(--Nunito)
-}
 
 
 /* --------------------------------------------------- Login Page CSS --------------------------------------------------- */
@@ -72,21 +113,6 @@ input {
     outline: none;
 }
 
-.blue-button {
-    height: 40px;
-    border: none;
-    font-size: 16px;
-    letter-spacing: 3px;
-    margin-top: 30px;
-    background-color: var(--light-blue);
-    color: #ffffff;
-    border-radius: 25px;
-}
-
-.blue-button:hover {
-    background-color: #88acfc;
-}
-
 /* Bandaid solution. Refactor pl0x */
 #error-div {
     position: relative;
@@ -115,4 +141,243 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+#background-div {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;  
+}
+
+/* --------------------------------------------------- RenderViews CSS --------------------------------------------------- */
+
+
+#all-seeing-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar {
+    position: sticky;
+    top: 0px;
+    height: 88vh;
+    width: 298px;
+    background-color: #091931;
+    margin-top: 40px;
+    margin-left: 40px;
+    border-radius: 25px;
+    font-family: var(--Nunito);
+}
+
+
+.links ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.links ul li {
+    font-size: 27px;
+    letter-spacing: 4px;
+    height: 55px;
+    padding: 5px;
+}
+
+
+.links ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: var(--Roboto);
+}
+
+.links ul li:hover{
+    border-left: #4C82FE 5px solid;
+    padding-left: 15px;
+}
+
+
+/* --------------------------------------------------- All Pages CSS --------------------------------------------------- */
+
+
+.page-wrapper {
+    width: 70vw;
+}
+
+.page-inner-wrapper-div {
+    background-color: #F0F3FF;
+    padding: 10px;
+    margin-top: 45px;
+    margin-left: 40px;
+    border-radius: 25px;
+}
+
+.page-title {
+    padding-left: 20px;
+    font-family: var(--Roboto);
+    font-weight: 500;
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+/* --------------------------------------------------- Users Pages CSS --------------------------------------------------- */
+
+#bottom-inner-wrapper-div {
+    height: 370px;
+}
+
+
+table {
+    width: 100%;
+    padding: 20px;
+    border-collapse: collapse;
+    color: #3a3a3a;
+}
+
+th {
+    font-family: var(--Roboto);
+    font-size: 18px;
+    height: 30px;
+    padding-bottom: 15px;
+    color: #3a3a3a;
+}
+
+td {
+    padding-left: 15px;
+    font-family: var(--Nunito);
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    height: 30px;
+}
+
+.deleteBtn {
+    border: none;
+    background-color: transparent;
+    font-size: 0.9rem;
+    color: red;
+}
+
+#add-user-form input {
+    height: 30px;
+    margin-top: 0;
+    padding-bottom: 5px;
+    letter-spacing: 1.5px;
+    background-color: transparent;
+}
+
+#add-user-form button {
+    letter-spacing: 1.5px;
+    padding-left: 20px;
+    padding-right: 20px
+}
+
+
+
+/* --------------------------------------------------- Metrics Pages CSS --------------------------------------------------- */
+/* Bandaid Solution --> refactor */
+#metrics-inner-div .page-inner-wrapper-div {
+    background-color: transparent;
+    padding-top: 0;
+}
+
+
+/* --------------------------------------------------- Settings Pages CSS --------------------------------------------------- */
+
+#settings-page .page-inner-wrapper-div {
+    height: 90%;
+}
+
+
+
+h3 {
+    font-family: var(--Nunito);
+}
+
+
+
+#setting-inner-container {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#setting-left {
+    width: 300px;
+    padding-top: 25px;
+    padding-left: 25px;
+    border-right: 1px solid grey;
+    padding-right: 30px;
+    height: 500px;
+}
+
+#img-div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+
+
+#setting-menu-div ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#setting-menu-div ul li {
+    font-size: 20px;
+    height: 40px;
+    font-family: var(--Nunito);
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+#selected {
+    background-color: var(--light-blue);
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+#user-img {
+    width: 100px;
+}
+
+#setting-right {
+    margin-left: 30px;
+}
+
+#setting-form input, #fake-form input{
+    width: 40%;
+    background-color: transparent;
+}
+
+
+#settings-submit-btn {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* refactor and Disregard  */
+
+#login-logo {
+    width: 240px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+}
+
+#left-div {
+    background-color: #ffffff
+}
+
+#menu-logo {
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-bottom: 30px;
+    width: 200px;
 }

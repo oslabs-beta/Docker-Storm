@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/mac.png';
 import Background from '../../../resources/Background.png';
+import logo from '../../../resources/logo-black.png';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('n');
@@ -34,6 +35,7 @@ const Login = () => {
 
       <div id="left-div" className="half-n-half">
         <form id="login-form" onSubmit={(event) => event.preventDefault()}>
+        <img id="login-logo" src={logo} alt=""/>
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
           <button className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
