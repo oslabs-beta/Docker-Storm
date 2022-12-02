@@ -33,10 +33,12 @@ let idCounter = 0;
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
     if(process.env.GRAFANA_DASHBOARD_ID) {
-      return res.status(200).send({dashId: process.env.GRAFANA_DASHBOARD_ID});
+      return res.status(200).send({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
     }
 
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
+    console.log('CREATEDB');
+    console.log(process.env.GRAFANA_API_KEY);
 
     fetch('http://localhost:3000/api/dashboards/db/', {
       method: 'POST',
@@ -52,6 +54,7 @@ const grafanaController: GrafanaController = {
         console.log(result);
         if(result.uid) {
           const str = `\nGRAFANA_DASHBOARD_ID = '${result.uid}'`;
+          console.log('LOOKING FOR THIS', str);
           fs.appendFileSync('./.env', str, 'utf-8');
           return next();
         }
@@ -105,6 +108,7 @@ const grafanaController: GrafanaController = {
     const {panels} = res.locals;
 
     const body = res.locals.dashboard;
+    console.log('body', body);
 
     if(!('panels' in body.dashboard)){
       body.dashboard['panels'] = [...panels];
