@@ -10,6 +10,7 @@ interface GrafanaController {
     updateDB: ResponseObject;
     getDashByUid: ResponseObject;
     createPanel: ResponseObject;
+    addTarget: ResponseObject;
 }
 
 interface ResultObj {
@@ -132,6 +133,16 @@ const grafanaController: GrafanaController = {
         return next();
       });
   },
+
+  addTarget(req, res, next) {
+    const targets = JSON.parse(fs.readFileSync('./prometheus/targets.json', 'utf-8'));
+    targets.push(req.body);
+    fs.writeFileSync('./prometheus/targets.json', JSON.stringify(targets, null, 4));
+    return next();
+
+
+
+  }
 };
 
 
