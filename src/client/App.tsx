@@ -3,7 +3,7 @@ import Login from './pages/login.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 
 import '../../resources/styles.css';

@@ -13,6 +13,6 @@ import { DefaultDeserializer } from 'v8';
 // Fields that we need:
 // First Name
 // Last Name
-// Organization
+// Organization Name
 // Job Title
 // 
