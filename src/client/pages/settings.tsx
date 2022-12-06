@@ -5,15 +5,19 @@ import { Job, JobArray, Target, TargetIpArray, Role } from '../../types.js';
 
 
 
+interface Props {
+  targetsArr: Target[];
+  setTargetsArr: React.Dispatch<React.SetStateAction<Target[]>>;
+}
 
-const Settings = () => {
+
+const Settings = (props : Props) => {
   const[password, setPassword] = useState('');
   const[newPassword, setNewPassword] = useState('');
   const[verifyPassword, setVerifyPassword] = useState('');
   const[job, setJob] = useState('');
   const[role, setRole] = useState<Role>('Manager');
   const[ip, setIp] = useState('');
-  const[targetsArr, setTargetsArr] = useState<Target[]>([]);
   const[added, setAdded] = useState(false);
 
   function changePassword(){
@@ -48,7 +52,7 @@ const Settings = () => {
       } 
     }; 
 
-    setTargetsArr([...targetsArr, obj]);
+    props.setTargetsArr([...props.targetsArr, obj]);
     setAdded(true);
     
 
@@ -68,37 +72,37 @@ const Settings = () => {
     return;
   }
 
-  useEffect(() => {
-    fetch('/metric/')
-      .then((data) => data.json())
-      .then((result) => {
-        const arr = makeTargetArray(result.jobs, result.targets);
-        setTargetsArr(arr);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('/metric/')
+  //     .then((data) => data.json())
+  //     .then((result) => {
+  //       const arr = makeTargetArray(result.jobs, result.targets);
+  //       setTargetsArr(arr);
+  //     });
+  // }, []);
 
 
-  const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
-    const result: Target[] = [];
-    for(let i = 0; i < jobs.length; i++) {
-      const obj: Target = {
-        targets: [ips[i]],
-        labels: {
-          job: jobs[i].job,
-          role: jobs[i].role
-        }
-      };
-      result.push(obj);
-    }
-    return result;
-  };
+  // const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
+  //   const result: Target[] = [];
+  //   for(let i = 0; i < jobs.length; i++) {
+  //     const obj: Target = {
+  //       targets: [ips[i]],
+  //       labels: {
+  //         job: jobs[i].job,
+  //         role: jobs[i].role
+  //       }
+  //     };
+  //     result.push(obj);
+  //   }
+  //   return result;
+  // };
 
 
 
   // probably should add styling to this
   // probably could add a delete button
   // key doesn't work if there are duplicates
-  const targetMap = targetsArr.map((target) => {
+  const targetMap = props.targetsArr.map((target) => {
     const str = `${target.targets[0]} ${target.labels.job} ${target.labels.role}`;
     return (<div key={str}>
       <p>{target.targets[0]}</p>

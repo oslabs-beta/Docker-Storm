@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
+import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
@@ -15,10 +16,14 @@ const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [pgUri, setPgUri] = useState('');
   const [dashId, setDashId] = useState('');
+  const[targetsArr, setTargetsArr] = useState<Target[]>([]);
 
 
   async function intializeDashboard() {
     const jobsList = await fetch('/metric').then(data => {return data.json();});
+    const arr = makeTargetArray(jobsList.jobs, jobsList.targets);
+    setTargetsArr(arr);
+
     console.log('Jobs: ', jobsList);
   
     const panelList = await fetch('/metric/genPanel', {
@@ -52,6 +57,21 @@ const App: React.FC = (): JSX.Element => {
         setDashId(result.ApiKey);
       });
   }
+
+  const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
+    const result: Target[] = [];
+    for(let i = 0; i < jobs.length; i++) {
+      const obj: Target = {
+        targets: [ips[i]],
+        labels: {
+          job: jobs[i].job,
+          role: jobs[i].role
+        }
+      };
+      result.push(obj);
+    }
+    return result;
+  };
   
   useEffect(() => {
     console.log('useeffect ran');
@@ -79,8 +99,9 @@ const App: React.FC = (): JSX.Element => {
           setPgUri={setPgUri}
           pgUri={pgUri}
         />}/>
-        <Route path='/app/*' element={<RenderViews dashId={dashId}/>}/>
+        <Route path='/app/*' element={<RenderViews targetsArr={targetsArr} setTargetsArr={setTargetsArr} dashId={dashId}/>}/>
       </Routes>
+      <div>{JSON.stringify(targetsArr)}</div>
     </HashRouter>
   );
 };

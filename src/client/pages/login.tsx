@@ -60,7 +60,6 @@ const Login = (props: Props) => {
 
   return (
     <div id="login-big-div">
-
       <div id="left-div" className="half-n-half">
         <form id="login-form" onSubmit={(event) => event.preventDefault()}>
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
