@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
+import * as manageID from '../helperFunctions/manageFiles.js';
 import { ResponseObject } from '../../types.js';
 dotenv.config({override: true});
 
@@ -28,7 +28,7 @@ interface Panel {
     graphType: string;
 }
 
-let idCounter = 0;
+let grafID = manageID.getGrafID();
 
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
@@ -88,12 +88,12 @@ const grafanaController: GrafanaController = {
     const {panels} = req.body;
     const panelsArray: Record<string, unknown>[] = [];
 
-
     panels.forEach((panel: Panel) => {
+      grafID = manageID.incrementGrafID(grafID);
       const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
       newPanel.title = panel.title;
       newPanel.targets[0].expr = panel.expression;
-      newPanel.id = idCounter++;
+      newPanel.id = grafID.panelId;
       panelsArray.push(newPanel);
     });
 
