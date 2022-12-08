@@ -10,6 +10,12 @@ interface Props {
   setTargetsArr: React.Dispatch<React.SetStateAction<Target[]>>;
 }
 
+interface Body {
+  panelTitles: Job[],
+  expr: string;
+  panelType: string;
+}
+
 
 const Settings = (props : Props) => {
   const[password, setPassword] = useState('');
@@ -65,6 +71,31 @@ const Settings = (props : Props) => {
       body: JSON.stringify(obj)
     });
 
+    const body: Body = {
+      panelTitles: [
+        {job: job, role: role}
+      ],
+      panelType: 'gauge',
+      expr: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=<jobname>}[1m])) * 100)'
+    };
+
+    fetch('/metric/genPanel', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    }).then((data) => data.json())
+      .then((result) => {
+        fetch('/graf/', {
+          method: 'PATCH',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(result)
+        });
+      });
+
     setJob('');
     setRole('Manager');
     setIp('');
@@ -72,36 +103,9 @@ const Settings = (props : Props) => {
     return;
   }
 
-  // useEffect(() => {
-  //   fetch('/metric/')
-  //     .then((data) => data.json())
-  //     .then((result) => {
-  //       const arr = makeTargetArray(result.jobs, result.targets);
-  //       setTargetsArr(arr);
-  //     });
-  // }, []);
-
-
-  // const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
-  //   const result: Target[] = [];
-  //   for(let i = 0; i < jobs.length; i++) {
-  //     const obj: Target = {
-  //       targets: [ips[i]],
-  //       labels: {
-  //         job: jobs[i].job,
-  //         role: jobs[i].role
-  //       }
-  //     };
-  //     result.push(obj);
-  //   }
-  //   return result;
-  // };
 
 
 
-  // probably should add styling to this
-  // probably could add a delete button
-  // key doesn't work if there are duplicates
   const targetMap = props.targetsArr.map((target) => {
     const str = `${target.targets[0]} ${target.labels.job} ${target.labels.role}`;
     return (<div key={str}>

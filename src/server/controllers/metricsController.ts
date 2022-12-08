@@ -28,6 +28,7 @@ const metricsController: MetricsController = {
 
   generatePanelBody(req, res, next){
     const {panelType, panelTitles, expr} = req.body;
+    
     const panelObjects: PanelObject[] = [];
     
     panelTitles.forEach((job: Job) => {
@@ -48,6 +49,7 @@ const metricsController: MetricsController = {
     });
 
     res.locals.panels = {'panels': panelObjects};
+
     return next();
   },
 

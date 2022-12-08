@@ -98,6 +98,7 @@ const grafanaController: GrafanaController = {
       panelsArray.push(newPanel);
     });
 
+
     res.locals.panels = panelsArray;
     return next();
   },
@@ -109,14 +110,13 @@ const grafanaController: GrafanaController = {
     const {panels} = res.locals;
 
     const body = res.locals.dashboard;
-    console.log('body', body);
-
     if(!('panels' in body.dashboard)){
       body.dashboard['panels'] = [...panels];
     }
     else{
       body.dashboard['panels'].push(...panels);
     }
+
 
 
     fetch('http://localhost:3000/api/dashboards/db/', {
