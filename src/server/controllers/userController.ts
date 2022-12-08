@@ -15,7 +15,6 @@ interface UserController {
     deleteUser: ResponseObject;
     getAllUsers: ResponseObject;
     checkEnv: ResponseObject;
-
 }
 
 

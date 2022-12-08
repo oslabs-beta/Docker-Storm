@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
+import Signup from './pages/signup.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
@@ -14,6 +15,7 @@ const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [pgUri, setPgUri] = useState('');
   const [dashId, setDashId] = useState('');
+  const [openSignup, setOpenSignup] = useState(false);
 
 
   async function intializeDashboard() {
@@ -70,6 +72,8 @@ const App: React.FC = (): JSX.Element => {
           apiKey={apiKey}
           setPgUri={setPgUri}
           pgUri={pgUri}
+          openSignup={openSignup}
+          setOpenSignup={setOpenSignup}
         />}/>
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
@@ -79,6 +83,16 @@ const App: React.FC = (): JSX.Element => {
         />}/>
         <Route path='/app/*' element={<RenderViews dashId={dashId}/>}/>
       </Routes>
+      {openSignup && <Signup 
+        setApiKey={setApiKey} 
+        apiKey={apiKey} 
+        setPgUri={setPgUri}
+        pgUri={pgUri}
+        openSignup={openSignup}
+        setOpenSignup={setOpenSignup}
+      />}
+      <button id="signup" onClick={() => { setOpenSignup(true); }}>Signup</button>
+
     </HashRouter>
   );
 };
