@@ -101,7 +101,6 @@ const App: React.FC = (): JSX.Element => {
         />}/>
         <Route path='/app/*' element={<RenderViews targetsArr={targetsArr} setTargetsArr={setTargetsArr} dashId={dashId}/>}/>
       </Routes>
-      <div>{JSON.stringify(targetsArr)}</div>
     </HashRouter>
   );
 };
