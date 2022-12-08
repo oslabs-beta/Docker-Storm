@@ -1,8 +1,4 @@
 {
-  "datasource": {
-    "type": "prometheus",
-    "uid": "WPF5XbO4k"
-  },
   "fieldConfig": {
     "defaults": {
       "color": {
@@ -79,10 +75,6 @@
   },
   "targets": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "WPF5XbO4k"
-      },
       "editorMode": "code",
       "expr": "placeholder",
       "legendFormat": "__auto",
