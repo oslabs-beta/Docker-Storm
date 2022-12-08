@@ -13,7 +13,7 @@ router.get('/all', userController.getAllUsers, (req,res) => {
 
 router.post('/login', userController.verifyUser, cookieController.setCookie, userController.checkEnv, (req, res) => {
   const obj = {
-    db: res.locals.dbUri,
+    grafUrl: res.locals.grafUrl,
     key: res.locals.apiKey
   };
   console.log(obj);
