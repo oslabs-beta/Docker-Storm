@@ -46,8 +46,10 @@ const initController: InitController = {
       const str = `\nGRAFANA_API_KEY = '${req.body.apiKey}'`;
       fs.appendFileSync('./.env', str, 'utf-8');
     }
-    if(!process.env.POSTGRES_URI) {
-      const str = `\nPOSTGRES_URI = '${req.body.pgUri}'`;
+    if(!process.env.GRAFANA_URL) {
+      let s = req.body.grafUrl;
+      if(s.at(-1) !== '/') s += '/';
+      const str = `\nGRAFANA_URL = '${s}'`;
       fs.appendFileSync('./.env', str, 'utf-8');
     }
 

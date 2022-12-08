@@ -7,11 +7,11 @@ import { DefaultDeserializer } from 'v8';
 interface Props {
   setApiKey: (arg: string) => void;
   apiKey: string;
-  setPgUri: (arg: string) => void;
-  pgUri: string;
+  setGrafUrl: (arg: string) => void;
+  grafUrl: string;
 }
 interface ResponseObject {
-  db: string;
+  grafUrl: string;
   key: string;
 }
   
@@ -24,8 +24,8 @@ const Login = (props: Props) => {
 
 
 
-  const setKeys = (apiKey: string, pgUri: string) => {
-    props.setPgUri(pgUri);
+  const setKeys = (apiKey: string, grafUrl: string) => {
+    props.setGrafUrl(grafUrl);
     props.setApiKey(apiKey);
   };
 
@@ -48,9 +48,10 @@ const Login = (props: Props) => {
       return;
     }
     const data: ResponseObject = await result.json();
+    console.log(data);
 
-    setKeys(data.key, data.db);
-    if(data.key && data.db) {
+    setKeys(data.key, data.grafUrl);
+    if(data.key && data.grafUrl) {
       navigate('/app');
     } else {
       navigate('/setup');
