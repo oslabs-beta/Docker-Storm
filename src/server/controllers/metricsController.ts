@@ -6,10 +6,11 @@ interface MetricsController {
     getListOfTargets: ResponseObject;
     generatePanelBody: ResponseObject;
     generateStaticPanels: ResponseObject;
+
 }
 
 const metricsController: MetricsController = {
-  getListOfTargets(req: Request, res: Response, next: NextFunction) {
+  getListOfTargets(req, res, next) {
     const targets: TargetsArray = JSON.parse(fs.readFileSync('./prometheus/targets.json', 'utf-8'));
     const jobsArray : JobArray = [];
     const targetsArray: TargetIpArray = [];
@@ -25,8 +26,9 @@ const metricsController: MetricsController = {
     return next();
   },
 
-  generatePanelBody(req: Request, res: Response, next: NextFunction){
+  generatePanelBody(req, res, next){
     const {panelType, panelTitles, expr} = req.body;
+    
     const panelObjects: PanelObject[] = [];
     
     panelTitles.forEach((job: Job) => {
@@ -47,16 +49,21 @@ const metricsController: MetricsController = {
     });
 
     res.locals.panels = {'panels': panelObjects};
+
     return next();
   },
 
-  generateStaticPanels(req: Request, res: Response, next: NextFunction){
+  generateStaticPanels(req, res, next){
     const staticPanelsArray: PanelObject[] = JSON.parse(fs.readFileSync('./grafana/staticPanels.json', 'utf-8'));
 
     console.log(staticPanelsArray);
     res.locals.staticPanels = staticPanelsArray;
     return next();
   },
+
+  
+
+
 };
 
 
