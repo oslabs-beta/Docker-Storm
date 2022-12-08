@@ -24,14 +24,13 @@ const Signup = (props: Props) => {
   const [emailSignup, setEmailSignup] = useState('');
   const [organization, setOrganization] = useState('');
   const [jobTitle, setJobTitle] = useState('');
-  const [openSignup, setOpenSignup] = useState(false)
   const navigate = useNavigate();
 
 
 
   return (
     <div id="signup-big-div">
-      <button id="exit-button" onClick={() => { setOpenSignup(false); }}>X</button>
+      <button id="exit-button" onClick={() => { props.setOpenSignup(false); }}>X</button>
       <div id="signup-form-div">
         <form id="signup-form" onSubmit={(event) => event.preventDefault()}>
           <label> Username:

@@ -22,7 +22,6 @@ const Login = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
   const navigate = useNavigate();
 
 
@@ -68,7 +67,7 @@ const Login = (props: Props) => {
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
           <button className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
-          <button id="signup" onClick={() => { setOpenSignup(true); }}>Signup</button>
+          <button id="signup" onClick={() => { props.setOpenSignup(true); }}>Signup</button>
           {invalid && <p className="error-p">Invalid username/password please try again</p>}
         </form>
       </div>
