@@ -10,6 +10,7 @@ interface GrafanaController {
     updateDB: ResponseObject;
     getDashByUid: ResponseObject;
     createPanel: ResponseObject;
+    addTarget: ResponseObject;
 }
 
 interface ResultObj {
@@ -97,6 +98,7 @@ const grafanaController: GrafanaController = {
       panelsArray.push(newPanel);
     });
 
+
     res.locals.panels = panelsArray;
     return next();
   },
@@ -108,14 +110,13 @@ const grafanaController: GrafanaController = {
     const {panels} = res.locals;
 
     const body = res.locals.dashboard;
-    console.log('body', body);
-
     if(!('panels' in body.dashboard)){
       body.dashboard['panels'] = [...panels];
     }
     else{
       body.dashboard['panels'].push(...panels);
     }
+
 
 
     fetch('http://localhost:3000/api/dashboards/db/', {
@@ -132,6 +133,16 @@ const grafanaController: GrafanaController = {
         return next();
       });
   },
+
+  addTarget(req, res, next) {
+    const targets = JSON.parse(fs.readFileSync('./prometheus/targets.json', 'utf-8'));
+    targets.push(req.body);
+    fs.writeFileSync('./prometheus/targets.json', JSON.stringify(targets, null, 4));
+    return next();
+
+
+
+  }
 };
 
 

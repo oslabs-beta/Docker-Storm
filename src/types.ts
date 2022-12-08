@@ -4,7 +4,7 @@ export type Job = {
   role: Role
 };
 
-export type Role = 'Manager' | 'Daemon' | 'Worker' | 'Overall'
+export type Role = 'Manager' | 'Daemon' | 'Worker' | 'Overall' | '' 
 
 export type Target = {
   targets: string[],

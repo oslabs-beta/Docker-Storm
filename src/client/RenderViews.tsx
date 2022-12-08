@@ -4,9 +4,12 @@ import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
 import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
+import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 
 interface Props {
   dashId: string;
+  targetsArr: Target[];
+  setTargetsArr: React.Dispatch<React.SetStateAction<Target[]>>;
 }
 
 
@@ -46,7 +49,7 @@ const RenderViews = (props: Props) => {
           </ul>
         </div>
         <Routes>
-          <Route path='/settings' element={<Settings/>}/>
+          <Route path='/settings' element={<Settings targetsArr={props.targetsArr} setTargetsArr={props.setTargetsArr} />}/>
           <Route path='/metrics' element={<Metrics dashId={props.dashId} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>

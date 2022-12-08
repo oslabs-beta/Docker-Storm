@@ -22,4 +22,9 @@ router.patch('/', grafanaController.getDashByUid, grafanaController.createPanel,
   return res.status(200).json('successful');
 });
 
+router.post('/targetsAdd', grafanaController.addTarget, (req, res) => {
+  return res.sendStatus(200);
+});
+
+
 export default router;
