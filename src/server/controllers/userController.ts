@@ -213,7 +213,7 @@ const userController: UserController = {
   },
 
   checkEnv: (req, res, next) => {
-    res.locals.dbUri = process.env.POSTGRES_URI || '';  
+    res.locals.grafUrl = process.env.GRAFANA_URL || '';  
     res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
     return next();
   }

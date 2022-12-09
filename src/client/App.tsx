@@ -14,7 +14,7 @@ import '../../resources/styles.css';
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
-  const [pgUri, setPgUri] = useState('');
+  const [grafUrl, setGrafUrl] = useState('');
   const [dashId, setDashId] = useState('');
   const [targetsArr, setTargetsArr] = useState<Target[]>([]);
   const [openSignup, setOpenSignup] = useState(false);
@@ -76,11 +76,11 @@ const App: React.FC = (): JSX.Element => {
   
   useEffect(() => {
     console.log('useeffect ran');
-    if(!apiKey || !pgUri) return;
+    if(!apiKey || !grafUrl) return;
     console.log('in use effect', apiKey);
     
     intializeDashboard();
-  }, [apiKey]);
+  }, [apiKey, grafUrl]);
   
 
   
@@ -99,10 +99,18 @@ const App: React.FC = (): JSX.Element => {
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
           apiKey={apiKey} 
-          setPgUri={setPgUri}
-          pgUri={pgUri}
+          setGrafUrl={setGrafUrl}
+          grafUrl={grafUrl}
         />}/>
-        <Route path='/app/*' element={<RenderViews targetsArr={targetsArr} setTargetsArr={setTargetsArr} dashId={dashId}/>}/>
+        <Route path='/app/*' 
+          element={<RenderViews 
+            targetsArr={targetsArr} 
+            setTargetsArr={setTargetsArr} 
+            dashId={dashId}
+            grafUrl={grafUrl}
+          />}/>
+          
+            
       </Routes>
       {openSignup && <Signup 
         setApiKey={setApiKey} 

@@ -41,7 +41,7 @@ const grafanaController: GrafanaController = {
     console.log('CREATEDB');
     console.log(process.env.GRAFANA_API_KEY);
 
-    fetch('http://localhost:3000/api/dashboards/db/', {
+    fetch(`${process.env.GRAFANA_URL}api/dashboards/db/`, {
       method: 'POST',
       body: dash,
       headers: {
@@ -69,7 +69,7 @@ const grafanaController: GrafanaController = {
   getDashByUid(req, res, next) {
     console.log('Here GETDASH!');
     dotenv.config({override: true});
-    fetch(`http://localhost:3000/api/dashboards/uid/${process.env.GRAFANA_DASHBOARD_ID}`, {
+    fetch(`${process.env.GRAFANA_URL}api/dashboards/uid/${process.env.GRAFANA_DASHBOARD_ID}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -119,7 +119,7 @@ const grafanaController: GrafanaController = {
 
 
 
-    fetch('http://localhost:3000/api/dashboards/db/', {
+    fetch(`${process.env.GRAFANA_URL}api/dashboards/db/`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {

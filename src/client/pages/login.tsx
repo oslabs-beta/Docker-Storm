@@ -13,7 +13,7 @@ interface Props {
   setOpenSignup: (arg: boolean) => void;
 }
 interface ResponseObject {
-  db: string;
+  grafUrl: string;
   key: string;
 }
   
@@ -26,8 +26,8 @@ const Login = (props: Props) => {
 
 
 
-  const setKeys = (apiKey: string, pgUri: string) => {
-    props.setPgUri(pgUri);
+  const setKeys = (apiKey: string, grafUrl: string) => {
+    props.setGrafUrl(grafUrl);
     props.setApiKey(apiKey);
   };
 
@@ -50,9 +50,10 @@ const Login = (props: Props) => {
       return;
     }
     const data: ResponseObject = await result.json();
+    console.log(data);
 
-    setKeys(data.key, data.db);
-    if(data.key && data.db) {
+    setKeys(data.key, data.grafUrl);
+    if(data.key && data.grafUrl) {
       navigate('/app');
     } else {
       navigate('/setup');

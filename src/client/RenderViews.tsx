@@ -11,6 +11,7 @@ interface Props {
   dashId: string;
   targetsArr: Target[];
   setTargetsArr: React.Dispatch<React.SetStateAction<Target[]>>;
+  grafUrl: string;
 }
 
 
@@ -51,7 +52,7 @@ const RenderViews = (props: Props) => {
         </div>
         <Routes>
           <Route path='/settings' element={<Settings targetsArr={props.targetsArr} setTargetsArr={props.setTargetsArr} />}/>
-          <Route path='/metrics' element={<Metrics dashId={props.dashId} />}/>
+          <Route path='/metrics' element={<Metrics dashId={props.dashId} grafUrl={props.grafUrl} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>
         </Routes>

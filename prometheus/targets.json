@@ -34,59 +34,5 @@
             "job": "Worker2",
             "role": "Worker"
         }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
-    },
-    {
-        "targets": [
-            ""
-        ],
-        "labels": {
-            "job": "",
-            "role": "Manager"
-        }
     }
 ]
