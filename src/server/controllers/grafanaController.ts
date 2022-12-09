@@ -88,7 +88,7 @@ const grafanaController: GrafanaController = {
     console.log('here CREATEPANEL');
     const {panels} = req.body;
     const panelsArray: Record<string, unknown>[] = [];
-    const panelPos = [12, 24];
+    const panelPos = [0, 12];
 
 
     panels.forEach((panel: Panel, index: number) => {

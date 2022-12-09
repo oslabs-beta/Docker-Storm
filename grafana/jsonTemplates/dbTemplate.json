@@ -2,7 +2,7 @@
   "dashboard": {
     "id": null,
     "uid": "dockerstorm",
-    "title": "Docker Storms",
+    "title": "Docker Storm",
     "tags": [ "Docker Swarm", "Docker Storm" ],
     "timezone": "browser",
     "schemaVersion": 37,
