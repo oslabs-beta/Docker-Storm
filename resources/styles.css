@@ -78,3 +78,35 @@ input {
     justify-content: center;
     align-items: center;
 }
+
+
+/* Modal */
+
+
+#signup {
+    background-color: transparent;
+    border: none;
+    margin-top: 15px;
+    
+}
+
+
+#signup-background-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(76,130,254, 0.8);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#signup-inner-div {
+    width: 300px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 25px;
+}

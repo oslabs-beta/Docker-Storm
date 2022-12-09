@@ -1,11 +1,11 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+import Signup from './pages/signup.jsx';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-import PgInit from './pages/pgInit.jsx';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 
 import '../../resources/styles.css';
@@ -16,7 +16,8 @@ const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [grafUrl, setGrafUrl] = useState('');
   const [dashId, setDashId] = useState('');
-  const[targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const [targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const [openSignup, setOpenSignup] = useState(false);
 
 
   async function intializeDashboard() {
@@ -57,7 +58,7 @@ const App: React.FC = (): JSX.Element => {
         setDashId(result.ApiKey);
       });
   }
-
+  
   const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
     const result: Target[] = [];
     for(let i = 0; i < jobs.length; i++) {
@@ -90,8 +91,10 @@ const App: React.FC = (): JSX.Element => {
         <Route path='/' element={<Login 
           setApiKey={setApiKey}
           apiKey={apiKey}
-          setGrafUrl={setGrafUrl}
-          grafUrl={grafUrl}
+          setPgUri={setPgUri}
+          pgUri={pgUri}
+          openSignup={openSignup}
+          setOpenSignup={setOpenSignup}
         />}/>
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
@@ -109,7 +112,14 @@ const App: React.FC = (): JSX.Element => {
           
             
       </Routes>
-      {grafUrl}
+      {openSignup && <Signup 
+        setApiKey={setApiKey} 
+        apiKey={apiKey} 
+        setPgUri={setPgUri}
+        pgUri={pgUri}
+        openSignup={openSignup}
+        setOpenSignup={setOpenSignup}
+      />}
     </HashRouter>
   );
 };

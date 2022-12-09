@@ -6,6 +6,7 @@ import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 
+
 interface Props {
   dashId: string;
   targetsArr: Target[];
