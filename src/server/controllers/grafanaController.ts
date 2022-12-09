@@ -2,7 +2,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
 import * as manageID from '../helperFunctions/manageFiles.js';
-import { ResponseObject } from '../../types.js';
+import { ResponseObject, PanelObject } from '../../types.js';
 dotenv.config({override: true});
 
 interface GrafanaController {
@@ -88,10 +88,15 @@ const grafanaController: GrafanaController = {
     console.log('here CREATEPANEL');
     const {panels} = req.body;
     const panelsArray: Record<string, unknown>[] = [];
+    const panelPos = [12, 24];
 
-    panels.forEach((panel: Panel) => {
+
+    panels.forEach((panel: Panel, index: number) => {
       grafID = manageID.incrementGrafID(grafID);
       const newPanel = JSON.parse(fs.readFileSync(`./grafana/jsonTemplates/${panel.graphType}Template.json`, 'utf-8'));
+      if(newPanel.gridPos.w === 12){
+        newPanel.gridPos.x = panelPos[index % 2];
+      }
       newPanel.title = panel.title;
       newPanel.targets[0].expr = panel.expression;
       newPanel.id = grafID.panelId;

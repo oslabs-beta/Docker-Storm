@@ -18,6 +18,15 @@
         }
     },
     {
+      "targets": [
+          "192.168.64.7:8080"
+      ],
+      "labels": {
+          "job": "Manager1",
+          "role": "Manager"
+      }
+    },
+    {
         "targets": [
             "192.168.64.8:9100"
         ],
@@ -26,6 +35,24 @@
             "role": "Worker"
         }
     },
+    {
+      "targets": [
+          "192.168.64.8:8080"
+      ],
+      "labels": {
+          "job": "Worker1",
+          "role": "Worker"
+      }
+  },
+  {
+    "targets": [
+        "192.168.64.9:8080"
+    ],
+    "labels": {
+        "job": "Worker1",
+        "role": "Worker"
+    }
+},
     {
         "targets": [
             "192.168.64.9:9100"
