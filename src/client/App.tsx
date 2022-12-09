@@ -5,8 +5,7 @@ import Signup from './pages/signup.jsx';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-import PgInit from './pages/pgInit.jsx';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 
 import '../../resources/styles.css';
@@ -17,7 +16,7 @@ const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [pgUri, setPgUri] = useState('');
   const [dashId, setDashId] = useState('');
-  const[targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const [targetsArr, setTargetsArr] = useState<Target[]>([]);
   const [openSignup, setOpenSignup] = useState(false);
 
 
@@ -59,21 +58,6 @@ const App: React.FC = (): JSX.Element => {
         setDashId(result.ApiKey);
       });
   }
-
-  const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
-    const result: Target[] = [];
-    for(let i = 0; i < jobs.length; i++) {
-      const obj: Target = {
-        targets: [ips[i]],
-        labels: {
-          job: jobs[i].job,
-          role: jobs[i].role
-        }
-      };
-      result.push(obj);
-    }
-    return result;
-  };
   
   const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
     const result: Target[] = [];
@@ -128,8 +112,6 @@ const App: React.FC = (): JSX.Element => {
         openSignup={openSignup}
         setOpenSignup={setOpenSignup}
       />}
-      <button id="signup" onClick={() => { setOpenSignup(true); }}>Signup</button>
-
     </HashRouter>
   );
 };
