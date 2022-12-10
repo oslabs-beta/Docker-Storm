@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 const InitialSetup = (props) => {
     const [currentApi, setCurrentApi] = useState(props.apiKey);
-    const [currentPgUri, setCurrentPgUri] = useState(props.pgUri);
+    const [currentGrafUrl, setCurrentGrafUrl] = useState(props.grafUrl);
     const [validInput, setValidInput] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        if (props.apiKey && props.pgUri)
+        if (props.apiKey && props.grafUrl)
             navigate('/app');
     }, []);
     // request to either create or edit the .env
     const handleSubmit = () => {
-        if (!currentApi || !currentPgUri) {
+        if (!currentApi || !currentGrafUrl) {
             setValidInput(true);
             return;
         }
         const body = {
             apiKey: currentApi,
-            pgUri: currentPgUri
+            grafUrl: currentGrafUrl
         };
         props.setApiKey(currentApi);
-        props.setPgUri(currentApi);
+        props.setGrafUrl(currentGrafUrl);
         fetch('/user/env', {
             method: 'POST',
             headers: {
@@ -39,18 +39,21 @@ const InitialSetup = (props) => {
       </div>);
     };
     // render when there is no pg uri in .env file
-    const renderPgUri = () => {
+    const renderGrafUrl = () => {
         return (<div>
-        Please enter your PG URI
+        <strong>Please enter your Grafana URL.</strong> <br></br> 
+        Please enter in the form of http://localhost:XXXX/
+         or http://[IP ADDRESS]/ or http://[URL]/ . <br></br>
+        Please do not add anything after the final / .  
       
-        <input type='text' placeholder='PG URI' onChange={input => setCurrentPgUri(input.target.value)} value={currentPgUri}/>
+        <input type='text' placeholder='GRAFANA URL' onChange={input => setCurrentGrafUrl(input.target.value)} value={currentGrafUrl}/>
       </div>);
     };
     return (<div>
 
       <form onSubmit={(e) => e.preventDefault()}>
         {!props.apiKey && renderApiKey()}
-        {!props.pgUri && renderPgUri()}
+        {!props.grafUrl && renderGrafUrl()}
         <button onClick={handleSubmit}>SUBMIT</button>
         {validInput && <div>Please fill out field(s) before submitting</div>}
       </form>
