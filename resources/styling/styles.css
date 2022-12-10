@@ -77,6 +77,8 @@ body {
 }
 
 #left-div {
+    display: flex;
+    flex-direction: column;
 }
 
 #login-form {
@@ -104,6 +106,11 @@ input {
 .error-p {
     color: #cf1515;
     font-size: 14px;
+}
+
+#signup:hover {
+    color: var(--light-blue);
+    cursor: pointer;
 }
 
 /* Right div CSS*/
@@ -145,6 +152,17 @@ input {
     align-items: center;
 }
 
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--Roboto);
+}
+
+#signup-form label {
+    display: flex;
+    flex-direction: column;
+    margin-top: 7px;
+}
 
 #signup-inner-div {
     width: 300px;
@@ -163,34 +181,32 @@ input {
 
 .navbar {
     position: sticky;
+    top: 0;
     height: 100vh;
-    width: 190px;
+    width: 170px;
     background-color: #091931;
     font-family: var(--Nunito);
 }
 
-.navbar {
-    list-style-type: none;
-    padding-left: 20px;
-    position: relative;
-}
 
-.navbar  li {
+.navbar li {
     font-size: 18px;
     letter-spacing: 4px;
     height: 30px;
     margin-top: 20px;
     padding: 5px;
-    margin-left: 10px;
+    text-decoration: none;
+    list-style: none;
 }
 
-.navbar  li a {
+
+.navbar li a {
     text-decoration: none;
     color: #ffffff;
     font-family: var(--Mulish);
 }
 
-.navbar  li:hover{
+.navbar li:hover{
     border-left: #4C82FE 5px solid;
     padding-left: 15px;
     transition-duration: 0.4s;
@@ -203,5 +219,5 @@ input {
 
 #navbar-logo {
     margin-top: 20px;
-    margin-left: 8px;
+    margin-left: 20px;
 }
