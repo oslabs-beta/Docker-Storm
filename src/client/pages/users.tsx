@@ -4,9 +4,9 @@ import React, {useState, useEffect} from 'react';
 interface User {
   username: string,
   role: string
-  organization: string,
-  email: string,
-  jobTitle: string,
+  organization?: string,
+  email?: string,
+  jobTitle?: string,
 }
 
 
@@ -99,7 +99,6 @@ const Users = () => {
     const role = user.role;
     const organization = user.organization;
     const email = user.email;
-    const 
 
     return (
       <tr key={username}>
