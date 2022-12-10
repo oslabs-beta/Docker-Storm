@@ -1,11 +1,10 @@
 import React, {useState, ReactNode} from 'react';
 import { useNavigate } from 'react-router-dom';
+import {TextField} from '@mui/material';
 
 interface Props {
     setApiKey: (arg: string) => void;
     apiKey: string;
-    setPgUri: (arg: string) => void;
-    pgUri: string;
     openSignup: boolean;
     setOpenSignup: (arg: boolean) => void;
 }
@@ -58,32 +57,35 @@ const Signup = (props: Props) => {
   return (
     <div id="signup-background-div">
       <div id="signup-inner-div">
-        <button id="exit-button" onClick={() => { props.setOpenSignup(false); }}>X</button>
+        
 
         {!signupSuccess &&
           <div id="signup-form-div">
             <form id="signup-form" onSubmit={(event) => event.preventDefault()}>
-              <label> Username:
-                <input className="signup-form-input" type="text" value={usernameSignup} onChange={input => setUsernameSignup(input.target.value)} placeholder="username"/>
+              <label> Username
+                <TextField className="signup-form-input" type="text" value={usernameSignup} onChange={input => setUsernameSignup(input.target.value)} placeholder="Username"/>
               </label>
-              <label> Password:
-                <input className="signup-form-input" type="password" value={passwordSignup} onChange={input => setPasswordSignup(input.target.value)} placeholder="password"/>
+              <label> Password
+                <TextField className="signup-form-input" type="password" value={passwordSignup} onChange={input => setPasswordSignup(input.target.value)} placeholder="Password"/>
               </label>
-              <label> Verify Password:
-                <input className="signup-form-input" type="text" value={verifyPasswordSignup} onChange={input => setVerifyPasswordSignup(input.target.value)} placeholder="type password again"/>
+              <label> Verify Password
+                <TextField className="signup-form-input" type="password" value={verifyPasswordSignup} onChange={input => setVerifyPasswordSignup(input.target.value)} placeholder="Type password again"/>
               </label>
-              <label> Email:
-                <input className="signup-form-input" type="text" value={emailSignup} onChange={input => setEmailSignup(input.target.value)} placeholder="email"/>
+              <label> Email
+                <TextField className="signup-form-input" type="text" value={emailSignup} onChange={input => setEmailSignup(input.target.value)} placeholder="Email"/>
               </label>
-              <label> Organization:
-                <input className="signup-form-input" type="text" value={organization} onChange={input => setOrganization(input.target.value)} placeholder="organization"/>
+              <label> Organization
+                <TextField className="signup-form-input" type="text" value={organization} onChange={input => setOrganization(input.target.value)} placeholder="Organization"/>
               </label>
-              <label> Job Title:
-                <input className="signup-form-input" type="text" value={jobTitle} onChange={input => setJobTitle(input.target.value)} placeholder="job title"/>
+              <label> Job Title
+                <TextField className="signup-form-input" type="text" value={jobTitle} onChange={input => setJobTitle(input.target.value)} placeholder="Job title"/>
               </label>
               <button className="blue-button" type="submit" onClick={() => createAdminUser()}>Signup</button>
               {invalid && <p className="error-p">Please fill out all fields</p>}
+              <button id="signup" onClick={() => { props.setOpenSignup(false); }}>Cancel</button>
             </form>
+            
+            
           </div>
         }
 

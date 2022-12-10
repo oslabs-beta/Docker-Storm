@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import mac from '../../../resources/mac.png';
-import waves from '../../../resources/waves.png';
+import mac from '../../../resources/media/mac.png';
+import waves from '../../../resources/media/waves.png';
+import loginLogo from '../../../resources/media/login-logo.png';
 import { DefaultDeserializer } from 'v8';
 
 interface Props {
   setApiKey: (arg: string) => void;
+  setGrafUrl: (arg: string) => void;
   apiKey: string;
-  setPgUri: (arg: string) => void;
-  pgUri: string;
   openSignup: boolean;
   setOpenSignup: (arg: boolean) => void;
 }
@@ -64,6 +64,9 @@ const Login = (props: Props) => {
   return (
     <div id="login-big-div">
       <div id="left-div" className="half-n-half">
+        <div id="login-logo-div">
+          <img src={loginLogo} alt="" />
+        </div>
         <form id="login-form" onSubmit={(event) => event.preventDefault()}>
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>

@@ -6,9 +6,10 @@ import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
 // import 'whatwg-fetch';
+import '../../resources/styling/styles.css';
 
 
-import '../../resources/styles.css';
+
 
 
 
@@ -91,8 +92,7 @@ const App: React.FC = (): JSX.Element => {
         <Route path='/' element={<Login 
           setApiKey={setApiKey}
           apiKey={apiKey}
-          setPgUri={setPgUri}
-          pgUri={pgUri}
+          setGrafUrl={setGrafUrl}
           openSignup={openSignup}
           setOpenSignup={setOpenSignup}
         />}/>
@@ -115,8 +115,6 @@ const App: React.FC = (): JSX.Element => {
       {openSignup && <Signup 
         setApiKey={setApiKey} 
         apiKey={apiKey} 
-        setPgUri={setPgUri}
-        pgUri={pgUri}
         openSignup={openSignup}
         setOpenSignup={setOpenSignup}
       />}
