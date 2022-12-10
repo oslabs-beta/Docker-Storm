@@ -9,9 +9,11 @@ interface Props {
   apiKey: string;
   setPgUri: (arg: string) => void;
   pgUri: string;
+  openSignup: boolean;
+  setOpenSignup: (arg: boolean) => void;
 }
 interface ResponseObject {
-  db: string;
+  grafUrl: string;
   key: string;
 }
   
@@ -24,8 +26,8 @@ const Login = (props: Props) => {
 
 
 
-  const setKeys = (apiKey: string, pgUri: string) => {
-    props.setPgUri(pgUri);
+  const setKeys = (apiKey: string, grafUrl: string) => {
+    props.setGrafUrl(grafUrl);
     props.setApiKey(apiKey);
   };
 
@@ -48,9 +50,10 @@ const Login = (props: Props) => {
       return;
     }
     const data: ResponseObject = await result.json();
+    console.log(data);
 
-    setKeys(data.key, data.db);
-    if(data.key && data.db) {
+    setKeys(data.key, data.grafUrl);
+    if(data.key && data.grafUrl) {
       navigate('/app');
     } else {
       navigate('/setup');
@@ -65,6 +68,7 @@ const Login = (props: Props) => {
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
           <button className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
+          <button id="signup" onClick={() => { props.setOpenSignup(true); }}>Signup</button>
           {invalid && <p className="error-p">Invalid username/password please try again</p>}
         </form>
       </div>
@@ -72,7 +76,6 @@ const Login = (props: Props) => {
       <div id="right-div" className="half-n-half">
         <div id="waves-div" style={{ backgroundImage: `url(${waves})`}}>
           <img src={mac} id="mac-img" alt="mac" />
-          {/* <img src={waves} id="waves-img" alt="waves" /> */}
         </div>
       </div>
     </div>

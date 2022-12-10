@@ -16,10 +16,6 @@
         }
       }
     ],
-    "datasource": {
-      "type": "prometheus",
-      "uid": "WPF5XbO4k"
-    },
     "pluginVersion": "9.2.6",
     "fieldConfig": {
       "defaults": {
@@ -55,10 +51,6 @@
     },
     "targets": [
       {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "WPF5XbO4k"
-        },
         "editorMode": "code",
         "expr": "placeholder",
         "hide": false,

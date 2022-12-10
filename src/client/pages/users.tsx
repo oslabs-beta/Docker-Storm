@@ -4,6 +4,9 @@ import React, {useState, useEffect} from 'react';
 interface User {
   username: string,
   role: string
+  organization: string,
+  email: string,
+  jobTitle: string,
 }
 
 
@@ -94,8 +97,16 @@ const Users = () => {
   const mappedList = userList.map(user => {
     const username = user.username;
     const role = user.role;
+    const organization = user.organization;
+    const email = user.email;
+    const 
+
     return (
-      <div className='usersList' key={username}>{username}, {role}</div>
+      <tr key={username}>
+        <td>{username}</td> 
+        <td>{role}</td>
+        <td className="centered"><button className="deleteBtn">X</button></td>
+      </tr>
     );});
 
 
