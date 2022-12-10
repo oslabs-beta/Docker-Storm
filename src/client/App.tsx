@@ -4,7 +4,7 @@ import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-import PgInit from './pages/pgInit.jsx';
+//import PgInit from './pages/pgInit.jsx';
 import 'whatwg-fetch';
 
 

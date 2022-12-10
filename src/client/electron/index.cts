@@ -43,22 +43,4 @@ app.on('ready', createMainWindow);
 //   if (electron.BrowserWindow.getAllWindows().length === 0) createMainWindow()
 // })
     
-
-
-// electron.ipcMain.handle('verify-number', async (_: any, args: any) => {
-//   return await verifyMobileNumber(args);
-// });
-
-// electron.ipcMain.handle('verify-code', async (_: any, args: any) => {
-//   return await verifyCode(args);
-// });
-
-// electron.ipcMain.handle('post-event', async (_: any, args: any) => {
-//   const { mobileNumber, triggeringEvent } = args;
-//   return await postEvent(mobileNumber, triggeringEvent);
-// });
-
-// electron.ipcMain.handle('email-event', async (_: any, args: any) => {
-//   return await emailEvent(args);
-// });
 module.exports = {};

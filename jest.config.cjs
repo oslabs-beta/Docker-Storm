@@ -16,6 +16,12 @@ module.exports = {
       babelConfig: true
     }
   },
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|svg)$': '<rootDir>/mocks/fileMock.js',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
+  },
+
+  
   modulePaths: ['<rootDir>']
 
 };

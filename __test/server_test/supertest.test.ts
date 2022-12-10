@@ -1,27 +1,18 @@
 import request from 'supertest';
 import db from '../../src/server/models/dockerStormModel';
 
-
 const server = 'http://localhost:8080';
 
-const userOne = {
+interface User {
+  username: string,
+  password: string,
+  role: string
+}
+
+const userOne: User = {
   username: 'TestUser',
   password: 'TestPassword',
   role: 'TestRole'
-
-const server = 'http://localhost:8080';
-
-const userOne = {
-  username: 'KevinTest',
-  password: 'asdf',
-  role: 'testrole'
-};
-
-const userOneChanged = {
-  username: 'KevinTest',
-  password: 'asdfgh',
-  role: 'testrole'
-
 };
 
 beforeAll(async () => {
@@ -46,68 +37,59 @@ afterAll(async() => {
 
 describe('Route Testing', () => {
 
-describe('Route Integration', () => {
+  describe('Route Integration', () => {
 
-  describe('Upon Initiating App', () => {
-    it('responds with 200 status and the login page', () => {
-      return request(server)
-        .get('/')
-        .expect(200);
+    describe('Upon Initiating App', () => {
+      it('responds with 200 status and the login page', () => {
+        return request(server)
+          .get('/')
+          .expect(200);
+      });
     });
+    
+    //below test will only run successfully if user has Grafana installed
+    xdescribe('Upon Initializing Grafana', () => {
+      it('responds with 200 status and the metrics page', () => {
+        return request(server)
+          .post('/graf/init')
+          .expect(200);
+      });
+    });
+
+    describe('Upon Deleting User', () => {
+      it('responds by deleting the user', () => {
+        return request(server)
+          .delete('/user/')
+          .send(userOne.username)
+          .expect(200);
+      });
+    }); 
+
+    // describe('Upon Changing Password', () => {
+    //   it('responds by changing the password', () => {
+    //     return request(server)
+    //       .patch('/user/')
+    //       .send(userOne)
+    //       .expect(200);
+    //   });
+    // }); 
+  
+
+    describe('Getting User List', () => {
+      it('responds by providing user list', () => {
+        return request(server)
+          .get('/user/all')
+          .expect(200);
+      });
+    }); 
+
+    describe('Should Add Targets', () => {
+      it('responds by adding targets', () => {
+        return request(server)
+          .post('/graf/targetsAdd')
+          .expect(200);
+      });
+    }); 
+
   });
-  
-  describe('Upon Initializing Grafana', () => {
-    it('responds with 200 status and the metrics page', () => {
-      return request(server)
-        .post('/graf/init')
-        .expect(200);
-    });
-  });
-  
-  describe('Upon Signing Up', () => {
-    it('responds with the home page', () => {
-      return request(server)
-        .post('/user/signup')
-        .send(userOne)
-        .expect(200);
-    });
-  }); 
-
-  describe('Upon Logging In', () => {
-    it('responds with the home page', () => {
-      return request(server)
-        .post('/user/login')
-        .send(userOne)
-        .expect(200);
-    });
-  }); 
-
-  describe('Upon Deleting User', () => {
-    it('responds by deleting the user', () => {
-      return request(server)
-        .delete('/user/')
-        .send(userOne.username)
-        .expect(200);
-    });
-  }); 
-
-  describe('Upon Changing Password', () => {
-    it('responds by changing the password', () => {
-      return request(server)
-        .patch('/user/')
-        .send(userOne)
-        .expect(200);
-    });
-  }); 
-  
-
-  describe('Getting User List', () => {
-    it('responds by providing user list', () => {
-      return request(server)
-        .get('/user/all')
-        .expect(200);
-    });
-  }); 
-
-
 });

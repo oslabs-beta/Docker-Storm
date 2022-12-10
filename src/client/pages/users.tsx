@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import React, {useState, useEffect} from 'react';
 
 interface User {
@@ -25,7 +26,7 @@ const Users = () => {
   };
 
   const grabUsers = () => {
-    fetch('/user/all')
+    window.fetch('/user/all')
       .then((data) => data.json())
       .then((result) => {
         addUsersToArray(result as User[]);
@@ -94,7 +95,7 @@ const Users = () => {
     const username = user.username;
     const role = user.role;
     return (
-      <div key={username}>{username}, {role}</div>
+      <div className='usersList' key={username}>{username}, {role}</div>
     );});
 
 
