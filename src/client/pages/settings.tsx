@@ -148,7 +148,7 @@ const Settings = (props : Props) => {
           <option value="Daemon">Daemon</option>
           <option value="Overall">Overall</option>
         </select>
-        <button type="submit"  onClick={() => addTarget()}>SUBMIT</button>
+        <button type="submit"  disabled={!job || !role || !ip} onClick={() => addTarget()}>SUBMIT</button>
       </form>
       {added && <div>Added node!</div>}
 

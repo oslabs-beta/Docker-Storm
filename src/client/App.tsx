@@ -1,22 +1,24 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+import Signup from './pages/signup.jsx';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-import PgInit from './pages/pgInit.jsx';
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
+import '../../resources/styling/styles.css';
 
 
-import '../../resources/styles.css';
+
 
 
 
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
-  const [pgUri, setPgUri] = useState('');
+  const [grafUrl, setGrafUrl] = useState('');
   const [dashId, setDashId] = useState('');
-  const[targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const [targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const [openSignup, setOpenSignup] = useState(false);
 
 
   async function intializeDashboard() {
@@ -57,7 +59,7 @@ const App: React.FC = (): JSX.Element => {
         setDashId(result.ApiKey);
       });
   }
-
+  
   const makeTargetArray = (jobs: Job[], ips: string[]) : Target[] => {
     const result: Target[] = [];
     for(let i = 0; i < jobs.length; i++) {
@@ -75,11 +77,11 @@ const App: React.FC = (): JSX.Element => {
   
   useEffect(() => {
     console.log('useeffect ran');
-    if(!apiKey || !pgUri) return;
+    if(!apiKey || !grafUrl) return;
     console.log('in use effect', apiKey);
     
     intializeDashboard();
-  }, [apiKey]);
+  }, [apiKey, grafUrl]);
   
 
   
@@ -90,17 +92,32 @@ const App: React.FC = (): JSX.Element => {
         <Route path='/' element={<Login 
           setApiKey={setApiKey}
           apiKey={apiKey}
-          setPgUri={setPgUri}
-          pgUri={pgUri}
+          setGrafUrl={setGrafUrl}
+          openSignup={openSignup}
+          setOpenSignup={setOpenSignup}
         />}/>
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
           apiKey={apiKey} 
-          setPgUri={setPgUri}
-          pgUri={pgUri}
+          setGrafUrl={setGrafUrl}
+          grafUrl={grafUrl}
         />}/>
-        <Route path='/app/*' element={<RenderViews targetsArr={targetsArr} setTargetsArr={setTargetsArr} dashId={dashId}/>}/>
+        <Route path='/app/*' 
+          element={<RenderViews 
+            targetsArr={targetsArr} 
+            setTargetsArr={setTargetsArr} 
+            dashId={dashId}
+            grafUrl={grafUrl}
+          />}/>
+          
+            
       </Routes>
+      {openSignup && <Signup 
+        setApiKey={setApiKey} 
+        apiKey={apiKey} 
+        openSignup={openSignup}
+        setOpenSignup={setOpenSignup}
+      />}
     </HashRouter>
   );
 };

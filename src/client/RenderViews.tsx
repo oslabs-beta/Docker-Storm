@@ -4,12 +4,15 @@ import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
 import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
+import logoWhite from '../../resources/media/logo-white.png';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+
 
 interface Props {
   dashId: string;
   targetsArr: Target[];
   setTargetsArr: React.Dispatch<React.SetStateAction<Target[]>>;
+  grafUrl: string;
 }
 
 
@@ -17,40 +20,39 @@ const RenderViews = (props: Props) => {
 
   return (
     <>
-      <h1>DOCKER STORM</h1>
-      <div className="navbar">
-        <div className="links">
-          <ul>
-            <li>
-              <Link to='/app/settings'>
-                <p>Settings</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/users'>
-                <p>Users</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/swarms'>
-                <p>Swarms</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/app/metrics'>
-                <p>Metrics</p>
-              </Link>
-            </li>
-            <li>
-              <Link to='/'>
-                <p>Logout</p>
-              </Link>
-            </li>
-          </ul>
+      <div id="all-seeing-div">
+        <div className="navbar">
+          <img id="navbar-logo" src={logoWhite} alt="" />
+          {/* <ul> */}
+          <li>
+            <Link to='/app/metrics'>
+                  Metrics
+            </Link>
+          </li>
+          <li>
+            <Link 
+              to='/app/settings'
+              // style={select === '/app/settings' ? clickedStyle : null}
+              // onClick={() => setSelect('/app/settings')}
+            >
+                  Settings
+            </Link>
+          </li>
+          <li>
+            <Link to='/app/users'>
+                  Users
+            </Link>
+          </li>
+          <li id="logout">
+            <Link to='/'>
+                  Logout
+            </Link>
+          </li>
+          {/* </ul> */}
         </div>
         <Routes>
           <Route path='/settings' element={<Settings targetsArr={props.targetsArr} setTargetsArr={props.setTargetsArr} />}/>
-          <Route path='/metrics' element={<Metrics dashId={props.dashId} />}/>
+          <Route path='/metrics' element={<Metrics dashId={props.dashId} grafUrl={props.grafUrl} />}/>
           <Route path='/users' element={<Users/>}/>
           <Route path='/swarms' element={<Swarms/>}/>
         </Routes>
@@ -59,6 +61,7 @@ const RenderViews = (props: Props) => {
 
 
 
+        
       </div>
     </>
   );

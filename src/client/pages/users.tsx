@@ -1,8 +1,15 @@
+// fix the fetch requests to include the new properties in the User interface
+// display the new properties in the table
+
+
 import React, {useState, useEffect} from 'react';
 
 interface User {
   username: string,
   role: string
+  organization?: string,
+  email?: string,
+  jobTitle?: string,
 }
 
 
@@ -93,8 +100,15 @@ const Users = () => {
   const mappedList = userList.map(user => {
     const username = user.username;
     const role = user.role;
+    const organization = user.organization;
+    const email = user.email;
+
     return (
-      <div key={username}>{username}, {role}</div>
+      <tr key={username}>
+        <td>{username}</td> 
+        <td>{role}</td>
+        <td className="centered"><button className="deleteBtn">X</button></td>
+      </tr>
     );});
 
 

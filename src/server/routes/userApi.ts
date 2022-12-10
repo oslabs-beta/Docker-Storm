@@ -13,7 +13,7 @@ router.get('/all', userController.getAllUsers, (req,res) => {
 
 router.post('/login', userController.verifyUser, cookieController.setCookie, userController.checkEnv, (req, res) => {
   const obj = {
-    db: res.locals.dbUri,
+    grafUrl: res.locals.grafUrl,
     key: res.locals.apiKey
   };
   console.log(obj);
@@ -22,6 +22,10 @@ router.post('/login', userController.verifyUser, cookieController.setCookie, use
 
 router.post('/env', initController.updateEnv, (req, res) => {
   return res.sendStatus(200);
+});
+
+router.post('/signupAdmin', userController.encrypt, userController.createAdminUser, userController.createAdminUserInfo, (req, res) => {
+  return res.status(200).json('successful');
 });
 
 router.post('/signup', userController.encrypt, userController.createUser, (req, res) => {

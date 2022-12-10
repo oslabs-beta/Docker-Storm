@@ -14,8 +14,9 @@ interface UserController {
     updateUser: ResponseObject;
     deleteUser: ResponseObject;
     getAllUsers: ResponseObject;
+    createAdminUser: ResponseObject;
+    createAdminUserInfo: ResponseObject;
     checkEnv: ResponseObject;
-
 }
 
 
@@ -132,7 +133,7 @@ const userController: UserController = {
 
   getAllUsers: (req,res,next) => {
 
-    const queryString = 'SELECT username, role FROM users;';
+    const queryString = 'SELECT * FROM users INNER JOIN users_info ON users.username = users_info.username';
     db.query(queryString, [])
       .then((result) => {
         res.locals.allUsers = result.rows;
@@ -148,8 +149,71 @@ const userController: UserController = {
 
   },
 
+  createAdminUser: async (req, res, next) => {
+
+    const { username, email, organization, jobTitle, password } = req.body;
+    res.locals.username = username;
+    res.locals.email = email;
+    res.locals.organization = organization;
+    res.locals.jobTitle = jobTitle;
+
+    
+    try {
+      if(!username || !password) {
+        return next({
+          log: 'Error caught in userController.createAdminUser',
+          status: 400,
+          message: 'Missing username or password in request',
+        });
+      }
+      const queryStr = 'INSERT INTO users (username, password, role) VALUES ($1, $2, \'admin\');';
+
+      db.query(queryStr, [username, res.locals.password])
+        .then(() => {return next();})
+        .catch((err: Error) => {
+          return next({
+            log: 'Error caught in createAdminUser db call',
+            status: 400,
+            message: {err: err}
+          });
+        });
+
+    } catch (error) {
+      return next({
+        log: 'Error caught in userController.createAdminUser',
+        status: 400,
+        message: 'Error in createAdminUser',
+      });
+    }
+  },
+
+  createAdminUserInfo: async (req, res, next) => {
+    console.log(res.locals.username, res.locals.email, res.locals.organization, res.locals.jobTitle);
+    
+    try {
+      const queryStr = 'INSERT INTO users_info (username, email, organization, job_title) VALUES ($1, $2, $3, $4);';
+
+      db.query(queryStr, [res.locals.username, res.locals.email, res.locals.organization, res.locals.jobTitle])
+        .then(() => {return next();})
+        .catch((err: Error) => {
+          return next({
+            log: 'Error caught in createAdminUser db call',
+            status: 400,
+            message: {err: err}
+          });
+        });
+
+    } catch (error) {
+      return next({
+        log: 'Error caught in userController.createAdminUser',
+        status: 400,
+        message: 'Error in createAdminUser',
+      });
+    }
+  },
+
   checkEnv: (req, res, next) => {
-    res.locals.dbUri = process.env.POSTGRES_URI || '';  
+    res.locals.grafUrl = process.env.GRAFANA_URL || '';  
     res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
     return next();
   }
