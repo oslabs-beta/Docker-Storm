@@ -41,7 +41,7 @@ const App: React.FC = (): JSX.Element => {
 
     const staticPanels = await fetch('/metric/genStaticPanels').then(data => {return data.json();});
     console.log('We made it!: ', staticPanels);
-    panelList.panels.push(...staticPanels);
+    panelList.panels.unshift(...staticPanels);
 
     console.log('Updated Panels: ', panelList);
   
