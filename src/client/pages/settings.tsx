@@ -133,7 +133,7 @@ const Settings = (props : Props) => {
         <input type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
         <input type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
         <input type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
-        <button type="submit" onClick={() => changePassword()}>SUBMIT</button>
+        <button type="submit" disabled={!password || !newPassword || !verifyPassword} onClick={() => changePassword()}>SUBMIT</button>
         <br></br>
         
       </form>

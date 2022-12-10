@@ -5,6 +5,7 @@
 /* --------------------------------------------------- Root / Global Classes --------------------------------------------------- */
 
 
+
 :root {
     --Nunito: 'Nunito', sans-serif;
     --Roboto: 'Roboto', sans-serif;
@@ -22,14 +23,13 @@
     color: var(--soft-black);
 }
 
-.blue-button {
+/* .blue-button {
     height: 40px;
     border: none;
     font-size: 16px;
     letter-spacing: 3px;
     margin-top: 30px;
     background-color: #88acfc;
-    /* #88acfc */
     color: #ffffff;
     border-radius: 25px;
 }
@@ -37,9 +37,13 @@
 .blue-button:hover {
     background-color: var(--light-blue);
     cursor: pointer;
-}
+} */
 
 h1 {
+    font-family: var(--Roboto);
+}
+
+h2 {
     font-family: var(--Roboto);
 }
 
@@ -81,7 +85,7 @@ body {
     flex-direction: column;
 }
 
-#login-form {
+/* #login-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -90,9 +94,9 @@ body {
     background-color: #ffffff;
     border-radius: 20px;
     padding: 30px 20px;
-}
+} */
 
-input {
+/* input {
     height: 40px;
     margin: 5px;
     font-size: 16px;
@@ -101,17 +105,13 @@ input {
     border: none;
     border-bottom: 2px solid #88acfc;
     outline: none;
-}
+} */
 
 .error-p {
     color: #cf1515;
     font-size: 14px;
 }
 
-#signup:hover {
-    color: var(--light-blue);
-    cursor: pointer;
-}
 
 /* Right div CSS*/
 
@@ -133,12 +133,6 @@ input {
 
 /* --------------------------------------------------- Signup Modal CSS --------------------------------------------------- */
 
-#signup {
-    background-color: transparent;
-    border: none;
-    margin-top: 15px;
-}
-
 
 #signup-background-div {
     position: fixed;
@@ -152,24 +146,18 @@ input {
     align-items: center;
 }
 
-#signup-form {
-    display: flex;
-    flex-direction: column;
-    font-family: var(--Roboto);
-}
-
-#signup-form label {
-    display: flex;
-    flex-direction: column;
-    margin-top: 7px;
-}
 
 #signup-inner-div {
     width: 300px;
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
     padding: 30px;
     border-radius: 25px;
-}
+} 
+
+
+
 
 
 /* --------------------------------------------------- RenderViews CSS --------------------------------------------------- */
