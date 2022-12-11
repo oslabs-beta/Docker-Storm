@@ -14,6 +14,7 @@ interface Props {
   grafUrl: string;
   apiKey: string;
 }
+
 interface ResponseObject {
   grafUrl: string;
   key: string;
@@ -57,11 +58,10 @@ const Login = (props: Props) => {
 
     setKeys(data.key, data.grafUrl);
     if(data.key && data.grafUrl) {
-      navigate('/app');
+      navigate('/app/metrics');
     } else {
       navigate('/setup');
     }
-
   };
 
   return (

@@ -1,7 +1,8 @@
 import { ipcMain } from 'electron/main';
 import React, {useEffect, useState} from 'react';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../../types.js';
-
+import {TextField, Select, MenuItem, Container, Box, createStyles, Grid, Button, Typography } from '@mui/material';
+import theme from '../theme.jsx';
 
 
 
@@ -16,6 +17,27 @@ interface Body {
   panelType: string;
 }
 
+const styles = {
+  buttonStyles: {
+    marginTop: '10px', 
+    border: theme.palette.primary.main,
+    borderStyle: 'solid',
+    backgroundColor: theme.palette.primary.main, 
+    '&:hover': {
+      backgroundColor: 'white',
+      color: theme.palette.primary.main,
+      
+    },
+    color: 'white'
+  },
+
+  gridStyles: {
+    width: '50%',
+    margin: '0px'
+  },
+  
+};
+
 
 const Settings = (props : Props) => {
   const [password, setPassword] = useState('');
@@ -26,6 +48,7 @@ const Settings = (props : Props) => {
   const [ip, setIp] = useState('');
   const [ports, setPorts] = useState('');
   const [added, setAdded] = useState(false);
+  const [pwAdded, setPwAdded] = useState(false);
 
   function changePassword(){
     if(newPassword !== verifyPassword){
@@ -45,6 +68,7 @@ const Settings = (props : Props) => {
             setPassword('');
             setNewPassword('');
             setVerifyPassword('');
+            setPwAdded(true);
           }
         });
     }
@@ -113,12 +137,12 @@ const Settings = (props : Props) => {
 
   const targetMap = props.targetsArr.map((target) => {
     const str = `${target.targets[0]} ${target.labels.job} ${target.labels.role}`;
-    return (<div key={str}>
-      <p>{target.targets[0]}</p>
-      <p>{target.labels.job}</p>
-      <p>{target.labels.role}</p>
-      <br></br>
-    </div>);
+    return (<Grid item xs={4} key={str} component="div" sx={{borderStyle: 'solid', borderRadius: '10px',borderColor:'black'}}>
+      <Typography>{`IP Address: ${target.targets[0]}`}</Typography>
+      <Typography>{`Job Name: ${target.labels.job}`}</Typography>
+      <Typography>{`Role: ${target.labels.role}`}</Typography>
+
+    </Grid>);
   });
 
   const style = {
@@ -127,35 +151,52 @@ const Settings = (props : Props) => {
 
 
   return (
-    <div>
-      <p data-testid="update-pw"> UPDATE PASSWORD</p>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
-        <input type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
-        <input type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
-        <button type="submit" disabled={!password || !newPassword || !verifyPassword} onClick={() => changePassword()}>SUBMIT</button>
-        <br></br>
+    <Box>
+      <Typography marginTop="30px" align="center"> UPDATE PASSWORD</Typography>
+      <Container component='form' onSubmit={(e) => e.preventDefault()} sx={{justifyItems:'center'}}>
+        <Box display="flex" flexDirection="column" alignItems="center" marginTop="20px">
+          <Box display="flex" justifyContent="center">
+            <TextField type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
+            <TextField type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
+            <TextField type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
+          </Box>
+          <Button sx={styles.buttonStyles} 
+            type="submit" 
+            disabled={!password || !newPassword || !verifyPassword} 
+            onClick={() => changePassword()}>
+            SUBMIT
+          </Button>
+        </Box>
+        {pwAdded && <div>Changed password!</div>}
         
-      </form>
-      <p>ADD A TARGET</p>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input type="text" placeholder='Ip Address' value={ip} onChange={input => setIp(input.target.value)} />
-        <input type="text" placeholder='Port(s) by comma' value={ports} onChange={input => setPorts(input.target.value)} />
-        <input type="text" placeholder='Job Name' value={job} onChange={input => setJob(input.target.value)} />
-        <select name="Role" value={role} style={style} onChange={input => setRole(input.target.value as Role)}>
-          <option value="Manager">Manager</option>
-          <option value="Worker">Worker</option>
-          <option value="Daemon">Daemon</option>
-          <option value="Overall">Overall</option>
-        </select>
-        <button type="submit"  disabled={!job || !role || !ip} onClick={() => addTarget()}>SUBMIT</button>
-      </form>
+      </Container>
+      <Typography marginTop="30px"align="center">ADD A TARGET</Typography>
+      <Container component="form" onSubmit={(e) => e.preventDefault()}>
+        <Box display="flex" flexDirection="column" alignItems="center" marginTop="20px">
+          <Box display="flex" flexDirection="row" >
+            <TextField type="text" placeholder='Ip Address' value={ip} onChange={input => setIp(input.target.value)} />
+            <TextField type="text" placeholder='Port(s) by comma' value={ports} onChange={input => setPorts(input.target.value)} />
+            <TextField type="text" placeholder='Job Name' value={job} onChange={input => setJob(input.target.value)} />
+          </Box>
+          <Select name="Role" value={role} sx={{marginTop: '10px'}} onChange={input => setRole(input.target.value as Role)}>
+            <MenuItem value="Manager">Manager</MenuItem>
+            <MenuItem value="Worker">Worker</MenuItem>
+            <MenuItem value="Daemon">Daemon</MenuItem>
+            <MenuItem value="Overall">Overall</MenuItem>
+          </Select>
+          <Button type="submit" sx={styles.buttonStyles} disabled={!job || !role || !ip} onClick={() => addTarget()}>SUBMIT</Button>
+        </Box>
+      </Container>
       {added && <div>Added node!</div>}
+      
+      <Box display="flex" flexDirection="column" alignItems="center" margin="30px">
+        <Typography>LIST OF TARGETS:</Typography>
+        <Grid container spacing={1} sx={{width: '1fr', margin:'0px'}}>
+          {targetMap}
+        </Grid>
+      </Box>
 
-      <p>LIST OF ALL TARGETS</p>
-      {targetMap}
-
-    </div>
+    </Box>
 
 
 
