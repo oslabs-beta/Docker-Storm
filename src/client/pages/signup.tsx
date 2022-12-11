@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
 import theme from '../theme.jsx';
+import Tooltip from './tooltip.jsx';
+
 
 
 
@@ -10,6 +12,8 @@ interface Props {
     apiKey: string;
     openSignup: boolean;
     setOpenSignup: (arg: boolean) => void;
+    setGrafUrl: (value: string) => void;
+    grafUrl: string;
 }
 
 interface ResponseObject {
@@ -17,6 +21,9 @@ interface ResponseObject {
     key: string;
 }
 
+const urlText = 'Please enter exactly in the form of http://localhost:XXXX/ or http://[IP ADDRESS]/ or http://[URL]/ . Please do not add anything after the final slash';
+
+const apiText = 'You can find your Grafana API key under the configuration gear in your Grafana account.';
 
 
 const Signup = (props: Props) => { 
@@ -28,17 +35,42 @@ const Signup = (props: Props) => {
   const [jobTitle, setJobTitle] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [currentApi, setCurrentApi] = useState(props.apiKey);
+  const [currentGrafUrl, setCurrentGrafUrl] = useState(props.grafUrl);
   const navigate = useNavigate();
 
+
+  const envSetup = () => {
+    const body = {
+      apiKey: currentApi,
+      grafUrl: currentGrafUrl
+    };
+    
+    props.setApiKey(currentApi);
+    props.setGrafUrl(currentGrafUrl);
+
+    fetch('/user/env', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body),
+    });
+  };
+
+
+
   const createAdminUser = async () => {
-    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization) {
+    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl) {
       setInvalid(true);
+      return;
     }
     
     if(passwordSignup !== verifyPasswordSignup) {
       return;
     }
-    
+
+    envSetup();
 
     const body = {
       username: usernameSignup,
@@ -169,6 +201,38 @@ const Signup = (props: Props) => {
                       onChange={input => setJobTitle(input.target.value)} 
                       placeholder="Job title"/>
                   </Grid>
+                  {!props.grafUrl && <Grid 
+                    item 
+                    xs={12}
+                    display='flex'
+                  >
+                    
+                    <TextField
+                      type="text" 
+                      label="Grafana URL" 
+                      required
+                      fullWidth
+                      value={currentGrafUrl} 
+                      onChange={input => setCurrentGrafUrl(input.target.value)} 
+                      placeholder="Grafana URL"/>
+                    <Tooltip text={urlText}/>
+                  </Grid>}
+                  {!props.apiKey && <Grid 
+                    item 
+                    xs={12}
+                    display="flex"
+                  >
+                    
+                    <TextField
+                      type="text" 
+                      label="Grafana API key" 
+                      required
+                      fullWidth
+                      value={currentApi} 
+                      onChange={input => setCurrentApi(input.target.value)} 
+                      placeholder="Grafana API key"/>
+                    <Tooltip text={apiText}/>
+                  </Grid>}
                   <Grid 
                     item
                     xs={12}

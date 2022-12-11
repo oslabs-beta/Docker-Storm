@@ -81,6 +81,8 @@ const InitialSetup = (props: Props) => {
     );
   };
 
+  //   GRAFANA_API_KEY = 'eyJrIjoiQ05EQU9DT3FubG9ycHZnM1V5ZDhtQ0NkNE9valFWbW4iLCJuIjoiZG9ja2Vyc3Rvcm0iLCJpZCI6MX0='
+  // GRAFANA_URL = 'http://localhost:3000/'
 
   return(
     <div>

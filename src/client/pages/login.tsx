@@ -5,14 +5,14 @@ import waves from '../../../resources/media/waves.png';
 import loginLogo from '../../../resources/media/login-logo.png';
 import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
 import theme from '../theme.jsx';
+import Signup from './signup.jsx';
 import { DefaultDeserializer } from 'v8';
 
 interface Props {
   setApiKey: (arg: string) => void;
   setGrafUrl: (arg: string) => void;
+  grafUrl: string;
   apiKey: string;
-  openSignup: boolean;
-  setOpenSignup: (arg: boolean) => void;
 }
 interface ResponseObject {
   grafUrl: string;
@@ -24,6 +24,7 @@ const Login = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
   const navigate = useNavigate();
 
 
@@ -124,7 +125,7 @@ const Login = (props: Props) => {
                   textAlign="center">
                   <Button 
                     sx={{color:theme.palette.primary.contrastText, paddingLeft:'30px', paddingRight:'30px', border: '1.3px solid #ffffff'}} 
-                    onClick={() => { props.setOpenSignup(true); }}>SIGNUP
+                    onClick={() => { setOpenSignup(true); }}>SIGNUP
                   </Button>
                 </Grid>
 
@@ -154,6 +155,14 @@ const Login = (props: Props) => {
           </Box>
         </Container>
       </div>
+      {openSignup && <Signup 
+        setApiKey={props.setApiKey} 
+        apiKey={props.apiKey} 
+        setGrafUrl={props.setGrafUrl}
+        grafUrl={props.grafUrl}
+        openSignup={openSignup}
+        setOpenSignup={setOpenSignup}
+      />}
 
       <div id="right-div" className="half-n-half">
         <div id="waves-div" style={{ backgroundImage: `url(${waves})`}}>

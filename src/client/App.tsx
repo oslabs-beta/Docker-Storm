@@ -93,8 +93,7 @@ const App: React.FC = (): JSX.Element => {
           setApiKey={setApiKey}
           apiKey={apiKey}
           setGrafUrl={setGrafUrl}
-          openSignup={openSignup}
-          setOpenSignup={setOpenSignup}
+          grafUrl={grafUrl}
         />}/>
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
@@ -112,12 +111,7 @@ const App: React.FC = (): JSX.Element => {
           
             
       </Routes>
-      {openSignup && <Signup 
-        setApiKey={setApiKey} 
-        apiKey={apiKey} 
-        openSignup={openSignup}
-        setOpenSignup={setOpenSignup}
-      />}
+      
     </HashRouter>
   );
 };
