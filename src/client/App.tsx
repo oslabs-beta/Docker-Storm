@@ -5,6 +5,7 @@ import Signup from './pages/signup.jsx';
 import React, {useEffect, useState, useContext, createContext} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
+import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
 // import 'whatwg-fetch';
 import '../../resources/styling/styles.css';
 
@@ -87,6 +88,7 @@ const App: React.FC = (): JSX.Element => {
   
 
   return (
+
     <HashRouter>
       <Routes>
         <Route path='/' element={<Login 
