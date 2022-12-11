@@ -61,14 +61,14 @@ const Signup = (props: Props) => {
 
         {!signupSuccess &&
             <Container component="main" maxWidth="xs">
-              <Box component="form" id="signup-form" onSubmit={(event) => event.preventDefault()}>
+              <Box component="form" id="signup-form" onSubmit={(event: { preventDefault: () => void; }) => event.preventDefault()}>
                 <TextField className="signup-form-input pushup" required fullWidth type="text" label="Username" value={usernameSignup} onChange={input => setUsernameSignup(input.target.value)} placeholder="Username"/>
                 <TextField className="signup-form-input" type="password" value={passwordSignup} onChange={input => setPasswordSignup(input.target.value)} placeholder="Password"/>
                 <TextField className="signup-form-input" type="password" value={verifyPasswordSignup} onChange={input => setVerifyPasswordSignup(input.target.value)} placeholder="Type password again"/>
                 <TextField className="signup-form-input" type="text" value={emailSignup} onChange={input => setEmailSignup(input.target.value)} placeholder="Email"/>
                 <TextField className="signup-form-input" type="text" value={organization} onChange={input => setOrganization(input.target.value)} placeholder="Organization"/>
                 <TextField className="signup-form-input" type="text" value={jobTitle} onChange={input => setJobTitle(input.target.value)} placeholder="Job title"/>
-                <button className="blue-button" type="submit" onClick={() => createAdminUser()}>Signup</button>
+                <button data-testid="test-signup-button" className="blue-button" type="submit" onClick={() => createAdminUser()}>Signup</button>
                 {invalid && <p className="error-p">Please fill out all fields</p>}
                 <button id="signup" onClick={() => { props.setOpenSignup(false); }}>Cancel</button>
               </Box>

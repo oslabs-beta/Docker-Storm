@@ -70,7 +70,7 @@ const Login = (props: Props) => {
         <form id="login-form" onSubmit={(event) => event.preventDefault()}>
           <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
           <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
-          <button className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
+          <button data-testid="test-login-button" className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
           <button id="signup" onClick={() => { props.setOpenSignup(true); }}>Signup</button>
           {invalid && <p className="error-p">Invalid username/password please try again</p>}
         </form>

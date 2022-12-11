@@ -10,28 +10,28 @@ import Settings from '../../dist/client/pages/Settings.jsx';
 import Users from '../../dist/client/pages/Users.jsx';
 
 
-describe('HomePage View', () => {
-  it('should render Homepage', () => {
+describe('Initial Login View', () => {
+  it('should render Initial Login Page', () => {
     render(<App />);
     const loginButton = screen.getByText('LOGIN');
     expect(loginButton).toBeInTheDocument();    
   });
 
-  it('should render RenderViews page', () => {
+  xit('should render Home page', () => {
     render(
       <Router>
         <RenderViews dashId={''} targetsArr={[]} setTargetsArr={function (): void {
           throw new Error('Function not implemented.');
-        } } />
+        } } grafUrl={''} />
       </Router>);
-    const appName = screen.getByText('DOCKER STORM');
+    const appName = screen.getByText('Metrics');
     expect(appName).toBeInTheDocument();    
   });
   
   it('should render Metrics page', () => {
     render(
       <Router>
-        <Metrics dashId={''} />
+        <Metrics dashId={''} grafUrl={''} />
       </Router>);    
     const metrics = screen.getByText('Metrics');
     expect(metrics).toBeInTheDocument();

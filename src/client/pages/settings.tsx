@@ -127,7 +127,7 @@ const Settings = (props : Props) => {
       <form onSubmit={(e) => e.preventDefault()}>
         <input type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
         <input type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
-        <input type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
+        <input type="password" placeholder='Confirm New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
         <button type="submit" onClick={() => changePassword()}>SUBMIT</button>
         <br></br>
         
@@ -136,7 +136,7 @@ const Settings = (props : Props) => {
       <form onSubmit={(e) => e.preventDefault()}>
         <input type="text" placeholder='Ip Address' value={ip} onChange={input => setIp(input.target.value)} />
         <input type="text" placeholder='Job Name' value={job} onChange={input => setJob(input.target.value)} />
-        <select name="Role" value={role} style={style} onChange={input => setRole(input.target.value as Role)}>
+        <select data-testid="target-list" name="Role" value={role} style={style} onChange={input => setRole(input.target.value as Role)}>
           <option value="Manager">Manager</option>
           <option value="Worker">Worker</option>
           <option value="Daemon">Daemon</option>
