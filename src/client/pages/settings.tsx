@@ -18,13 +18,14 @@ interface Body {
 
 
 const Settings = (props : Props) => {
-  const[password, setPassword] = useState('');
-  const[newPassword, setNewPassword] = useState('');
-  const[verifyPassword, setVerifyPassword] = useState('');
-  const[job, setJob] = useState('');
-  const[role, setRole] = useState<Role>('Manager');
-  const[ip, setIp] = useState('');
-  const[added, setAdded] = useState(false);
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [job, setJob] = useState('');
+  const [role, setRole] = useState<Role>('Manager');
+  const [ip, setIp] = useState('');
+  const [ports, setPorts] = useState('');
+  const [added, setAdded] = useState(false);
 
   function changePassword(){
     if(newPassword !== verifyPassword){
@@ -50,14 +51,19 @@ const Settings = (props : Props) => {
   }
 
   function addTarget() {
+    const portArr: string[] = ports.split(/[ ,]+/).filter(Boolean);
+    const ipArr: string[] = [];
+    portArr.forEach((portElem: string) => {
+      ipArr.push(`${ip}:${portElem}`);
+    });
+    
     const obj : Target = {
-      targets: [ip],
+      targets: ipArr,
       labels:  {
         job: job,
         role: role
       } 
     }; 
-
     props.setTargetsArr([...props.targetsArr, obj]);
     setAdded(true);
     
@@ -99,8 +105,7 @@ const Settings = (props : Props) => {
     setJob('');
     setRole('Manager');
     setIp('');
-
-    return;
+    setPorts('');
   }
 
 
@@ -135,6 +140,7 @@ const Settings = (props : Props) => {
       <p>ADD A TARGET</p>
       <form onSubmit={(e) => e.preventDefault()}>
         <input type="text" placeholder='Ip Address' value={ip} onChange={input => setIp(input.target.value)} />
+        <input type="text" placeholder='Port(s) by comma' value={ports} onChange={input => setPorts(input.target.value)} />
         <input type="text" placeholder='Job Name' value={job} onChange={input => setJob(input.target.value)} />
         <select data-testid="target-list" name="Role" value={role} style={style} onChange={input => setRole(input.target.value as Role)}>
           <option value="Manager">Manager</option>

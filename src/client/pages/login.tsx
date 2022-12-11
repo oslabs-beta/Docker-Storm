@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/media/mac.png';
 import waves from '../../../resources/media/waves.png';
 import loginLogo from '../../../resources/media/login-logo.png';
+import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
+import theme from '../theme.jsx';
 import { DefaultDeserializer } from 'v8';
 
 interface Props {
@@ -62,18 +64,95 @@ const Login = (props: Props) => {
   };
 
   return (
+
+
+
     <div id="login-big-div">
       <div id="left-div" className="half-n-half">
         <div id="login-logo-div">
           <img src={loginLogo} alt="" />
         </div>
-        <form id="login-form" onSubmit={(event) => event.preventDefault()}>
-          <input className="login-input" type="text" value={username} onChange={input => setUsername(input.target.value)} placeholder="username"></input>
-          <input className="login-input" type="password" value={password} onChange={input => setPassword(input.target.value)} placeholder="password"></input>
-          <button data-testid="test-login-button" className="blue-button" type="submit" onClick={confirmCredentials}>LOGIN</button>
-          <button id="signup" onClick={() => { props.setOpenSignup(true); }}>Signup</button>
-          {invalid && <p className="error-p">Invalid username/password please try again</p>}
-        </form>
+
+        <Container 
+          component="main" >
+          <Box component="form"
+            id="login-form" 
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <Grid container 
+              sx={{gap: '10px 0px', marginLeft: '0', marginRight: '0', marginTop:'30px', width: '100%', paddingLeft: '0px', paddingRight: '0px'}}
+              justifyContent="center"
+              alignContent="center"
+              direction="column"
+            >
+              <Grid
+                item 
+                className="login-grid"
+                xs={12}
+              >
+                <TextField 
+                  required
+                  variant='outlined'
+                  type="text"
+                  label="Username"
+                  value={username} 
+                  onChange={input => setUsername(input.target.value)}
+                  sx={{ width: 350 }} 
+                />
+              </Grid>
+              <Grid
+                item 
+                className="login-grid"
+
+                xs={12}
+              >
+                <TextField 
+                  required
+                  variant='outlined'
+                  type="password"
+                  label="Password"  
+                  value={password} 
+                  onChange={input => setPassword(input.target.value)}
+                  sx={{ width: 350 }} 
+                />
+              </Grid>
+              <Grid item xs={12} display="flex" sx={{marginTop: '20px'}}>
+                <Grid 
+                  item
+                  xs={12}
+                  sm={6}
+                  textAlign="center">
+                  <Button 
+                    sx={{color:theme.palette.primary.contrastText, paddingLeft:'30px', paddingRight:'30px', border: '1.3px solid #ffffff'}} 
+                    onClick={() => { props.setOpenSignup(true); }}>SIGNUP
+                  </Button>
+                </Grid>
+
+                <Grid 
+                  item
+                  xs={12}
+                  sm={6}
+                  textAlign="center">
+                  <Button 
+                    type="submit" 
+                    sx={{color:'white', 
+                      backgroundColor: theme.palette.primary.main, 
+                      paddingLeft:'30px', 
+                      paddingRight:'30px',
+                      border: '1.3px solid',
+                      '&:hover': {
+                        backgroundColor: 'white',
+                        color: theme.palette.primary.main,
+                        
+                      },}} 
+                    onClick={confirmCredentials}>LOGIN
+                  </Button>
+                </Grid>
+              </Grid>
+              {invalid && <p className="error-p">Invalid username/password please try again</p>}
+            </Grid>
+          </Box>
+        </Container>
       </div>
 
       <div id="right-div" className="half-n-half">
