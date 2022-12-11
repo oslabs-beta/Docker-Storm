@@ -162,10 +162,6 @@ body {
 
 /* --------------------------------------------------- RenderViews CSS --------------------------------------------------- */
 
-#all-seeing-div {
-    display: flex;
-    flex-direction: row;
-}
 
 .navbar {
     position: sticky;

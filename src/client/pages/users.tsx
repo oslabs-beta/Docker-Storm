@@ -1,8 +1,10 @@
 // fix the fetch requests to include the new properties in the User interface
 // display the new properties in the table
-
-
 import React, {useState, useEffect} from 'react';
+import Link from '@mui/material/Link';
+import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
+
+
 
 interface User {
   username: string,
@@ -10,6 +12,7 @@ interface User {
   organization?: string,
   email?: string,
   jobTitle?: string,
+  TableRow: React.ElementType;
 }
 
 
@@ -71,7 +74,7 @@ const Users = () => {
         const newUserList = [...userList];
         const newUser: User = {
           username: username,
-          role: role
+          role: role,
         };
         newUserList.push(newUser);
 
@@ -104,42 +107,62 @@ const Users = () => {
     const email = user.email;
 
     return (
-      <tr key={username}>
-        <td>{username}</td> 
-        <td>{role}</td>
-        <td className="centered"><button className="deleteBtn">X</button></td>
-      </tr>
+      <TableRow component={Paper}>
+        <TableCell>{username}</TableCell>
+        <TableCell>{role}</TableCell>
+      </TableRow>
     );});
 
 
   return (
     <>
       <div>List of all users</div>
-      <div>{mappedList}</div>
-      <form onSubmit={e => e.preventDefault()}>
-        <input type="text" 
-          placeholder="Username" 
-          value={username} 
-          onChange={input => setUsername(input.target.value)} />
-        <input type="text"
-          placeholder="Role" 
-          value={role}
-          onChange={input => setRole(input.target.value)}/>
-        <input type="text" 
-          placeholder="Password" 
-          value={password}
-          onChange={input => setPassword(input.target.value)}/>
-        <input type="text" 
-          placeholder="Confirm Password" 
-          value={confirmPassword}
-          onChange={input => setConfirmPassword(input.target.value)}/>
-        <button type="submit" onClick={addNewUser}>Add New User</button>
-      </form>
-      {missingField && <div>Please fill out all fields before submitting</div>}
-      {matchPassword && <div>Passwords do not match</div>}
-      {uniqueUser && <div>Username already taken, please choose another username</div>}
+      <div id="table-div">
+        <TableContainer component={Paper}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Username</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Company</TableCell>
+              <TableCell>Job Title</TableCell>
+              <TableCell>Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {mappedList}
+          </TableBody>
+        </TableContainer>
+      </div>
+      <div>
+        <form onSubmit={e => e.preventDefault()}>
+          <input type="text" 
+            placeholder="Username" 
+            value={username} 
+            onChange={input => setUsername(input.target.value)} />
+          <input type="text"
+            placeholder="Role"
+            value={role}
+            onChange={input => setRole(input.target.value)}/>
+          <input type="text" 
+            placeholder="Password" 
+            value={password}
+            onChange={input => setPassword(input.target.value)}/>
+          <input type="text" 
+            placeholder="Confirm Password" 
+            value={confirmPassword}
+            onChange={input => setConfirmPassword(input.target.value)}/>
+          <button type="submit" onClick={addNewUser}>Add New User</button>
+          {missingField && <div>Please fill out all fields before submitting</div>}
+          {matchPassword && <div>Passwords do not match</div>}
+          {uniqueUser && <div>Username already taken, please choose another username</div>}
+        </form>
+      </div>
     </>
   );
 };
 
 export default Users;
+
+// fix fetch request 
+// fix table
+// fix div
