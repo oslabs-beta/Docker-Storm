@@ -1,17 +1,64 @@
-# Docker Storm
+# Docker Storm &middot; ![Github Repo Size](https://img.shields.io/github/repo-size/oslabs-beta/Docker-Storm) ![GitHub License](https://img.shields.io/github/license/oslabs-beta/Docker-Storm) ![GitHub PR](https://img.shields.io/badge/PRs-welcome-orange) ![GitHub Commit](https://img.shields.io/github/last-commit/oslabs-beta/Docker-Storm) ![GitHub Stars](https://img.shields.io/github/stars/oslabs-beta/Docker-Storm)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh justo, cursus 
-a justo et, lacinia cursus dui. Nullam ac sodales tellus. Sed maximus odio quam, eu 
-condimentum justo semper sit amet. Aenean consectetur urna quis lacinia auctor. Maecenas 
-eget mauris vitae purus suscipit tincidunt id in metus. Nullam mattis, lacus in pulvinar 
-auctor, justo sapien vulputate leo, euismod vehicula turpis orci et velit. Nunc placerat 
-odio vitae blandit tempor. Nunc dictum blandit eros et hendrerit.
+## About
+Docker Storm provides a easy to use interface in order to view important metrics regarding your current 
+Docker Swarm cluster and the containers which are being run on them. With the ablity to add new ports
+and create new users it's quick to implement and get up and running on your device. Metric tracking is done
+using information gathered using cadvisor and node-exporter.
 
+## Table of Contents
+Application usage/documentation
+
+- [Features](#features)
+- [Documentation](#documentation)
+- [Prerequisites](#prerequisites)
+
+Installation guides
+
+- [Installation](#installation)
+- [Docker Swarm Setup (If needed)](#if-you-need-to-setup-docker-swarm)
+
+Contributers and other info
+- [Contributers](#contributers)
+- [Contributing](#contributing)
+
+## Features:
+Live updating metric tracking in an organized grafana graph
+
+Ability to add new servers/vm's to track
+
+Settings page to change important user/system information
+
+Users page to see all the current users and add new users
+
+Login page with passwords encrypted using bcrypt
+
+
+[↥Back to top](#table-of-contents)
+
+## Documentation:
+You can access the documentation on this page: <br>
+https://DockerStorm.com/Documentation
+
+[↥Back to top](#table-of-contents)
 
 ## Prerequisites: 
-Before being able to run Docker Storm it is expected that you already have a Docker Swarm running
-with access to the IP addresses of each worker/manager. If not please follow the steps HERE
-to create a basic Docker Swarm setup using Multipass
+- The host computer running Docker Storm (does not have to be part of the swarm) will need these installed
+  - `Prometheus` (https://github.com/prometheus/prometheus) 
+  - `Grafana` (https://github.com/grafana/grafana) 
+    - Once installation is complete ensure that `allow_embedding` is enabled see docs for more info on how to enable this 
+    - If you want to allow users to view your Grafana charts without having to log in ensure that anonymous which is under `[auth.anonymous]` is enabled see docs for more info on how to enable this 
+    - (https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/)
+
+Before being able  to run Docker Storm it is expected that you already have a Docker Swarm running with access to the IP addresses of each worker/manager. If not please follow the steps [HERE](#if-you-need-to-setup-docker-swarm) to create a basic Docker Swarm setup using Multipass 
+
+Otherwise if you have a pre-existing swarm running make sure that:
+  - All Manager/Worker machines have installed
+    - `Node-Exporter` (https://github.com/prometheus/node_exporter) 
+    - `cAdvisor` (https://github.com/google/cadvisor)
+
+
+[↥Back to top](#table-of-contents)
 
 ## Installation:
 
@@ -25,19 +72,29 @@ Install Dependencies:
   npm install
 ```
 
-To start prometheus:
+Please start prometheus using the configuration file provided by Docker Storm:
 ```sh
   prometheus --web.enable-lifecycle --config.file=prometheus/prometheus.yml
 ```
-    
+
+Create a .env file in the root directory of Docker Storm and enter in a Postgres URI in this format:
+```sh
+  POSTGRES_URI = "PostgresURI Here"
+```
+All other keys will be asked upon first launch
+
+<br>
+
 To start application:
 ```sh
   npm run electron
   OR
   npm start
 ```
+
+[↥Back to top](#table-of-contents)
 ## If you need to setup Docker Swarm
-<details><summary></summary> 
+<details><summary>Docker Swarm Setup (Multipass)</summary> 
 
 ## VM Installation using Multipass (Mac OS): 
 Install multipass (please make sure you have brew installed):
@@ -126,6 +183,8 @@ Insert in vim:
 
 <br>
 
+[↥Back to top](#table-of-contents)
+
 ## Contributers
 
 - [@Kelvin Van](https://github.com/KelvinVan1)
@@ -133,12 +192,14 @@ Insert in vim:
 - [@Kevin Tseng](https://github.com/Kevin-J-Tseng)
 - [@Jeffrey Lee](https://github.com/jclee8888)
 
+[↥Back to top](#table-of-contents)
 
 ## Contributing
 
 Contributions are always welcome!
 
-See `contributing.md` for ways to get started.
+See `CONTRIBUTING.md` for ways to get started.
 
-Please adhere to this project's `code of conduct`.
+Please adhere to this project's `code of conduct` in `CODE_OF_CONDUCT.md`
 
+[↥Back to top](#table-of-contents)
