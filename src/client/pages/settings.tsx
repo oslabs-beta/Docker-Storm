@@ -154,7 +154,7 @@ const Settings = (props : Props) => {
 
   return (
     <Box id="big-div" sx={{ display: 'flex', flexDirection: 'column', height:'100%'}}>
-      <Box sx={{ margin: '10px 50px', height:'inherit'}}>
+      <Box sx={{ margin: '10px 5%', height:'inherit'}}>
         <h2>Settings</h2>
         <Box sx={{backgroundColor:'#ffffff', height:'80%', borderRadius:'15px', padding:'0px 20px'}}>
           <Container component='form' onSubmit={(e) => e.preventDefault()} sx={{justifyItems:'center'}}>
@@ -191,8 +191,8 @@ const Settings = (props : Props) => {
       
           <Box display="flex" flexDirection="column" sx={{width:'70vw', marginTop:'50px', paddingLeft:'15px'}}>
             <Typography>LIST OF TARGETS:</Typography>
-            <ImageList sx={{width:'100%', margin:'20 10px', gridAutoFlow: 'column', gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr)) !important",
-              gridAutoColumns: "minmax(300px, 1fr)", overflowX:'scroll'}}>
+            <ImageList sx={{width:'100%', margin:'20 10px', gridAutoFlow: 'column', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr)) !important',
+              gridAutoColumns: 'minmax(300px, 1fr)', overflowX:'scroll'}}>
               {targetMap}
             </ImageList>
           </Box>

@@ -37,5 +37,15 @@
             "job": "Worker2",
             "role": "Worker"
         }
+    },
+    {
+        "targets": [
+            "321.534.4.12:9090",
+            "321.534.4.12:7070"
+        ],
+        "labels": {
+            "job": "Worker3",
+            "role": "Worker"
+        }
     }
 ]
