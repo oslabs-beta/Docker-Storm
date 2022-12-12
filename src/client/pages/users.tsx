@@ -15,9 +15,6 @@ interface User {
   TableRow: React.ElementType;
 }
 
-
-
-
 const Users = () => {
 
   const [userList, setUserList] = useState<User[]>([]);
@@ -28,7 +25,6 @@ const Users = () => {
   const [missingField, setMissingField] = useState(false);
   const [matchPassword, setMatchPassword] = useState(false);
   const [uniqueUser, setUniqueUser] = useState(false);
-
 
   const addUsersToArray = (arr: User[]) => {
     setUserList(arr);
@@ -78,7 +74,6 @@ const Users = () => {
         };
         newUserList.push(newUser);
 
-        // unsure if there isn't a better way to this 
         setUserList(newUserList);
         setUsername('');
         setRole('');
@@ -93,8 +88,6 @@ const Users = () => {
     });
 
   };
-
-
 
   useEffect(() => {
     grabUsers();

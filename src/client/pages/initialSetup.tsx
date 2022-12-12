@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { renderMatches, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     setApiKey: (value: string) => void;
@@ -21,10 +21,6 @@ const InitialSetup = (props: Props) => {
     if(props.apiKey && props.grafUrl) navigate('/app');
   }, []);
 
-
-
-
-  // request to either create or edit the .env
   const handleSubmit = () => {
     if(!currentApi || !currentGrafUrl) {
       setValidInput(true);
@@ -50,8 +46,6 @@ const InitialSetup = (props: Props) => {
     });
   };
 
-
-  // render when there is no graf api key in the .env file
   const renderApiKey = () => {
     return (
       <div>
@@ -64,7 +58,6 @@ const InitialSetup = (props: Props) => {
     );
   };
 
-  // render when there is no pg uri in .env file
   const renderGrafUrl = () => {
     return (
       <div>
@@ -81,7 +74,6 @@ const InitialSetup = (props: Props) => {
     );
   };
 
-
   return(
     <div>
 
@@ -91,10 +83,6 @@ const InitialSetup = (props: Props) => {
         <button onClick={handleSubmit}>SUBMIT</button>
         {validInput && <div>Please fill out field(s) before submitting</div>}
       </form>
-
-
-
-
     </div>
   );
 };

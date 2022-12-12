@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
@@ -6,7 +6,7 @@ import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 import {Box} from '@mui/material';
 import logoWhite from '../../resources/media/logo-white.png';
-import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+import { Target } from '../types.js';
 
 
 interface Props {
