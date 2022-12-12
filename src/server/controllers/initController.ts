@@ -1,20 +1,22 @@
-import { Request, Response, NextFunction } from 'express';
 import db from '../models/dockerStormModel.js';
 import { ResponseObject } from '../../types.js';
 import fs from 'fs';
 import * as dotenv from 'dotenv';
 dotenv.config({override: true});
 
-
+// Interfaces needed for our controller
 interface InitController {
     initializeDatabase: ResponseObject;
     updateEnv: ResponseObject;
 
 }
 
-
+//Controller
 const initController: InitController = {
   
+  /**
+   * We will create the necessary tables if they do not already exist within our database
+   */
   initializeDatabase: async (req, res, next) => {
     console.log('In init controller');
     
@@ -59,6 +61,9 @@ const initController: InitController = {
       });
   },
 
+  /**
+   * This method provides a way to update our GRAFANA_API_KEY along with GRAFANA_URL from within our application
+   */
   updateEnv: (req, res, next) => {
     if(!process.env.GRAFANA_API_KEY) {
       const str = `\nGRAFANA_API_KEY = '${req.body.apiKey}'`;
