@@ -22,7 +22,6 @@ interface ResponseObject {
 }
 
 const urlText = 'Please enter exactly in the form of http://localhost:XXXX/ or http://[IP ADDRESS]/ or http://[URL]/ . Please do not add anything after the final slash';
-
 const apiText = 'You can find your Grafana API key under the configuration gear in your Grafana account.';
 
 
@@ -153,11 +152,7 @@ const Signup = (props: Props) => {
                       onChange={input => setVerifyPasswordSignup(input.target.value)} 
                       placeholder="Type password again"/>
                   </Grid>
-                  <Grid 
-                    item 
-                    
-                    xs={12}
-                  >
+                  <Grid item xs={12}>
                     <TextField 
                       type="text" 
                       required
@@ -167,11 +162,7 @@ const Signup = (props: Props) => {
                       onChange={input => setEmailSignup(input.target.value)} 
                       placeholder="Email"/>
                   </Grid>
-                  <Grid
-                    item 
-                    className="signup-grid"
-                    xs={12}
-                  >
+                  <Grid item className="signup-grid" xs={12}>
                     <TextField 
                       type="text" 
                       label="Organization" 
@@ -251,7 +242,6 @@ const Signup = (props: Props) => {
                         '&:hover': {
                           backgroundColor: 'white',
                           color: theme.palette.primary.main,
-                          
                         }}}  
                       onClick={() => createAdminUser()}>Signup</Button>
                   </Grid>
