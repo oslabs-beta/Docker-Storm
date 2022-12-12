@@ -17,15 +17,15 @@ describe('Initial Login View', () => {
     expect(loginButton).toBeInTheDocument();    
   });
 
-  xit('should render Home page', () => {
+  it('should render Home page', () => {
     render(
       <Router>
         <RenderViews dashId={''} targetsArr={[]} setTargetsArr={function (): void {
           throw new Error('Function not implemented.');
         } } grafUrl={''} />
       </Router>);
-    const appName = screen.getByText('Metrics');
-    expect(appName).toBeInTheDocument();    
+    const settings = screen.getByText('Settings');
+    expect(settings).toBeInTheDocument();    
   });
   
   it('should render Metrics page', () => {

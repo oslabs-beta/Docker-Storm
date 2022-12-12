@@ -14,8 +14,7 @@ describe('Settings Page', () => {
 
   it('should render submit target button and password update button', () => {
     const buttons = screen.getAllByRole('button');
-    expect(buttons).toHaveLength(2);
-    
+    expect(buttons).toHaveLength(2);    
   });
 
   it('should handle a click when clicking target Submit', () => {

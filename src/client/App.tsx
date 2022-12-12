@@ -9,7 +9,7 @@ import InitialSetup from './pages/initialSetup.jsx';
 import 'whatwg-fetch';
 
 
-import '../../resources/styles.css';
+import '../../resources/styling/styles.css';
 
 
 
