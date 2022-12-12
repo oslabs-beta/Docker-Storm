@@ -2,14 +2,13 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
-import Swarms from './pages/swarms.jsx';
 import Users from './pages/users.jsx';
 import {Box} from '@mui/material';
 import logoWhite from '../../resources/media/logo-white.png';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined.js';
+import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined.js';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined.js';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined.js';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 
 
@@ -59,7 +58,6 @@ const RenderViews = (props: Props) => {
             <Route path='/settings' element={<Settings targetsArr={props.targetsArr} setTargetsArr={props.setTargetsArr} />}/>
             <Route path='/metrics' element={<Metrics dashId={props.dashId} grafUrl={props.grafUrl} />}/>
             <Route path='/users' element={<Users/>}/>
-            <Route path='/swarms' element={<Swarms/>}/>
           </Routes>
         </Box>
       </Box>
