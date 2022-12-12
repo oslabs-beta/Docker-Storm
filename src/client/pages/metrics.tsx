@@ -19,8 +19,8 @@ const Metrics = (props: Props) => {
   return (
     <Box sx={{ margin: '10px 50px'}}>
       <h2>Metrics</h2>
-      <Box sx={{backgroundColor:'grey', width:'80vw', height:'80vh'}}>
-      {props.dashId && <iframe src={`${props.grafUrl}d/${props.dashId}/docker-storm?orgId=1&refresh=5s&kiosk=tv`} width="1200" height="1600" frameBorder="0"></iframe>}
+      <Box>
+        {props.dashId && <iframe src={`${props.grafUrl}d/${props.dashId}/docker-storm?orgId=1&refresh=5s&kiosk=tv`} width="820" height="540" frameBorder="0"></iframe>}
       </Box>
     </Box>
 
