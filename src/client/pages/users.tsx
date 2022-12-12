@@ -1,12 +1,8 @@
-// fix the fetch requests to include the new properties in the User interface
-// display the new properties in the table
 import React, {useState, useEffect} from 'react';
 import Link from '@mui/material/Link';
 import { Box, Container, TableContainer, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 import theme from '../theme.jsx';
 import { StyleSharp } from '@mui/icons-material';
-
-
 
 interface User {
   username: string,
@@ -17,6 +13,31 @@ interface User {
   TableRow?: React.ElementType;
 }
 
+const styles = {
+  buttonStyles: {
+    marginTop: '10px', 
+    border: theme.palette.primary.main,
+    borderStyle: 'solid',
+    backgroundColor: theme.palette.primary.main, 
+    '&:hover': {
+      backgroundColor: 'white',
+      color: theme.palette.primary.main,
+    },
+    color: 'white'
+  },
+  gridStyles: {
+    width: '50%',
+    margin: '0px'
+  },
+  fields: {
+    backgroundColor: '#ffffff',
+  },
+  tableHeader: {
+    color: '#9FA2B4',
+  }
+};
+
+<<<<<<< HEAD
 
 const styles = {
   buttonStyles: {
@@ -46,6 +67,8 @@ const styles = {
 
 
 
+=======
+>>>>>>> dev
 const Users = () => {
 
   const [userList, setUserList] = useState<User[]>([]);
@@ -57,7 +80,6 @@ const Users = () => {
   const [matchPassword, setMatchPassword] = useState(false);
   const [uniqueUser, setUniqueUser] = useState(false);
 
-
   const addUsersToArray = (arr: User[]) => {
     setUserList(arr);
   };
@@ -68,13 +90,13 @@ const Users = () => {
       .then((result) => {
         addUsersToArray(result as User[]);
       });
-
   };
 
   const addNewUser = () => {
     setMissingField(false);
     setMatchPassword(false);
     setUniqueUser(false);
+
     if(!username || !role || !password || !confirmPassword) {
       setMissingField(true);
       return;
@@ -105,8 +127,6 @@ const Users = () => {
           role: role,
         };
         newUserList.push(newUser);
-
-        // unsure if there isn't a better way to this 
         setUserList(newUserList);
         setUsername('');
         setRole('');
@@ -119,10 +139,7 @@ const Users = () => {
         setUniqueUser(true);
       }
     });
-
   };
-
-
 
   useEffect(() => {
     grabUsers();
@@ -149,8 +166,6 @@ const Users = () => {
   return (
     <>
       <Box className="big-div" sx={{ display: 'flex', flexDirection: 'column', height:'100%'}}>
-
-
         <Box id="table-div" sx={{ margin: '10px 50px'}}>
           <h2>List of all users</h2>
           <TableContainer component={Paper} sx={{maxHeight: '50vh', overflow:'auto'}}>
@@ -183,12 +198,9 @@ const Users = () => {
             {uniqueUser && <div>Username already taken, please choose another username</div>}
           </Container>
         </Box>
-
       </Box>
     </>
   );
 };
 
 export default Users;
-
-// fix fetch request 

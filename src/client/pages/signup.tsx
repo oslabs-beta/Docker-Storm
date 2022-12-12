@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
+import {TextField, Container, Box, Grid, Button } from '@mui/material';
 import theme from '../theme.jsx';
 import Tooltip from './tooltip.jsx';
 
@@ -95,13 +95,6 @@ const Signup = (props: Props) => {
       return;
     }
   };
-
-
-
-
-
-
-
 
   return (
     <div id="signup-background-div">
@@ -261,7 +254,6 @@ const Signup = (props: Props) => {
               </Box>
             
             </Container>
-            
         }
 
         {signupSuccess &&
@@ -282,7 +274,6 @@ const Signup = (props: Props) => {
                   onClick={() => { props.setOpenSignup(false); }}>LOGIN</Button>
               </Grid>
             </Box>
-            
         }
 
       </div>

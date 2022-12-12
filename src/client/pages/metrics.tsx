@@ -15,7 +15,6 @@ const Metrics = (props: Props) => {
     setDash(props.dashId);
     setGrafUrl(props.grafUrl);
   },[dash, grafUrl]);
-  
 
   return (
     <Box sx={{ margin: '10px 50px'}}>

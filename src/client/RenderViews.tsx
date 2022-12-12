@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
@@ -11,6 +11,7 @@ import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+
 
 interface Props {
   dashId: string;

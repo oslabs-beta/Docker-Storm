@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/media/mac.png';
 import waves from '../../../resources/media/waves.png';
 import loginLogo from '../../../resources/media/login-logo.png';
-import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
+import {TextField, Container, Box, Grid, Button } from '@mui/material';
 import theme from '../theme.jsx';
 import Signup from './signup.jsx';
 import { DefaultDeserializer } from 'v8';
@@ -20,15 +20,12 @@ interface ResponseObject {
   key: string;
 }
   
-// could maybe use cacheing to prevent need to fetch env file every time
 const Login = (props: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const navigate = useNavigate();
-
-
 
   const setKeys = (apiKey: string, grafUrl: string) => {
     props.setGrafUrl(grafUrl);
@@ -54,7 +51,6 @@ const Login = (props: Props) => {
       return;
     }
     const data: ResponseObject = await result.json();
-    console.log(data);
 
     setKeys(data.key, data.grafUrl);
     if(data.key && data.grafUrl) {

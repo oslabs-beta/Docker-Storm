@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
 import { Job, JobArray, Target, TargetIpArray, TargetsArray, ResponseObject, PanelObject, Role } from '../../types.js';
 import fs from 'fs';
 
+// Interface for controller
 interface MetricsController {
     getListOfTargets: ResponseObject;
     generatePanelBody: ResponseObject;
@@ -9,7 +9,12 @@ interface MetricsController {
 
 }
 
+// Controller
 const metricsController: MetricsController = {
+
+  /**
+   * Method which will grab a list of targets from our targets.json and set it into res.locals
+   */
   getListOfTargets(req, res, next) {
     const targets: TargetsArray = JSON.parse(fs.readFileSync('./prometheus/targets.json', 'utf-8'));
     const jobsArray : JobArray = [];
@@ -22,10 +27,13 @@ const metricsController: MetricsController = {
 
     res.locals.jobs = jobsArray;
     res.locals.targets = targetsArray;
-    console.log(res.locals.jobs);
     return next();
   },
 
+  /**
+   * Method which will generate the panel body needed by the grafana controller given some values in a body
+   * This method will iterate through each panelTitle and create a body object for it and push it back into the panels object
+   */
   generatePanelBody(req, res, next){
     const {panelType, panelTitles, expr} = req.body;
     
@@ -53,17 +61,16 @@ const metricsController: MetricsController = {
     return next();
   },
 
+  /**
+   * This method works to read from the staticPanels.json which has all of the panel bodies avaliable within it and save it to res.locals
+   */
   generateStaticPanels(req, res, next){
+    console.log('In generateStaticPanels');
+    
     const staticPanelsArray: PanelObject[] = JSON.parse(fs.readFileSync('./grafana/staticPanels.json', 'utf-8'));
-
-    console.log(staticPanelsArray);
     res.locals.staticPanels = staticPanelsArray;
     return next();
   },
-
-  
-
-
 };
 
 
