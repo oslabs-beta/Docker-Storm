@@ -6,7 +6,6 @@ const { Pool } = pkg;
 
 const PG_URI = process.env.POSTGRES_URI;
 
-
 const pool = new Pool({
   connectionString: PG_URI,
 });

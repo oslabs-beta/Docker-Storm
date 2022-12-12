@@ -2,7 +2,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
 import * as manageID from '../helperFunctions/manageFiles.js';
-import { ResponseObject, PanelObject } from '../../types.js';
+import { ResponseObject } from '../../types.js';
 dotenv.config({override: true});
 
 interface GrafanaController {
@@ -33,13 +33,13 @@ let grafID = manageID.getGrafID();
 
 const grafanaController: GrafanaController = {
   createDB(req,res,next) {
+    console.log('In createDB Controller');
+
     if(process.env.GRAFANA_DASHBOARD_ID) {
       return res.status(200).send({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
     }
 
     const dash = fs.readFileSync('./grafana/jsonTemplates/dbTemplate.json', 'utf-8');
-    console.log('CREATEDB');
-    console.log(process.env.GRAFANA_API_KEY);
 
     fetch(`${process.env.GRAFANA_URL}api/dashboards/db/`, {
       method: 'POST',
@@ -55,19 +55,19 @@ const grafanaController: GrafanaController = {
         console.log(result);
         if(result.uid) {
           const str = `\nGRAFANA_DASHBOARD_ID = '${result.uid}'`;
-          console.log('LOOKING FOR THIS', str);
           fs.appendFileSync('./.env', str, 'utf-8');
           return next();
         }
         return next();
       })
       .catch((err) => {
+        return next(err);
         console.log(err);
       });        
   },
 
   getDashByUid(req, res, next) {
-    console.log('Here GETDASH!');
+    console.log('In getDashByUid Controller!');
     dotenv.config({override: true});
     fetch(`${process.env.GRAFANA_URL}api/dashboards/uid/${process.env.GRAFANA_DASHBOARD_ID}`, {
       method: 'GET',
@@ -85,7 +85,7 @@ const grafanaController: GrafanaController = {
   },
 
   createPanel(req, res, next){
-    console.log('here CREATEPANEL');
+    console.log('In createPanel');
     const {panels} = req.body;
     const panelsArray: Record<string, unknown>[] = [];
     const panelPos = [0, 12];
@@ -110,7 +110,7 @@ const grafanaController: GrafanaController = {
   
   
   updateDB(req, res, next) {
-    console.log('Here UPDATEDB!');
+    console.log('In updateDB!');
 
     const {panels} = res.locals;
 
@@ -121,8 +121,6 @@ const grafanaController: GrafanaController = {
     else{
       body.dashboard['panels'].push(...panels);
     }
-
-
 
     fetch(`${process.env.GRAFANA_URL}api/dashboards/db/`, {
       method: 'POST',
@@ -144,10 +142,8 @@ const grafanaController: GrafanaController = {
     targets.push(req.body);
     fs.writeFileSync('./prometheus/targets.json', JSON.stringify(targets, null, 4));
     return next();
-
-
-
   }
+
 };
 
 

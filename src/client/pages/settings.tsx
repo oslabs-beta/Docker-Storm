@@ -1,9 +1,5 @@
-import { ipcMain } from 'electron/main';
-import React, {useEffect, useState} from 'react';
-import { Job, JobArray, Target, TargetIpArray, Role } from '../../types.js';
-
-
-
+import React, { useState } from 'react';
+import { Job, Target, Role } from '../../types.js';
 
 interface Props {
   targetsArr: Target[];

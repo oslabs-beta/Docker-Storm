@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express';
 import { Job, JobArray, Target, TargetIpArray, TargetsArray, ResponseObject, PanelObject, Role } from '../../types.js';
 import fs from 'fs';
 
@@ -22,7 +21,6 @@ const metricsController: MetricsController = {
 
     res.locals.jobs = jobsArray;
     res.locals.targets = targetsArray;
-    console.log(res.locals.jobs);
     return next();
   },
 
@@ -54,16 +52,12 @@ const metricsController: MetricsController = {
   },
 
   generateStaticPanels(req, res, next){
+    console.log('In generateStaticPanels');
+    
     const staticPanelsArray: PanelObject[] = JSON.parse(fs.readFileSync('./grafana/staticPanels.json', 'utf-8'));
-
-    console.log(staticPanelsArray);
     res.locals.staticPanels = staticPanelsArray;
     return next();
   },
-
-  
-
-
 };
 
 

@@ -1,11 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
-import * as dotenv from 'dotenv';
 import { ResponseObject } from '../../types.js';
-
-
-
 
 interface UserController {
     verifyUser: ResponseObject;
@@ -19,16 +14,13 @@ interface UserController {
     checkEnv: ResponseObject;
 }
 
-
-
-
 const userController: UserController = {
 
   verifyUser: async (req, res, next) => {
+    console.log('In verifyUser');
+
     const { password } = req.body;
-
     const username = req.body.username || req.cookies.username;
-
     const queryStr = 'SELECT * FROM users WHERE username = $1';
 
     try {
@@ -63,7 +55,10 @@ const userController: UserController = {
     
 
   createUser: async (req, res, next) => {
+    console.log('In createUser');
+
     const { username, role } = req.body;
+
     try {
       if(!username || !res.locals.password) {
         return next({
@@ -93,9 +88,8 @@ const userController: UserController = {
     }
   },
 
-  // if we are creating new password it will be newPassword
-  // if we are just verifying password it will be password
   encrypt: async (req, res, next) => {
+    console.log('In encrypt');
     const password = req.body.newPassword || req.body.password;
 
     const saltFactor = bcrypt.genSaltSync(10);
@@ -104,6 +98,7 @@ const userController: UserController = {
   },
 
   updateUser: (req, res, next) => {
+    console.log('In updateUser');
     const username = req.cookies.username;
     const password = res.locals.password;
 
@@ -114,9 +109,8 @@ const userController: UserController = {
     
   },
 
-  // UPDATE users SET password='asdf' WHERE username='shay';
-
   deleteUser: (req, res, next) => {
+    console.log('In deleteUser');
     const { username } = req.body;
 
     const queryStr = 'DELETE FROM users WHERE username=($1);';
@@ -132,7 +126,7 @@ const userController: UserController = {
 
 
   getAllUsers: (req,res,next) => {
-
+    console.log('In getAllUsers');
     const queryString = 'SELECT * FROM users INNER JOIN users_info ON users.username = users_info.username';
     db.query(queryString, [])
       .then((result) => {
@@ -150,7 +144,7 @@ const userController: UserController = {
   },
 
   createAdminUser: async (req, res, next) => {
-
+    console.log('In createAdminUser');
     const { username, email, organization, jobTitle, password } = req.body;
     res.locals.username = username;
     res.locals.email = email;
@@ -188,7 +182,7 @@ const userController: UserController = {
   },
 
   createAdminUserInfo: async (req, res, next) => {
-    console.log(res.locals.username, res.locals.email, res.locals.organization, res.locals.jobTitle);
+    console.log('In createAdminUserInfo');
     
     try {
       const queryStr = 'INSERT INTO users_info (username, email, organization, job_title) VALUES ($1, $2, $3, $4);';
@@ -213,6 +207,8 @@ const userController: UserController = {
   },
 
   checkEnv: (req, res, next) => {
+    console.log('In checkEnv');
+    
     res.locals.grafUrl = process.env.GRAFANA_URL || '';  
     res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
     return next();

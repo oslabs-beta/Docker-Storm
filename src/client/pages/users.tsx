@@ -1,7 +1,3 @@
-// fix the fetch requests to include the new properties in the User interface
-// display the new properties in the table
-
-
 import React, {useState, useEffect} from 'react';
 
 interface User {
@@ -11,9 +7,6 @@ interface User {
   email?: string,
   jobTitle?: string,
 }
-
-
-
 
 const Users = () => {
 
@@ -25,7 +18,6 @@ const Users = () => {
   const [missingField, setMissingField] = useState(false);
   const [matchPassword, setMatchPassword] = useState(false);
   const [uniqueUser, setUniqueUser] = useState(false);
-
 
   const addUsersToArray = (arr: User[]) => {
     setUserList(arr);
@@ -75,7 +67,6 @@ const Users = () => {
         };
         newUserList.push(newUser);
 
-        // unsure if there isn't a better way to this 
         setUserList(newUserList);
         setUsername('');
         setRole('');
@@ -90,8 +81,6 @@ const Users = () => {
     });
 
   };
-
-
 
   useEffect(() => {
     grabUsers();

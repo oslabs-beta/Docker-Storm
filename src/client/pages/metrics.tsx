@@ -13,7 +13,6 @@ const Metrics = (props: Props) => {
     setDash(props.dashId);
     setGrafUrl(props.grafUrl);
   },[dash, grafUrl]);
-  
 
   return (
     <div>

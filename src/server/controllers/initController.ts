@@ -16,7 +16,7 @@ interface InitController {
 const initController: InitController = {
   
   initializeDatabase: async (req, res, next) => {
-    console.log('in controller');
+    console.log('In init controller');
     
     const dbQuery = `CREATE TABLE IF NOT EXISTS users(
     "id" SERIAL NOT NULL,
@@ -59,11 +59,7 @@ const initController: InitController = {
       });
   },
 
-  // apiKey
-  // pgUri
-  //GRAFANA_API_KEY
   updateEnv: (req, res, next) => {
-    const f = fs.readFileSync('./.env', 'utf-8');
     if(!process.env.GRAFANA_API_KEY) {
       const str = `\nGRAFANA_API_KEY = '${req.body.apiKey}'`;
       fs.appendFileSync('./.env', str, 'utf-8');
@@ -77,8 +73,6 @@ const initController: InitController = {
 
     dotenv.config({override: true});
     
-
-
     return next();
   }
 };

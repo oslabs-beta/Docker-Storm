@@ -1,11 +1,10 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login.jsx';
-import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
+import { Job, Target} from '../types.js';
 import Signup from './pages/signup.jsx';
-import React, {useEffect, useState, useContext, createContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
-// import 'whatwg-fetch';
 import '../../resources/styling/styles.css';
 
 
@@ -25,8 +24,6 @@ const App: React.FC = (): JSX.Element => {
     const jobsList = await fetch('/metric').then(data => {return data.json();});
     const arr = makeTargetArray(jobsList.jobs, jobsList.targets);
     setTargetsArr(arr);
-
-    console.log('Jobs: ', jobsList);
   
     const panelList = await fetch('/metric/genPanel', {
       method: 'POST',
@@ -36,14 +33,9 @@ const App: React.FC = (): JSX.Element => {
       body: JSON.stringify({panelTitles: jobsList.jobs, panelType: 'gauge', expr: '100 - (avg(irate(node_cpu_seconds_total{mode=\'idle\', job=<jobname>}[1m])) * 100)'}),
     })
       .then(data => {return data.json();});
-  
-    console.log('Panels:', panelList);
 
     const staticPanels = await fetch('/metric/genStaticPanels').then(data => {return data.json();});
-    console.log('We made it!: ', staticPanels);
     panelList.panels.unshift(...staticPanels);
-
-    console.log('Updated Panels: ', panelList);
   
     fetch('/graf/init', {
 
@@ -55,7 +47,6 @@ const App: React.FC = (): JSX.Element => {
     })
       .then((data) => data.json())
       .then((result) => {
-        console.log('RESULT HERE', result);
         setDashId(result.ApiKey);
       });
   }
@@ -78,7 +69,6 @@ const App: React.FC = (): JSX.Element => {
   useEffect(() => {
     console.log('useeffect ran');
     if(!apiKey || !grafUrl) return;
-    console.log('in use effect', apiKey);
     
     intializeDashboard();
   }, [apiKey, grafUrl]);
