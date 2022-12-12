@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import db from '../models/dockerStormModel.js';
 import { ResponseObject } from '../../types.js';
 
+//Controller interface
 interface UserController {
     verifyUser: ResponseObject;
     createUser: ResponseObject;
@@ -14,8 +15,13 @@ interface UserController {
     checkEnv: ResponseObject;
 }
 
+//Controller
 const userController: UserController = {
 
+  /**
+   * Method will verify that the user entered the correct credentials using bycrpt's compare
+   * First we grab the user info then compare that hashed password to the input passsword
+   */
   verifyUser: async (req, res, next) => {
     console.log('In verifyUser');
 
@@ -54,6 +60,10 @@ const userController: UserController = {
   },
     
 
+  /**
+   * This method will create a new user
+   * We go ahead and insert a new user into our users table upon creation
+   */
   createUser: async (req, res, next) => {
     console.log('In createUser');
 
@@ -88,6 +98,9 @@ const userController: UserController = {
     }
   },
 
+  /**
+   * This method encrypt's our password using a has of 10 and the password passed into it saving it to res.locals
+   */
   encrypt: async (req, res, next) => {
     console.log('In encrypt');
     const password = req.body.newPassword || req.body.password;
@@ -97,6 +110,9 @@ const userController: UserController = {
     return next();
   },
 
+  /**
+   * This method updates the user's password with a new hashed password
+   */
   updateUser: (req, res, next) => {
     console.log('In updateUser');
     const username = req.cookies.username;
@@ -109,6 +125,9 @@ const userController: UserController = {
     
   },
 
+  /**
+   * This method if will delete the user from the users table
+   */
   deleteUser: (req, res, next) => {
     console.log('In deleteUser');
     const { username } = req.body;
@@ -125,6 +144,9 @@ const userController: UserController = {
   },
 
 
+  /**
+   * This method grabs each user and saves it into res.locals to display later
+   */
   getAllUsers: (req,res,next) => {
     console.log('In getAllUsers');
     const queryString = 'SELECT * FROM users INNER JOIN users_info ON users.username = users_info.username';
@@ -143,6 +165,9 @@ const userController: UserController = {
 
   },
 
+  /**
+   * This method creates the admin user along with org info
+   */
   createAdminUser: async (req, res, next) => {
     console.log('In createAdminUser');
     const { username, email, organization, jobTitle, password } = req.body;
@@ -181,6 +206,9 @@ const userController: UserController = {
     }
   },
 
+  /**
+   * This method populates the additional info for a specific user (email, org, job title)
+   */
   createAdminUserInfo: async (req, res, next) => {
     console.log('In createAdminUserInfo');
     
@@ -206,9 +234,12 @@ const userController: UserController = {
     }
   },
 
+  /**
+   * This method sets the res.locals of grafUrl and apiKey
+   */
   checkEnv: (req, res, next) => {
     console.log('In checkEnv');
-    
+
     res.locals.grafUrl = process.env.GRAFANA_URL || '';  
     res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
     return next();
