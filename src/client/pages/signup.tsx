@@ -60,7 +60,7 @@ const Signup = (props: Props) => {
 
 
   const createAdminUser = async () => {
-    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl) {
+    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl || !jobTitle) {
       setInvalid(true);
       return;
     }
@@ -69,7 +69,7 @@ const Signup = (props: Props) => {
       return;
     }
 
-    envSetup();
+    
 
     const body = {
       username: usernameSignup,
@@ -92,9 +92,12 @@ const Signup = (props: Props) => {
 
     if(result.status == 200) {
       setSignupSuccess(true);
+      envSetup();
       return;
     }
   };
+
+
 
   return (
     <div id="signup-background-div">
