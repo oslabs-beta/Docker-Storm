@@ -2,7 +2,9 @@
 // display the new properties in the table
 import React, {useState, useEffect} from 'react';
 import Link from '@mui/material/Link';
-import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, Container, TableContainer, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
+import theme from '../theme.jsx';
+import { StyleSharp } from '@mui/icons-material';
 
 
 
@@ -12,9 +14,35 @@ interface User {
   organization?: string,
   email?: string,
   jobTitle?: string,
-  TableRow: React.ElementType;
+  TableRow?: React.ElementType;
 }
 
+
+const styles = {
+  buttonStyles: {
+    marginTop: '10px', 
+    border: theme.palette.primary.main,
+    borderStyle: 'solid',
+    backgroundColor: theme.palette.primary.main, 
+    '&:hover': {
+      backgroundColor: 'white',
+      color: theme.palette.primary.main,
+      
+    },
+    color: 'white'
+  },
+  gridStyles: {
+    width: '50%',
+    margin: '0px'
+  },
+  fields: {
+    backgroundColor: '#ffffff',
+  },
+  tableHeader: {
+    color: '#9FA2B4',
+  }
+  
+};
 
 
 
@@ -60,7 +88,7 @@ const Users = () => {
     const body = {
       username: username,
       role: role,
-      password: password
+      password: password,
     };
 
     fetch('/user/signup', {
@@ -103,12 +131,16 @@ const Users = () => {
   const mappedList = userList.map(user => {
     const username = user.username;
     const role = user.role;
+    const jobTitle = user.job_title;
     const organization = user.organization;
     const email = user.email;
 
     return (
       <TableRow component={Paper}>
         <TableCell>{username}</TableCell>
+        <TableCell>{organization}</TableCell>
+        <TableCell>{jobTitle}</TableCell>
+        <TableCell>{email}</TableCell>
         <TableCell>{role}</TableCell>
       </TableRow>
     );});
@@ -116,47 +148,43 @@ const Users = () => {
 
   return (
     <>
-      <div>List of all users</div>
-      <div id="table-div">
-        <TableContainer component={Paper}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Username</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Job Title</TableCell>
-              <TableCell>Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {mappedList}
-          </TableBody>
-        </TableContainer>
-      </div>
-      <div>
-        <form onSubmit={e => e.preventDefault()}>
-          <input type="text" 
-            placeholder="Username" 
-            value={username} 
-            onChange={input => setUsername(input.target.value)} />
-          <input type="text"
-            placeholder="Role"
-            value={role}
-            onChange={input => setRole(input.target.value)}/>
-          <input type="text" 
-            placeholder="Password" 
-            value={password}
-            onChange={input => setPassword(input.target.value)}/>
-          <input type="text" 
-            placeholder="Confirm Password" 
-            value={confirmPassword}
-            onChange={input => setConfirmPassword(input.target.value)}/>
-          <button type="submit" onClick={addNewUser}>Add New User</button>
-          {missingField && <div>Please fill out all fields before submitting</div>}
-          {matchPassword && <div>Passwords do not match</div>}
-          {uniqueUser && <div>Username already taken, please choose another username</div>}
-        </form>
-      </div>
+      <Box className="big-div" sx={{ display: 'flex', flexDirection: 'column', height:'100%'}}>
+
+
+        <Box id="table-div" sx={{ margin: '10px 50px'}}>
+          <h2>List of all users</h2>
+          <TableContainer component={Paper} sx={{maxHeight: '50vh', overflow:'auto'}}>
+            <Table stickyHeader>
+              <TableHead >
+                <TableRow >
+                  <TableCell>Username</TableCell>
+                  <TableCell>Organization</TableCell>
+                  <TableCell>Job Title</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Role</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {mappedList}
+              </TableBody>
+            </Table>
+          </TableContainer>        
+        </Box>
+
+        <Box sx={{ margin: '10px 50px', display: 'flex'}}>
+          <Container component='form' onSubmit={(e) => e.preventDefault()} sx={{display:'flex', flexDirection: 'row', justifyContent:'space-between', alignContent: 'center'}}>
+            <TextField type="text" placeholder='Username' value={username} onChange={input => setUsername(input.target.value)} style={styles.fields}/>
+            <TextField type="text" placeholder='Role' value={role} onChange={input => setRole(input.target.value)}  style={styles.fields}/>
+            <TextField type="password" placeholder='Password' value={password} onChange={input => setPassword(input.target.value)}  style={styles.fields}/>
+            <TextField type="password" placeholder='Confirm Password' value={confirmPassword} onChange={input => setConfirmPassword(input.target.value)}  style={styles.fields}/>
+            <Button sx={styles.buttonStyles} type="submit" onClick={addNewUser}>Add New User</Button>
+            {missingField && <div>Please fill out all fields before submitting</div>}
+            {matchPassword && <div>Passwords do not match</div>}
+            {uniqueUser && <div>Username already taken, please choose another username</div>}
+          </Container>
+        </Box>
+
+      </Box>
     </>
   );
 };
@@ -164,5 +192,3 @@ const Users = () => {
 export default Users;
 
 // fix fetch request 
-// fix table
-// fix div
