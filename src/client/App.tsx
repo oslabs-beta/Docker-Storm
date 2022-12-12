@@ -5,6 +5,8 @@ import Signup from './pages/signup.jsx';
 import React, {useEffect, useState} from 'react';
 import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
+import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
+// import 'whatwg-fetch';
 import '../../resources/styling/styles.css';
 
 
@@ -77,14 +79,14 @@ const App: React.FC = (): JSX.Element => {
   
 
   return (
+
     <HashRouter>
       <Routes>
         <Route path='/' element={<Login 
           setApiKey={setApiKey}
           apiKey={apiKey}
           setGrafUrl={setGrafUrl}
-          openSignup={openSignup}
-          setOpenSignup={setOpenSignup}
+          grafUrl={grafUrl}
         />}/>
         <Route path='/setup' element={<InitialSetup 
           setApiKey={setApiKey} 
@@ -102,12 +104,7 @@ const App: React.FC = (): JSX.Element => {
           
             
       </Routes>
-      {openSignup && <Signup 
-        setApiKey={setApiKey} 
-        apiKey={apiKey} 
-        openSignup={openSignup}
-        setOpenSignup={setOpenSignup}
-      />}
+      
     </HashRouter>
   );
 };
