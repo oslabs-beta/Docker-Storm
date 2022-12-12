@@ -60,7 +60,7 @@ const Signup = (props: Props) => {
 
 
   const createAdminUser = async () => {
-    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl) {
+    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl || !jobTitle) {
       setInvalid(true);
       return;
     }
