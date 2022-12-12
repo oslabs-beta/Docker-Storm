@@ -26,8 +26,30 @@ const initController: InitController = {
     PRIMARY KEY("id"),
     UNIQUE("username"));`;
 
+    const dbQueryInfo = `
+      CREATE TABLE IF NOT EXISTS users_info(
+      "id" SERIAL NOT NULL,
+      "username" text NOT NULL,
+      "organization" text NOT NULL,
+      "job_title" text NOT NULL,
+      "email" text NOT NULL,
+      PRIMARY KEY ("id"),
+      CONSTRAINT "username" FOREIGN KEY ("username") REFERENCES users("username") ON DELETE CASCADE,
+      UNIQUE ("username")
+      );`;
+
     db.query(dbQuery, [])
-      .then(() => {return next();})
+      .then(() => {
+        db.query(dbQueryInfo, [])
+          .then(() => {return next();})
+          .catch((err) => {
+            return next({
+              log: 'Error caught in initialize DB',
+              status: 400,
+              message: err,
+            });
+          });
+      })
       .catch((err) => {
         return next({
           log: 'Error caught in initialize DB',
