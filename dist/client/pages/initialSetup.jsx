@@ -9,7 +9,6 @@ const InitialSetup = (props) => {
         if (props.apiKey && props.grafUrl)
             navigate('/app');
     }, []);
-    // request to either create or edit the .env
     const handleSubmit = () => {
         if (!currentApi || !currentGrafUrl) {
             setValidInput(true);
@@ -31,14 +30,12 @@ const InitialSetup = (props) => {
             navigate('/app');
         });
     };
-    // render when there is no graf api key in the .env file
     const renderApiKey = () => {
         return (<div>
         Please enter your Grafana Api Key
         <input type='text' placeholder='Grafana Api Key' onChange={input => setCurrentApi(input.target.value)} value={currentApi}/>
       </div>);
     };
-    // render when there is no pg uri in .env file
     const renderGrafUrl = () => {
         return (<div>
         <strong>Please enter your Grafana URL.</strong> <br></br> 
@@ -57,10 +54,6 @@ const InitialSetup = (props) => {
         <button onClick={handleSubmit}>SUBMIT</button>
         {validInput && <div>Please fill out field(s) before submitting</div>}
       </form>
-
-
-
-
     </div>);
 };
 export default InitialSetup;

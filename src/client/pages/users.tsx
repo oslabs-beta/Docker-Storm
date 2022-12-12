@@ -37,40 +37,7 @@ const styles = {
   }
 };
 
-<<<<<<< HEAD
-
-const styles = {
-  buttonStyles: {
-    marginTop: '10px', 
-    border: theme.palette.primary.main,
-    borderStyle: 'solid',
-    backgroundColor: theme.palette.primary.main, 
-    '&:hover': {
-      backgroundColor: 'white',
-      color: theme.palette.primary.main,
-      
-    },
-    color: 'white'
-  },
-  gridStyles: {
-    width: '50%',
-    margin: '0px'
-  },
-  fields: {
-    backgroundColor: '#ffffff',
-  },
-  tableHeader: {
-    color: '#9FA2B4',
-  }
-  
-};
-
-
-
-=======
->>>>>>> dev
 const Users = () => {
-
   const [userList, setUserList] = useState<User[]>([]);
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
@@ -79,7 +46,6 @@ const Users = () => {
   const [missingField, setMissingField] = useState(false);
   const [matchPassword, setMatchPassword] = useState(false);
   const [uniqueUser, setUniqueUser] = useState(false);
-
   const addUsersToArray = (arr: User[]) => {
     setUserList(arr);
   };
