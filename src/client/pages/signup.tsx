@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {TextField, Container, Box, createStyles, Grid, Button } from '@mui/material';
+import {TextField, Container, Box, Grid, Button } from '@mui/material';
 import theme from '../theme.jsx';
+import Tooltip from './tooltip.jsx';
+
 
 
 
@@ -10,6 +12,8 @@ interface Props {
     apiKey: string;
     openSignup: boolean;
     setOpenSignup: (arg: boolean) => void;
+    setGrafUrl: (value: string) => void;
+    grafUrl: string;
 }
 
 interface ResponseObject {
@@ -17,6 +21,8 @@ interface ResponseObject {
     key: string;
 }
 
+const urlText = 'Please enter exactly in the form of http://localhost:XXXX/ or http://[IP ADDRESS]/ or http://[URL]/ . Please do not add anything after the final slash';
+const apiText = 'You can find your Grafana API key under the configuration gear in your Grafana account.';
 
 
 const Signup = (props: Props) => { 
@@ -28,16 +34,41 @@ const Signup = (props: Props) => {
   const [jobTitle, setJobTitle] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [currentApi, setCurrentApi] = useState(props.apiKey);
+  const [currentGrafUrl, setCurrentGrafUrl] = useState(props.grafUrl);
   const navigate = useNavigate();
 
+
+  const envSetup = () => {
+    const body = {
+      apiKey: currentApi,
+      grafUrl: currentGrafUrl
+    };
+    
+    props.setApiKey(currentApi);
+    props.setGrafUrl(currentGrafUrl);
+
+    fetch('/user/env', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body),
+    });
+  };
+
+
+
   const createAdminUser = async () => {
-    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization) {
+    if(!usernameSignup || !passwordSignup || !verifyPasswordSignup || !emailSignup || !organization || !currentApi || !currentGrafUrl || !jobTitle) {
       setInvalid(true);
+      return;
     }
     
     if(passwordSignup !== verifyPasswordSignup) {
       return;
     }
+
     
 
     const body = {
@@ -61,14 +92,10 @@ const Signup = (props: Props) => {
 
     if(result.status == 200) {
       setSignupSuccess(true);
+      envSetup();
       return;
     }
   };
-
-
-
-
-
 
 
 
@@ -128,11 +155,7 @@ const Signup = (props: Props) => {
                       onChange={input => setVerifyPasswordSignup(input.target.value)} 
                       placeholder="Type password again"/>
                   </Grid>
-                  <Grid 
-                    item 
-                    
-                    xs={12}
-                  >
+                  <Grid item xs={12}>
                     <TextField 
                       type="text" 
                       required
@@ -142,11 +165,7 @@ const Signup = (props: Props) => {
                       onChange={input => setEmailSignup(input.target.value)} 
                       placeholder="Email"/>
                   </Grid>
-                  <Grid
-                    item 
-                    className="signup-grid"
-                    xs={12}
-                  >
+                  <Grid item className="signup-grid" xs={12}>
                     <TextField 
                       type="text" 
                       label="Organization" 
@@ -169,6 +188,38 @@ const Signup = (props: Props) => {
                       onChange={input => setJobTitle(input.target.value)} 
                       placeholder="Job title"/>
                   </Grid>
+                  {!props.grafUrl && <Grid 
+                    item 
+                    xs={12}
+                    display='flex'
+                  >
+                    
+                    <TextField
+                      type="text" 
+                      label="Grafana URL" 
+                      required
+                      fullWidth
+                      value={currentGrafUrl} 
+                      onChange={input => setCurrentGrafUrl(input.target.value)} 
+                      placeholder="Grafana URL"/>
+                    <Tooltip text={urlText}/>
+                  </Grid>}
+                  {!props.apiKey && <Grid 
+                    item 
+                    xs={12}
+                    display="flex"
+                  >
+                    
+                    <TextField
+                      type="text" 
+                      label="Grafana API key" 
+                      required
+                      fullWidth
+                      value={currentApi} 
+                      onChange={input => setCurrentApi(input.target.value)} 
+                      placeholder="Grafana API key"/>
+                    <Tooltip text={apiText}/>
+                  </Grid>}
                   <Grid 
                     item
                     xs={12}
@@ -194,7 +245,6 @@ const Signup = (props: Props) => {
                         '&:hover': {
                           backgroundColor: 'white',
                           color: theme.palette.primary.main,
-                          
                         }}}  
                       onClick={() => createAdminUser()}>Signup</Button>
                   </Grid>
@@ -207,7 +257,6 @@ const Signup = (props: Props) => {
               </Box>
             
             </Container>
-            
         }
 
         {signupSuccess &&
@@ -228,7 +277,6 @@ const Signup = (props: Props) => {
                   onClick={() => { props.setOpenSignup(false); }}>LOGIN</Button>
               </Grid>
             </Box>
-            
         }
 
       </div>
@@ -237,44 +285,3 @@ const Signup = (props: Props) => {
 };
 
 export default Signup;
-
-
-
-// <div id="signup-form-div">
-//   <form id="signup-form" onSubmit={(event) => event.preventDefault()}>
-//     <label> Username
-//       <TextField className="signup-form-input" type="text" value={usernameSignup} onChange={input => setUsernameSignup(input.target.value)} placeholder="Username"/>
-//     </label>
-//     <label> Password
-//       <TextField className="signup-form-input" type="password" value={passwordSignup} onChange={input => setPasswordSignup(input.target.value)} placeholder="Password"/>
-//     </label>
-//     <label> Verify Password
-//       <TextField className="signup-form-input" type="password" value={verifyPasswordSignup} onChange={input => setVerifyPasswordSignup(input.target.value)} placeholder="Type password again"/>
-//     </label>
-//     <label> Email
-//       <TextField className="signup-form-input" type="text" value={emailSignup} onChange={input => setEmailSignup(input.target.value)} placeholder="Email"/>
-//     </label>
-//     <label> Organization
-//       <TextField className="signup-form-input" type="text" value={organization} onChange={input => setOrganization(input.target.value)} placeholder="Organization"/>
-//     </label>
-//     <label> Job Title
-//       <TextField className="signup-form-input" type="text" value={jobTitle} onChange={input => setJobTitle(input.target.value)} placeholder="Job title"/>
-//     </label>
-//     <button className="blue-button" type="submit" onClick={() => createAdminUser()}>Signup</button>
-//     {invalid && <p className="error-p">Please fill out all fields</p>}
-//     <button id="signup" onClick={() => { props.setOpenSignup(false); }}>Cancel</button>
-//   </form>
-            
-            
-// </div>;
-
-
-// InputLabelProps={{
-//   sx: { 
-//     paddingBottom: '500px', 
-//     color:'red',
-//     '&::placeholder': {
-//       textAlign: 'right !important',
-//     },
-//   }, 
-// }}

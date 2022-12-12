@@ -13,9 +13,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-// GRAFANA_API_KEY = 'eyJrIjoiQ05EQU9DT3FubG9ycHZnM1V5ZDhtQ0NkNE9valFWbW4iLCJuIjoiZG9ja2Vyc3Rvcm0iLCJpZCI6MX0='
-// GRAFANA_URL = 'http://localhost:3000/'
-
 // A custom theme for this app
 const theme = createTheme({
   palette: {
@@ -46,7 +43,10 @@ const theme = createTheme({
   },
   typography: {
     // fontFamily: RobotoBold,
-  },
+  }, 
+
+
+
   
 });
 

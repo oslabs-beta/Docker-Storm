@@ -1,8 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 
-// setup IPC Bridge
 
-// global reference to mainWindow (necessary to prevent mainWindow from being garbage collected)
 let mainWindow: BrowserWindow;
 
 function createMainWindow() {
@@ -10,7 +8,6 @@ function createMainWindow() {
     width: 1300,
     height: 800,
     webPreferences: {
-      // preload: path.join(__dirname, '../electron/preload.js'),
       webSecurity: false,
       sandbox: false,
     },
@@ -21,26 +18,9 @@ function createMainWindow() {
   mainWindow.loadURL('http://localhost:8080'); //change to localhost:8080
   mainWindow.on('ready-to-show', () => mainWindow.show());
 
-
-  // mainWindow.on('closed', () => {
-  //   mainWindow = null;
-  // });
 }
 
 
 app.on('ready', createMainWindow);
-    
-// // MacOS Specific function
-// electron.app.on('window-all-closed', function () {
-//   // Common for application and their menu bar to stay active until use quits explicitly 
-//   if (process.platform !== 'darwin') {
-//     electron.app.quit()
-//   }
-// })
-// // MacOS Specific function
-// electron.app.on('activate', function() {
-//   // Common to re-create a window in the app when the dock icon is clicked and there are no other windows open
-//   if (electron.BrowserWindow.getAllWindows().length === 0) createMainWindow()
-// })
-    
+ 
 module.exports = {};
