@@ -5,15 +5,16 @@
   "main": "dist/client/electron/index.cjs",
   "type": "module",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open --hot",
-    "start": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon dist/server/server.js",
+    "dev": "concurrently \"tsc\" \"webpack-dev-server --mode development --open --hot\"",
+    "start": "concurrently \"tsc\" \"NODE_ENV=development webpack-dev-server --open\" \"NODE_ENV=development nodemon dist/server/server.js\"",
     "build": "NODE_ENV=production webpack",
     "server": "NODE_ENV=production nodemon dist/server/server.js",
     "s:e": "NODE_ENV=development webpack --config webpack.electron.config.cjs --mode development && electron .",
     "test": "jest --config jest.config.cjs --verbose --coverage",
-    "starttest": "concurrently \"npm start\" \"npm test\"",
-    "electron": "concurrently \"npm start\" \"npm run s:e\""
+    "starttest": "concurrently \"tsc\" \"npm start\" \"npm test\"",
+    "electron": "concurrently \"tsc\" \"npm start\" \"npm run s:e\""
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/Docker-Storm.git"
