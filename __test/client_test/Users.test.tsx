@@ -1,7 +1,8 @@
 import * as React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Users from '../../dist/client/pages/users.jsx';
+
 
 describe('Users Page', () => {
 
@@ -14,6 +15,15 @@ describe('Users Page', () => {
     expect(buttons).toHaveTextContent('Add New User');
   }); 
 
+  it('should handle a click when clicking Add New User', () => {
+    const mockClick = jest.fn();
+    const button = screen.getByText('Add New User');
+    console.log(button);
+    button.onclick = mockClick;
+    fireEvent.click(button);
+    expect(mockClick).toHaveBeenCalledTimes(1);
+  });
+  
   it('should have four input fields to add new user' , () => {
     const username = screen.getByPlaceholderText('Username');
     const role = screen.getByPlaceholderText('Role');
@@ -29,14 +39,6 @@ describe('Users Page', () => {
     const list = screen.getByText('List of all users');
     expect(list).toBeInTheDocument();
   });
-
-  // xit('should handle a user inputting changes into an input form', () => {
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   const component:any = ReactTestUtils.renderIntoDocument(<Users />);
-  //   const input: Element = ReactTestUtils.findRenderedDOMComponentWithTag(component, 'input')
-  //   ReactTestUtils.Simulate.change(input, { target: { value: 'test'}});
-  //   expect(input.value).toBe('test');
-  // });
-
 });
+
 

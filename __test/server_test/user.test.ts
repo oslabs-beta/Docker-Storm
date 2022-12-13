@@ -10,12 +10,6 @@ const userOne = {
   role: 'TestRole'
 };
 
-const userOneChanged = {
-  username: 'TestUser',
-  password: 'TestPasswordChanged',
-  role: 'TestRole'
-};
-
 beforeAll( () => {
 
   const createTest = `CREATE TABLE IF NOT EXISTS users(
@@ -32,8 +26,8 @@ beforeAll( () => {
 
 describe('User Creation, Updating, and Deletion', () => {  
 
-  beforeAll( () => {
-     fetch('http://localhost:8080/user/signup', {
+  beforeEach( async() => {
+    await fetch('http://localhost:8080/user/signup', {
       method: 'POST',
       headers: {
         'content-type' : 'application/json'
@@ -44,7 +38,7 @@ describe('User Creation, Updating, and Deletion', () => {
       .then((result) => console.log(result));
   });
 
-  afterAll(() => {
+  afterEach(() => {
     fetch('http://localhost:8080/user/', {
       method: 'DELETE',
       headers: {'Content-type': 'application/json'},
@@ -62,64 +56,10 @@ describe('User Creation, Updating, and Deletion', () => {
         const arrayOfUsers : string[] = [];        
         result.forEach((element: { username: string; }) => {
           arrayOfUsers.push(element.username);
-          console.log(arrayOfUsers);
         });
         expect(arrayOfUsers).toContain(userOne.username);          
       });  
   });
-
-  // db.query(queryStr, [username])
-  //       .then((data) => {
-  //         if(data.rows.length === 1){
-  //           const validPassword = bcrypt.compareSync(password, data.rows[0].password);
-  //           if(validPassword) return next();
-
-  // it('should update the password of a user', () => {
-  //   const currentPassword = userOne.password;
-  //   console.log(currentPassword);
-  //   // const changePassword = 'UPDATE users SET password=($1) WHERE username=($2);';
-  //   // db.query(changePassword,[userOneChanged.password, userOne.username]);
-  //   fetch('https://localhost:8080/user/', {
-  //     method: 'PATCH',
-  //     headers: {'content-type': 'application/json'},
-  //     body: JSON.stringify(userOne)
-  //   })
-  //     .then((data) => console.log(data));
-
-
-
-  // fetch('http://localhost:8080/user/all')
-  //   .then((data) => data.json())
-  //   .then(() => {
-  //     const queryStr = 'SELECT password FROM users WHERE username=$1';
-  //     const userName = [userOne.username];
-  //     console.log(userName);
-  //     const updatedPass = db.query(queryStr, userName);
-  //     console.log(updatedPass);
-  //     expect(updatedPass).not.toEqual(currentPassword);          
-  //   }); 
-
-    
-  // });
-
-  //not functioning properly
-  // it('should delete user from the database', () => {
-  //   // const deleteTest = 'DELETE FROM users WHERE username=$1';
-  //   // await db.query(deleteTest, [userOne.username]);
-  //   
-  //   })
-  //     .then((data) => console.log(data));
-  //   fetch('http://localhost:8080/user/all')
-  //     .then((data) => data.json())
-  //     .then((result) => {
-  //       const arrayOfUsers : string[] = [];
-  //       console.log(arrayOfUsers);
-  //       result.forEach((element: { username: string; }) => {
-  //         arrayOfUsers.push(element.username);
-  //       });
-  //       expect(arrayOfUsers).not.toContain(userOne.username);          
-  //     });  
-  // });
 });
 
 

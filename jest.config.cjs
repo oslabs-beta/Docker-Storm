@@ -10,7 +10,7 @@ module.exports = {
   },
   testMatch: ['*/__tests__/**/*.ts?(x)', '**/?(*.)+(test).ts?(x)'],
 
-  testTimeout: 5000,
+  testTimeout: 20000,
   globals: {
     'ts-jest': {
       babelConfig: true
