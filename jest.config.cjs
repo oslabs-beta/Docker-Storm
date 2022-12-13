@@ -10,12 +10,18 @@ module.exports = {
   },
   testMatch: ['*/__tests__/**/*.ts?(x)', '**/?(*.)+(test).ts?(x)'],
 
-  testTimeout: 5000,
+  testTimeout: 20000,
   globals: {
     'ts-jest': {
       babelConfig: true
     }
   },
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|svg)$': '<rootDir>/mocks/fileMock.js',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
+  },
+
+  
   modulePaths: ['<rootDir>']
 
 };

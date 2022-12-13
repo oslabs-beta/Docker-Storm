@@ -73,6 +73,7 @@ const Login = (props: Props) => {
         <Container 
           component="main" >
           <Box component="form"
+            data-testid="user-input-field"
             id="login-form" 
             onSubmit={(event) => event.preventDefault()}
           >
@@ -88,6 +89,7 @@ const Login = (props: Props) => {
                 xs={12}
               >
                 <TextField 
+                  data-testid="username-input"
                   required
                   variant='outlined'
                   type="text"
@@ -104,6 +106,7 @@ const Login = (props: Props) => {
                 xs={12}
               >
                 <TextField 
+                  data-testid="password-input"
                   required
                   variant='outlined'
                   type="password"
@@ -120,6 +123,7 @@ const Login = (props: Props) => {
                   sm={6}
                   textAlign="center">
                   <Button 
+                    data-testid="sign-up button"
                     sx={{color:theme.palette.primary.contrastText, paddingLeft:'30px', paddingRight:'30px', border: '1.3px solid #ffffff'}} 
                     onClick={() => { setOpenSignup(true); }}>SIGNUP
                   </Button>
@@ -131,6 +135,7 @@ const Login = (props: Props) => {
                   sm={6}
                   textAlign="center">
                   <Button 
+                    data-testid="login button"
                     type="submit" 
                     sx={{color:'white', 
                       backgroundColor: theme.palette.primary.main, 

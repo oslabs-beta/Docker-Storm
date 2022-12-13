@@ -1,8 +1,7 @@
+import 'whatwg-fetch';
 import React, {useState, useEffect} from 'react';
-import Link from '@mui/material/Link';
 import { Box, Container, TableContainer, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 import theme from '../theme.jsx';
-import { StyleSharp } from '@mui/icons-material';
 
 interface User {
   username: string,
@@ -51,7 +50,7 @@ const Users = () => {
   };
 
   const grabUsers = () => {
-    fetch('/user/all')
+    window.fetch('/user/all')
       .then((data) => data.json())
       .then((result) => {
         addUsersToArray(result as User[]);
