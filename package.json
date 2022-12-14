@@ -5,15 +5,16 @@
   "main": "dist/client/electron/index.cjs",
   "type": "module",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open --hot",
-    "start": "NODE_ENV=development webpack-dev-server --open & NODE_ENV=development nodemon dist/server/server.js",
+    "dev": "concurrently \"tsc\" \"webpack-dev-server --mode development --open --hot\"",
+    "start": "concurrently \"tsc\" \"NODE_ENV=development webpack-dev-server --open\" \"NODE_ENV=development nodemon dist/server/server.js\"",
     "build": "NODE_ENV=production webpack",
     "server": "NODE_ENV=production nodemon dist/server/server.js",
     "s:e": "NODE_ENV=development webpack --config webpack.electron.config.cjs --mode development && electron .",
     "test": "jest --config jest.config.cjs --verbose --coverage",
-    "starttest": "concurrently \"npm start\" \"npm test\"",
-    "electron": "concurrently \"npm start\" \"npm run s:e\""
+    "starttest": "concurrently \"tsc\" \"npm start\" \"npm test\"",
+    "electron": "concurrently \"tsc\" \"npm start\" \"npm run s:e\""
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/Docker-Storm.git"
@@ -72,8 +73,10 @@
     "eslint-plugin-react": "^7.31.10",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
+    "jest-transform-stub": "^2.0.0",
     "jsdom": "^20.0.3",
     "jsdom-global": "^3.0.2",
     "nodemon": "^2.0.20",
@@ -86,23 +89,6 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1",
     "whatwg-fetch": "^3.6.2"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    },
-    "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
-    ]
   }
+
 }

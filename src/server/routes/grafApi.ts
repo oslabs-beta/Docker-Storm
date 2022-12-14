@@ -18,7 +18,7 @@ router.patch('/', grafanaController.getDashByUid, grafanaController.createPanel,
   return res.status(200).json('successful');
 });
 
-// Post request which adds new targers to our targets file for prometheus to track
+// Post request which adds new targets to our targets file for prometheus to track
 router.post('/targetsAdd', grafanaController.addTarget, (req, res) => {
   return res.sendStatus(200);
 });

@@ -1,7 +1,6 @@
-import { ipcMain } from 'electron/main';
-import React, {useEffect, useState} from 'react';
-import { Job, JobArray, Target, TargetIpArray, Role } from '../../types.js';
-import {ImageList, TextField, Select, MenuItem, Container, Box, createStyles, Grid, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Job, Target, Role } from '../../types.js';
+import {ImageList, TextField, Select, MenuItem, Container, Box, Grid, Button, Typography } from '@mui/material';
 import theme from '../theme.jsx';
 
 
@@ -20,7 +19,7 @@ interface Body {
 const styles = {
   buttonStyles: {
     marginLeft: '20px',
-    marginRight: '20px', 
+    marginRight: '20px',
     paddingLeft: '20px',
     paddingRight: '20px',
     border: theme.palette.primary.main,
@@ -154,7 +153,7 @@ const Settings = (props : Props) => {
 
   return (
     <Box id="big-div" sx={{ display: 'flex', flexDirection: 'column', height:'100%'}}>
-      <Box sx={{ margin: '10px 50px', height:'inherit'}}>
+      <Box sx={{ margin: '10px 5%', height:'inherit'}}>
         <h2>Settings</h2>
         <Box sx={{backgroundColor:'#ffffff', height:'80%', borderRadius:'15px', padding:'0px 20px'}}>
           <Container component='form' onSubmit={(e) => e.preventDefault()} sx={{justifyItems:'center'}}>
@@ -163,8 +162,8 @@ const Settings = (props : Props) => {
               <Box display="flex" flexDirection='row' sx={{alignItems: 'center'}}>
                 <TextField type="password" placeholder='Current Password' value={password} onChange={input => setPassword(input.target.value)} />
                 <TextField type="password" placeholder='New Password' value={newPassword} onChange={input => setNewPassword(input.target.value)} />
-                <TextField type="password" placeholder='New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
-                <Button sx={styles.buttonStyles} type="submit" disabled={!password || !newPassword || !verifyPassword} onClick={() => changePassword()}>SUBMIT</Button>
+                <TextField type="password" placeholder='Confirm New Password' value={verifyPassword} onChange={input => setVerifyPassword(input.target.value)} />
+                <Button sx={styles.buttonStyles} data-testid="pw-button" type="submit" disabled={!password || !newPassword || !verifyPassword} onClick={() => changePassword()}>SUBMIT</Button>
               </Box>
             </Box>
             {pwAdded && <div>Changed password!</div>}
@@ -177,22 +176,22 @@ const Settings = (props : Props) => {
                 <TextField type="text" placeholder='Ip Address' value={ip} onChange={input => setIp(input.target.value)} />
                 <TextField type="text" placeholder='Port(s) by comma' value={ports} onChange={input => setPorts(input.target.value)} />
                 <TextField type="text" placeholder='Job Name' value={job} onChange={input => setJob(input.target.value)} />
-                <Select name="Role" value={role}  onChange={input => setRole(input.target.value as Role)}>
-                  <MenuItem value="Manager">Manager</MenuItem>
-                  <MenuItem value="Worker">Worker</MenuItem>
-                  <MenuItem value="Daemon">Daemon</MenuItem>
-                  <MenuItem value="Overall">Overall</MenuItem>
+                <Select data-testid="target-list" name="Role" value={role}  onChange={input => setRole(input.target.value as Role)}>
+                  <MenuItem data-testid="menu-item" value="Manager">Manager</MenuItem>
+                  <MenuItem data-testid="menu-item" value="Worker">Worker</MenuItem>
+                  <MenuItem data-testid="menu-item" value="Daemon">Daemon</MenuItem>
+                  <MenuItem data-testid="menu-item" value="Overall">Overall</MenuItem>
                 </Select>
-                <Button type="submit" sx={styles.buttonStyles} disabled={!job || !role || !ip} onClick={() => addTarget()}>SUBMIT</Button>
+                <Button data-testid="target-button" type="submit" sx={styles.buttonStyles} disabled={!job || !role || !ip} onClick={() => addTarget()}>SUBMIT</Button>
               </Box>
             </Box>
           </Container>
-          {added && <div>Added node!</div>}
+          {added && <div data-testid="node-notif">Added node!</div>}
       
           <Box display="flex" flexDirection="column" sx={{width:'70vw', marginTop:'50px', paddingLeft:'15px'}}>
             <Typography>LIST OF TARGETS:</Typography>
-            <ImageList sx={{width:'100%', margin:'20 10px', gridAutoFlow: 'column', gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr)) !important",
-              gridAutoColumns: "minmax(300px, 1fr)", overflowX:'scroll'}}>
+            <ImageList sx={{width:'100%', margin:'20 10px', gridAutoFlow: 'column', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr)) !important',
+              gridAutoColumns: 'minmax(300px, 1fr)', overflowX:'scroll'}}>
               {targetMap}
             </ImageList>
           </Box>

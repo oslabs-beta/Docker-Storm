@@ -5,10 +5,7 @@ import Metrics from './pages/metrics.jsx';
 import Users from './pages/users.jsx';
 import {Box} from '@mui/material';
 import logoWhite from '../../resources/media/logo-white.png';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined.js';
-import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined.js';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined.js';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined.js';
+import { EqualizerOutlined, GroupOutlined, LogoutOutlined, SettingsOutlined } from '@mui/icons-material';
 import { Job, JobArray, Target, TargetIpArray, Role } from '../types.js';
 
 
@@ -29,26 +26,26 @@ const RenderViews = (props: Props) => {
           <img id="navbar-logo" src={logoWhite} alt="" />
           <li>
             <Link to='/app/metrics'>
-              <EqualizerOutlinedIcon sx={{marginRight:'15px'}}/>
+              <EqualizerOutlined sx={{marginRight:'15px'}}/>
                   Metrics
             </Link>
           </li>
           <li>
             <Link 
               to='/app/settings'>
-              <SettingsOutlinedIcon sx={{marginRight:'15px'}}/>
+              <SettingsOutlined sx={{marginRight:'15px'}}/>
                   Settings
             </Link>
           </li>
           <li>
             <Link to='/app/users'>
-              <GroupOutlinedIcon sx={{marginRight:'15px'}}/>
+              <GroupOutlined sx={{marginRight:'15px'}}/>
                   Users
             </Link>
           </li>
           <li id="logout">
             <Link to='/'>
-              <LogoutOutlinedIcon sx={{marginRight:'15px'}}/>
+              <LogoutOutlined sx={{marginRight:'15px'}}/>
                   Logout
             </Link>
           </li>

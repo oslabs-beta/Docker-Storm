@@ -1,15 +1,14 @@
+import 'whatwg-fetch';
 import React, {useState, useEffect} from 'react';
-import Link from '@mui/material/Link';
 import { Box, Container, TableContainer, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 import theme from '../theme.jsx';
-import { StyleSharp } from '@mui/icons-material';
 
 interface User {
   username: string,
   role: string
   organization?: string,
   email?: string,
-  jobTitle?: string,
+  job_title?: string,
   TableRow?: React.ElementType;
 }
 
@@ -51,7 +50,7 @@ const Users = () => {
   };
 
   const grabUsers = () => {
-    fetch('/user/all')
+    window.fetch('/user/all')
       .then((data) => data.json())
       .then((result) => {
         addUsersToArray(result as User[]);
@@ -119,7 +118,7 @@ const Users = () => {
     const email = user.email;
 
     return (
-      <TableRow component={Paper}>
+      <TableRow component={Paper} key={username}>
         <TableCell>{username}</TableCell>
         <TableCell>{organization}</TableCell>
         <TableCell>{jobTitle}</TableCell>
@@ -132,7 +131,7 @@ const Users = () => {
   return (
     <>
       <Box className="big-div" sx={{ display: 'flex', flexDirection: 'column', height:'100%'}}>
-        <Box id="table-div" sx={{ margin: '10px 50px'}}>
+        <Box id="table-div" sx={{ margin: '10px 5%'}}>
           <h2>List of all users</h2>
           <TableContainer component={Paper} sx={{maxHeight: '50vh', overflow:'auto'}}>
             <Table stickyHeader>

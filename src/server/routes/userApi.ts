@@ -31,7 +31,7 @@ router.post('/signupAdmin', userController.encrypt, userController.createAdminUs
   return res.status(200).json('successful');
 });
 
-// Get request which manages signing up a new user account and encrypting their password
+// Post request which manages signing up a new user account and encrypting their password
 router.post('/signup', userController.encrypt, userController.createUser, (req, res) => {
   return res.status(200).json('successful');
 });
