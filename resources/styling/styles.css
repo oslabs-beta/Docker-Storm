@@ -172,3 +172,22 @@ body {
 svg {
     vertical-align: middle;
 }
+
+
+
+/* Logos */
+
+#login-logo-div img{
+    width: 150px;
+}
+
+
+#navbar-logo {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 95px;
+}
+
+#mac-img {
+    width: 650px;
+}

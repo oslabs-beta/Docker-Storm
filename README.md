@@ -25,13 +25,23 @@ Contributers and other info
 ## Features:
 Live updating metric tracking in an organized grafana graph
 
-Ability to add new servers/vm's to track
+![DockerStormMetrics](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/mac.png?raw=true)
 
-Settings page to change important user/system information
+Settings page to change important user/system information in addition to the ability to add new servers/vm's to track 
+
+![DockerStormSettings](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/settings-screenshot.png?raw=true)
 
 Users page to see all the current users and add new users
 
+![DockerStormLogin](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/users-screenshot.png?raw=true)
+
 Login page with passwords encrypted using bcrypt
+
+![DockerStormLogin](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/login-screenshot.png?raw=true)
+
+Signup page with fields to enter initial setup information
+
+![DockerStormLogin](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/signup-screenshot.png?raw=true)
 
 
 [↥Back to top](#table-of-contents)
