@@ -67,14 +67,18 @@ const App: React.FC = (): JSX.Element => {
   };
   
   useEffect(() => {
+    fetch('/init');
     console.log('useeffect ran');
     if(!apiKey || !grafUrl) return;
     
     intializeDashboard();
   }, [apiKey, grafUrl]);
-  
 
   
+  useEffect(() => {
+    console.log('Init DB ran');
+    fetch('/init');
+  }, []);
 
   return (
 
