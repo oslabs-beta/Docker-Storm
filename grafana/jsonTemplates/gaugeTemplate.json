@@ -1,0 +1,71 @@
+{
+  "fieldConfig": {
+    "defaults": {
+      "color": {
+        "mode": "thresholds"
+      },
+      "mappings": [],
+      "max": 100,
+      "min": 0,
+      "thresholds": {
+        "mode": "percentage",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "#EAB839",
+            "value": 50
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      },
+      "unit": "percent"
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 9,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": 2,
+  "options": {
+    "orientation": "auto",
+    "reduceOptions": {
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": "",
+      "values": false
+    },
+    "showThresholdLabels": false,
+    "showThresholdMarkers": true
+  },
+  "pluginVersion": "9.2.6",
+  "targets": [
+    {
+      "editorMode": "code",
+      "expr": "Placeholder",
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A"
+    }
+  ],
+  "title": "Panel Title",
+  "type": "gauge",
+
+  "transformations": [
+    {
+      "id": "labelsToFields",
+      "options": {
+        "valueLabel": "job"
+      }
+    }
+  ]
+}

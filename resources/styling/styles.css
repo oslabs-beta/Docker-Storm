@@ -1,0 +1,193 @@
+/* --------------------------------------------------- Font Imports --------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&family=Roboto:wght@100;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500&display=swap');
+/* --------------------------------------------------- Root / Global Classes --------------------------------------------------- */
+
+
+
+:root {
+    --Nunito: 'Nunito', sans-serif;
+    --Roboto: 'Roboto', sans-serif;
+    --Mulish: 'Mulish', sans-serif;
+    --light-blue: #4C82FE;
+    --soft-black: #121212;
+    --dark-grey: #959595;
+}
+
+.white-text {
+    color: #ffffff;
+}
+
+.dark-text {
+    color: var(--soft-black);
+}
+
+h1 {
+    font-family: var(--Roboto);
+}
+
+h2 {
+    font-family: var(--Roboto);
+}
+
+p {
+    font-family: var(--Nunito)
+}
+
+h3 {
+    color: #3a3a3a;
+}
+
+.centered {
+    text-align: center;
+}
+
+body {
+    margin: 0 0;
+}
+
+/* --------------------------------------------------- Signup Modal CSS --------------------------------------------------- */
+
+
+
+#login-big-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.half-n-half {
+    display: flex;
+    height: 100vh;
+    width: 50vw;
+    justify-content: center;
+    align-items: center;
+}
+
+#left-div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.error-p {
+    color: #cf1515;
+    font-size: 14px;
+}
+
+
+/* Right div CSS*/
+
+#right-div {
+    background-color: #13507A;
+}
+
+#waves-div {
+    height: 100vh;
+    width: 50vw;
+    background-position: bottom;
+    background-repeat: no-repeat;    
+    background-size: 120% 80%;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --------------------------------------------------- Signup Modal CSS --------------------------------------------------- */
+
+
+#signup-background-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(76,130,254, 0.8);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#signup-inner-div {
+    width: 300px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 25px;
+} 
+
+
+
+
+
+/* --------------------------------------------------- RenderViews CSS --------------------------------------------------- */
+
+
+.navbar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 210px;
+    background-color: #091931;
+    font-family: var(--Nunito);
+}
+
+
+.navbar li {
+    font-size: 18px;
+    letter-spacing: 4px;
+    height: 30px;
+    margin-top: 20px;
+    padding: 5px;
+    text-decoration: none;
+    list-style: none;
+}
+
+
+.navbar li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: var(--Mulish);
+}
+
+.navbar li:hover{
+    border-left: #4C82FE 5px solid;
+    padding-left: 15px;
+    transition-duration: 0.4s;
+}
+
+#logout {
+    position: absolute;
+    bottom: 20px;
+}
+
+#navbar-logo {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+svg {
+    vertical-align: middle;
+}
+
+
+
+/* Logos */
+
+#login-logo-div img{
+    width: 150px;
+}
+
+
+#navbar-logo {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 95px;
+}
+
+#mac-img {
+    width: 650px;
+}

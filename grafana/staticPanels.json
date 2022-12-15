@@ -1,0 +1,57 @@
+[
+    {
+        "title": "CPU Usage per Container",
+        "expression": "sum(rate(container_cpu_usage_seconds_total{name=~'.+'}[1m])) by (name) * 100",
+        "graphType": "containerPercent",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Memory Usage Per Container",
+        "expression": "sum(container_memory_rss{name=~'.+'}) by (name)",
+        "graphType": "containerByte",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Incoming Network Traffic per Container",
+        "expression": "sum(rate(container_network_receive_bytes_total{name=~'.+'}[1m])) by (name)",
+        "graphType": "containerByte",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Outgoing Network Traffic per Container",
+        "expression": "sum(rate(container_network_transmit_bytes_total{name=~'.+'}[1m])) by (name)",
+        "graphType": "containerByte",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Machine Ram Usage",
+        "expression": "100 * (1 - ((avg_over_time(node_memory_MemFree_bytes[1m]) + avg_over_time(node_memory_Cached_bytes[1m]) + avg_over_time(node_memory_Buffers_bytes[1m])) / avg_over_time(node_memory_MemTotal_bytes[1m])))",
+        "graphType": "line",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Running Containers",
+        "expression": "swarm_manager_tasks_total{state='running'}",
+        "graphType": "stat",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Node Status",
+        "expression": "swarm_manager_nodes",
+        "graphType": "state",
+        "role" : "overall"
+    },
+
+    {
+        "title": "Remaining Disk Space",
+        "expression": "(node_filesystem_avail_bytes{mountpoint='/',fstype!='rootfs'})",
+        "graphType": "disk",
+        "role" : "overall"
+    }   
+]

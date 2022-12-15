@@ -1,0 +1,14 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "dockerstorm",
+    "title": "Docker Storm",
+    "tags": [ "Docker Swarm", "Docker Storm" ],
+    "timezone": "browser",
+    "schemaVersion": 37,
+    "version": 0,
+    "refresh": "5s"
+  },
+  "message": "Made changes to xyz",
+  "overwrite": false
+}
