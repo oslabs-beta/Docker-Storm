@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import Navbar from './pages/navbar.jsx';
 import Settings from './pages/settings.jsx';
 import Metrics from './pages/metrics.jsx';
 import Users from './pages/users.jsx';
@@ -17,48 +18,19 @@ interface Props {
 }
 
 
-const RenderViews = (props: Props) => {
+const RenderViews = ({dashId, targetsArr, setTargetsArr, grafUrl}: Props) => {
 
   return (
-    <>
-      <Box display="flex" flexDirection="row" sx={{backgroundColor:'#091931', width: '100%', paddingLeft: '20px'}}>
-        <div className="navbar">
-          <img id="navbar-logo" src={logoWhite} alt="" />
-          <li>
-            <Link to='/app/metrics'>
-              <EqualizerOutlined sx={{marginRight:'15px'}}/>
-                  Metrics
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to='/app/settings'>
-              <SettingsOutlined sx={{marginRight:'15px'}}/>
-                  Settings
-            </Link>
-          </li>
-          <li>
-            <Link to='/app/users'>
-              <GroupOutlined sx={{marginRight:'15px'}}/>
-                  Users
-            </Link>
-          </li>
-          <li id="logout">
-            <Link to='/'>
-              <LogoutOutlined sx={{marginRight:'15px'}}/>
-                  Logout
-            </Link>
-          </li>
-        </div>
-        <Box sx={{backgroundColor:'#F7F8FC', width: '100%', height:'100vh', borderRadius: '40px 0px 0px 40px', paddingTop: '30px'}}>
-          <Routes>
-            <Route path='/settings' element={<Settings targetsArr={props.targetsArr} setTargetsArr={props.setTargetsArr} />}/>
-            <Route path='/metrics' element={<Metrics dashId={props.dashId} grafUrl={props.grafUrl} />}/>
-            <Route path='/users' element={<Users/>}/>
-          </Routes>
-        </Box>
+    <Box display="flex" flexDirection="row" sx={{backgroundColor:'#091931', width: '100%', paddingLeft: '20px'}}>
+      <Navbar/>
+      <Box sx={{backgroundColor:'#F7F8FC', width: '100%', height:'100vh', borderRadius: '40px 0px 0px 40px', paddingTop: '30px'}}>
+        <Routes>
+          <Route path='/settings' element={<Settings targetsArr={targetsArr} setTargetsArr={setTargetsArr} />}/>
+          <Route path='/metrics' element={<Metrics dashId={dashId} grafUrl={grafUrl} />}/>
+          <Route path='/users' element={<Users/>}/>
+        </Routes>
       </Box>
-    </>
+    </Box>
   );
 };
 

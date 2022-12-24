@@ -14,7 +14,6 @@
     "starttest": "concurrently \"tsc\" \"npm start\" \"npm test\"",
     "electron": "concurrently \"tsc\" \"npm start\" \"npm run s:e\""
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oslabs-beta/Docker-Storm.git"
@@ -90,5 +89,4 @@
     "webpack-dev-server": "^4.11.1",
     "whatwg-fetch": "^3.6.2"
   }
-
 }

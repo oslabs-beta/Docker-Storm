@@ -9,8 +9,8 @@ import Signup from './signup.jsx';
 import { DefaultDeserializer } from 'v8';
 
 interface Props {
-  setApiKey: (arg: string) => void;
-  setGrafUrl: (arg: string) => void;
+  setApiKey: React.Dispatch<React.SetStateAction<string>>;
+  setGrafUrl: React.Dispatch<React.SetStateAction<string>>;
   grafUrl: string;
   apiKey: string;
 }
@@ -25,6 +25,7 @@ const Login = (props: Props) => {
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
+  const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
   const navigate = useNavigate();
 
   const setKeys = (apiKey: string, grafUrl: string) => {
@@ -32,16 +33,13 @@ const Login = (props: Props) => {
     props.setApiKey(apiKey);
   };
 
-  const confirmCredentials = async () => {
-    const body = {
-      username: username,
-      password: password
-    };
+  const confirmCredentials = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     
     const result = await fetch('/user/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body),
+      body: JSON.stringify({username, password}),
     });
 
     if(result.status !== 200) {
@@ -63,98 +61,90 @@ const Login = (props: Props) => {
   return (
 
 
+    <>
+      <div id="login-big-div">
+        <div id="left-div" className="half-n-half">
+          <div id="login-logo-div">
+            <img src={loginLogo} alt="" />
+          </div>
 
-    <div id="login-big-div">
-      <div id="left-div" className="half-n-half">
-        <div id="login-logo-div">
-          <img src={loginLogo} alt="" />
-        </div>
-
-        <Container 
-          component="main" >
-          <Box component="form"
-            data-testid="user-input-field"
-            id="login-form" 
-            onSubmit={(event) => event.preventDefault()}
-          >
-            <Grid container 
-              sx={{gap: '10px 0px', marginLeft: '0', marginRight: '0', marginTop:'30px', width: '100%', paddingLeft: '0px', paddingRight: '0px'}}
-              justifyContent="center"
-              alignContent="center"
-              direction="column"
+          <Container 
+            component="main" >
+            <Box component="form"
+              data-testid="user-input-field"
+              id="login-form" 
+              onSubmit={(event) => confirmCredentials(event)}
             >
-              <Grid
-                item 
-                className="login-grid"
-                xs={12}
+              <Grid container 
+                sx={{'& .MuiTextField-root': {width: '30ch', marginTop:'7px'}}}
+                justifyContent="center"
+                alignContent="center"
+                direction="column"
               >
-                <TextField 
-                  data-testid="username-input"
-                  required
-                  variant='outlined'
-                  type="text"
-                  label="Username"
-                  value={username} 
-                  onChange={input => setUsername(input.target.value)}
-                  sx={{ width: 350 }} 
-                />
-              </Grid>
-              <Grid
-                item 
-                className="login-grid"
-
-                xs={12}
-              >
-                <TextField 
-                  data-testid="password-input"
-                  required
-                  variant='outlined'
-                  type="password"
-                  label="Password"  
-                  value={password} 
-                  onChange={input => setPassword(input.target.value)}
-                  sx={{ width: 350 }} 
-                />
-              </Grid>
-              <Grid item xs={12} display="flex" sx={{marginTop: '20px'}}>
-                <Grid 
-                  item
-                  xs={12}
-                  sm={6}
-                  textAlign="center">
-                  <Button 
-                    data-testid="sign-up button"
-                    sx={{color:theme.palette.primary.contrastText, paddingLeft:'30px', paddingRight:'30px', border: '1.3px solid #ffffff'}} 
-                    onClick={() => { setOpenSignup(true); }}>SIGNUP
-                  </Button>
+                <Grid
+                  item 
+                >
+                  <TextField 
+                    data-testid="username-input"
+                    required
+                    label="Username"
+                    value={username} 
+                    onChange={input => setUsername(input.target.value)}
+                  />
                 </Grid>
+                <Grid
+                  item 
+                  className="login-grid"
 
-                <Grid 
-                  item
                   xs={12}
-                  sm={6}
-                  textAlign="center">
-                  <Button 
-                    data-testid="login button"
-                    type="submit" 
-                    sx={{color:'white', 
-                      backgroundColor: theme.palette.primary.main, 
-                      paddingLeft:'30px', 
-                      paddingRight:'30px',
-                      border: '1.3px solid',
-                      '&:hover': {
-                        backgroundColor: 'white',
-                        color: theme.palette.primary.main,
-                        
-                      },}} 
-                    onClick={confirmCredentials}>LOGIN
-                  </Button>
+                >
+                  <TextField 
+                    data-testid="password-input"
+                    required
+                    type="password"
+                    label="Password"  
+                    value={password} 
+                    onChange={input => setPassword(input.target.value)}
+                  />
                 </Grid>
+                <Grid item xs={12} display="flex" sx={{marginTop: '20px'}}>
+                  <Grid 
+                    item
+                    xs={12}
+                    sm={6}
+                    textAlign="center">
+                    <Button 
+                      data-testid="sign-up button"
+                      variant='outlined'
+                      onClick={() => {setOpenSignup(true);}}>SIGNUP
+                    </Button>
+                  </Grid>
+
+                  <Grid 
+                    item
+                    xs={12}
+                    sm={6}
+                    textAlign="center">
+                    <Button 
+                      data-testid="login button"
+                      variant='contained'
+                    >LOGIN
+                    </Button>
+                  </Grid>
+                </Grid>
+                {invalid && <p className="error-p">Invalid username/password please try again</p>}
               </Grid>
-              {invalid && <p className="error-p">Invalid username/password please try again</p>}
-            </Grid>
-          </Box>
-        </Container>
+            </Box>
+          </Container>
+        </div>
+      
+
+        <div id="right-div" className="half-n-half">
+          <div id="waves-div" style={{ backgroundImage: `url(${waves})`}}>
+            <img src={mac} id="mac-img" alt="mac" />
+          </div>
+        </div>
+      
       </div>
       {openSignup && <Signup 
         setApiKey={props.setApiKey} 
@@ -163,14 +153,11 @@ const Login = (props: Props) => {
         grafUrl={props.grafUrl}
         openSignup={openSignup}
         setOpenSignup={setOpenSignup}
+        setOpenSuccessfulSignup={setOpenSuccessfulSignup}
+        openSuccessfulSignup={openSuccessfulSignup}
       />}
+    </>
 
-      <div id="right-div" className="half-n-half">
-        <div id="waves-div" style={{ backgroundImage: `url(${waves})`}}>
-          <img src={mac} id="mac-img" alt="mac" />
-        </div>
-      </div>
-    </div>
   );
 };
 

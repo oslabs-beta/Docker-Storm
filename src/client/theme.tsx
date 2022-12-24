@@ -15,19 +15,19 @@ declare module '@mui/material/styles' {
 
 // A custom theme for this app
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#4C82FE',
-      dark: '#121212',
-      contrastText: '#959595',
-    },
-    secondary: {
-      main: '#EF8354',
-      light: '#f29b76',
-      dark: '#e95818',
-      contrastText: '#2D3142',
-    },
-  },
+  // palette: {
+  //   primary: {
+  //     main: '#4C82FE',
+  //     dark: '#121212',
+  //     contrastText: '#959595',
+  //   },
+  //   secondary: {
+  //     main: '#EF8354',
+  //     light: '#f29b76',
+  //     dark: '#e95818',
+  //     contrastText: '#2D3142',
+  //   },
+  // },
   spacing: 4,
   breakpoints: {
     values: {
@@ -51,3 +51,20 @@ const theme = createTheme({
 });
 
 export default theme;
+
+
+
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#4C82FE',
+//       dark: '#121212',
+//       contrastText: '#959595',
+//     },
+//     secondary: {
+//       main: '#EF8354',
+//       light: '#f29b76',
+//       dark: '#e95818',
+//       contrastText: '#2D3142',
+//     },
+//   },

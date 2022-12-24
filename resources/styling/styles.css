@@ -70,6 +70,8 @@ body {
 }
 
 
+
+
 .error-p {
     color: #cf1515;
     font-size: 14px;
@@ -97,30 +99,68 @@ body {
 /* --------------------------------------------------- Signup Modal CSS --------------------------------------------------- */
 
 
-#signup-background-div {
+#signup-modal {
     position: fixed;
     top: 0;
+    bottom: 0;
+    z-index: 1000;
     left: 0;
-    background: rgb(76,130,254, 0.8);
-    width: 100vw;
-    height: 100vh;
+    right: 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    backdrop-filter: blur(8px);
 }
 
 
-#signup-inner-div {
-    width: 300px;
-    background-color: #ffffff;
+#signup-header {
+    font-weight: bold;
+    font-size: large;
+    margin-top: 0px;
+}
+
+.env-text-field {
+    width:20ch !important;
+
+}
+
+#signup-form {
+    background-color: white;
+    padding: 20;
+    border-radius: 5;
+    width: 60%;
+    border-radius: 35px;
+    overflow: auto;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+#signup-container {
+    gap: 5px 0px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
     display: flex;
-    flex-direction: column;
-    padding: 30px;
-    border-radius: 25px;
-} 
+    justify-content: center;
+    margin-top: 25px;
+}
 
-
-
+#signup-confirm {
+  background-color: white;
+  width: 335px;
+  border-radius: 35px;
+  height: 335px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  gap:20px;
+}
 
 
 /* --------------------------------------------------- RenderViews CSS --------------------------------------------------- */
