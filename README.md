@@ -43,13 +43,6 @@ Signup page with fields to enter initial setup information
 
 ![DockerStormLogin](https://github.com/oslabs-beta/Docker-Storm/blob/dev/resources/media/signup-screenshot.png?raw=true)
 
-
-[↥Back to top](#table-of-contents)
-
-## Documentation:
-You can access the documentation on this page: <br>
-https://DockerStorm.com/Documentation
-
 [↥Back to top](#table-of-contents)
 
 ## Prerequisites: 
