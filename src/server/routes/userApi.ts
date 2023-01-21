@@ -17,7 +17,7 @@ router.post('/login', userController.verifyUser, cookieController.setCookie, use
     grafUrl: res.locals.grafUrl,
     key: res.locals.apiKey
   };
-
+  console.log(obj);
   return res.status(200).json(obj);
 });
 

@@ -30,6 +30,7 @@ const SignupModal = ({envSetup} : Props) => {
     organization: '',
     jobTitle: '',
   }); 
+  
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [currentApi, setCurrentApi] = useState(envSetup.apiKey);
   const [currentGrafUrl, setCurrentGrafUrl] = useState(envSetup.grafUrl);

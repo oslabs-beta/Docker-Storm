@@ -28,6 +28,7 @@ const userController: UserController = {
     const { password } = req.body;
     const username = req.body.username || req.cookies.username;
     const queryStr = 'SELECT * FROM users WHERE username = $1';
+    console.log(username, password);
 
     try {
       db.query(queryStr, [username])

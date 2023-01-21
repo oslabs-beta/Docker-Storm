@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import mac from '../../../resources/media/mac.png';
 import waves from '../../../resources/media/waves.png';
 import loginLogo from '../../../resources/media/login-logo.png';
 import {TextField, Container, Box, Grid, Button } from '@mui/material';
-import theme from '../theme.jsx';
 import Signup from './signup.jsx';
-import { DefaultDeserializer } from 'v8';
+import useLogin from '../queries/useLogin.jsx';
 
 interface Props {
   setApiKey: React.Dispatch<React.SetStateAction<string>>;
@@ -21,11 +20,13 @@ interface ResponseObject {
 }
   
 const Login = (props: Props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
+  const loginCredentials = useRef<HTMLFormElement>(null);
+  const loginAttempt = useLogin();
+  const [body, setBody] = useState('asdf');
+
   const navigate = useNavigate();
 
   const setKeys = (apiKey: string, grafUrl: string) => {
@@ -34,28 +35,58 @@ const Login = (props: Props) => {
   };
 
   const confirmCredentials = async (e: React.FormEvent<HTMLFormElement>) => {
-    
-    
-    const result = await fetch('/user/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({username, password}),
-    });
+    e.preventDefault();
+    const username = (loginCredentials.current?.['username-input']?.value);
+    const password = (loginCredentials.current?.['password-input']?.value);
+    console.log(username, password);
 
-    if(result.status !== 200) {
-      setInvalid(true);
-      setUsername('');
-      setPassword('');
-      return;
-    }
-    const data: ResponseObject = await result.json();
+    // const result = await loginAttempt.mutateAsync({username,password});
+    // the query is hitting the backend properly, but the result is not reflecting - tbh I imagine that 
+    // it has to do with use effect under the hood ?
 
-    setKeys(data.key, data.grafUrl);
-    if(data.key && data.grafUrl) {
-      navigate('/app/metrics');
-    } else {
-      navigate('/setup');
+    
+    // this is always returning false for some reason
+    // console.log(loginAttempt);
+    // console.log('loginAttempt', loginAttempt);
+    // setBody(result.grafUrl);
+    // console.log('result', result);
+
+
+    try {
+      const loginResults = await loginAttempt.mutateAsync({username, password});
+
+      const grafUrl = loginResults.grafUrl;
+      const apiKey = loginResults.key;
+      console.log(loginResults);
+      setBody(grafUrl + apiKey);
+
+    } catch (err) {
+      setBody('err');
     }
+    // const data = await (result as Response).json();
+    // console.log('data', data);
+
+    
+
+
+    // const result = useQuery(['login'], () =>loginAttempt(username, password));
+
+    // console.log(result.isSuccess);
+    
+
+    // if(result.status !== 200) {
+    //   setInvalid(true);
+    //   setUsername('');
+    //   setPassword('');
+    //   return;
+    // }
+
+    // setKeys(data.key, data.grafUrl);
+    // if(data.key && data.grafUrl) {
+    //   navigate('/app/metrics');
+    // } else {
+    //   navigate('/setup');
+    // }
   };
 
   return (
@@ -72,6 +103,7 @@ const Login = (props: Props) => {
             component="main" >
             <Box component="form"
               data-testid="user-input-field"
+              ref={loginCredentials}
               id="login-form" 
               onSubmit={(event) => confirmCredentials(event)}
             >
@@ -87,9 +119,8 @@ const Login = (props: Props) => {
                   <TextField 
                     data-testid="username-input"
                     required
+                    id='username-input'
                     label="Username"
-                    value={username} 
-                    onChange={input => setUsername(input.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -101,10 +132,11 @@ const Login = (props: Props) => {
                   <TextField 
                     data-testid="password-input"
                     required
+                    id='password-input'
                     type="password"
                     label="Password"  
-                    value={password} 
-                    onChange={input => setPassword(input.target.value)}
+                    error={loginAttempt.isError}
+                    helperText={loginAttempt.isError && 'incorrect password'}
                   />
                 </Grid>
                 <Grid item xs={12} display="flex" sx={{marginTop: '20px'}}>
@@ -128,6 +160,7 @@ const Login = (props: Props) => {
                     <Button 
                       data-testid="login button"
                       variant='contained'
+                      type="submit"
                     >LOGIN
                     </Button>
                   </Grid>
@@ -156,6 +189,7 @@ const Login = (props: Props) => {
         setOpenSuccessfulSignup={setOpenSuccessfulSignup}
         openSuccessfulSignup={openSuccessfulSignup}
       />}
+      <div>{body}</div>
     </>
 
   );
