@@ -1,3 +1,4 @@
+import { ConstructionOutlined } from '@mui/icons-material';
 import { useMutation } from '@tanstack/react-query';
 
 
@@ -17,13 +18,20 @@ async function loginAttempt(loginInfo: LoginInfo) {
     body: JSON.stringify(loginInfo)
   });
 
-  if(result.status !== 200) return Error;
-  return await result.json();
+  if(result.status !== 200) {
+    console.log('login was incorrect');
+    return Error;
+  }
+  return await result;
 }
 
 const useLogin = () => {
   const {mutateAsync, data, isLoading, isError, error } = useMutation({
     mutationFn: (loginCredentials: LoginInfo) => loginAttempt(loginCredentials),
+    // onError: (error, varibles, context) => {
+    //   console.log('an error occurred');
+    //   console.log(error);
+    // },
     retry: false
   });
 

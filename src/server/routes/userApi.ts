@@ -46,4 +46,12 @@ router.delete('/', userController.deleteUser, (req, res) => {
   return res.status(200).json('successful');
 });
 
+router.get('/cached', userController.checkEnv, (req, res) => {
+  const obj = {
+    apiKey: res.locals.apiKey,
+    grafUrl: res.locals.grafUrl
+  };
+  return res.status(200).json(obj);
+});
+
 export default router;

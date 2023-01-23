@@ -245,6 +245,9 @@ const userController: UserController = {
     res.locals.apiKey = process.env.GRAFANA_API_KEY || '';
     return next();
   }
+
+
+
 };
 
 export default userController;

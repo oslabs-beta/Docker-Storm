@@ -25,3 +25,8 @@ export type PanelObject = {
   graphType: 'gauge' | 'line';
   role: Role;
 }
+
+export type cacheData = {
+  grafUrl: string;
+  apiKey: string;
+}

@@ -6,6 +6,8 @@ import loginLogo from '../../../resources/media/login-logo.png';
 import {TextField, Container, Box, Grid, Button } from '@mui/material';
 import Signup from './signup.jsx';
 import useLogin from '../queries/useLogin.jsx';
+import fetchFunction from '../queries/cacheFetch.jsx';
+import {useQuery} from '@tanstack/react-query';
 
 interface Props {
   setApiKey: React.Dispatch<React.SetStateAction<string>>;
@@ -25,7 +27,7 @@ const Login = (props: Props) => {
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
   const loginCredentials = useRef<HTMLFormElement>(null);
   const loginAttempt = useLogin();
-  const [body, setBody] = useState('asdf');
+  // const [body, setBody] = useState('asdf');
 
   const navigate = useNavigate();
 
@@ -33,6 +35,10 @@ const Login = (props: Props) => {
     props.setGrafUrl(grafUrl);
     props.setApiKey(apiKey);
   };
+
+  const {isLoading, error, data} = useQuery(['cache'], fetchFunction);
+
+
 
   const confirmCredentials = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,15 +59,19 @@ const Login = (props: Props) => {
 
 
     try {
-      const loginResults = await loginAttempt.mutateAsync({username, password});
+      // const loginResults = await loginAttempt.mutateAsync({username, password});
+      // const res = await (loginResults as Response).json();
+      // console.log(loginAttempt.isError.toString());
 
-      const grafUrl = loginResults.grafUrl;
-      const apiKey = loginResults.key;
-      console.log(loginResults);
-      setBody(grafUrl + apiKey);
+      // const grafUrl = res.grafUrl;
+      // const apiKey = res.key;
+      navigate('/app/metrics');
+      // setBody(grafUrl + apiKey);
 
     } catch (err) {
-      setBody('err');
+      console.log('in the error');
+      // console.log(loginAttempt.isError);
+      // console.log(err);
     }
     // const data = await (result as Response).json();
     // console.log('data', data);
@@ -83,11 +93,17 @@ const Login = (props: Props) => {
 
     // setKeys(data.key, data.grafUrl);
     // if(data.key && data.grafUrl) {
-    //   navigate('/app/metrics');
+    
     // } else {
     //   navigate('/setup');
     // }
   };
+
+
+ 
+
+
+
 
   return (
 
@@ -189,11 +205,16 @@ const Login = (props: Props) => {
         setOpenSuccessfulSignup={setOpenSuccessfulSignup}
         openSuccessfulSignup={openSuccessfulSignup}
       />}
-      <div>{body}</div>
+      {isLoading && <div>loading</div> || <div>{data.grafUrl}{data.apiKey}</div>}
+      {/* <div>{body}</div>
+      {loginAttempt.isLoading && <div>LOADINGLOADINGLOADINGLOADING</div>}
+      <div>{loginAttempt.isError.toString()}</div>
+      <div>{loginAttempt.isError ? ( <p>Error occured</p> ) : <div>didnt work</div>}</div> */}
     </>
 
   );
 };
+
 
 
 
