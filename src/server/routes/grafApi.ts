@@ -10,7 +10,7 @@ router.get('/', grafanaController.createDB, (req, res) => {
 
 // Post request that will work on initalizing the dashboard if it does not already exist based off of the panels already in targets
 router.post('/init', grafanaController.createDB, grafanaController.getDashByUid, grafanaController.createPanel, grafanaController.updateDB, (req, res) => {
-  return res.status(200).json({ApiKey: process.env.GRAFANA_DASHBOARD_ID});
+  return res.status(200).json({dashId: process.env.GRAFANA_DASHBOARD_ID});
 });
 
 // Patch request to update the dashboard with the provided panels

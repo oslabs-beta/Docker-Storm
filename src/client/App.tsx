@@ -17,11 +17,21 @@ import fetchFunction from './queries/cacheFetch.jsx';
 import '../../resources/styling/styles.css';
 
 
+// TODO: 
+
+// make the functions modular in initdashboard.tsx
+// hook up the signup functionality init db
+// fix all the prop drilling
+
+
+
+
 const App: React.FC = (): JSX.Element => {
   const [apiKey, setApiKey] = useState('');
   const [grafUrl, setGrafUrl] = useState('');
   const [dashId, setDashId] = useState('');
   const [targetsArr, setTargetsArr] = useState<Target[]>([]);
+  const queryClient = useQueryClient();
   const [openSignup, setOpenSignup] = useState(false);
   const {data} = useQuery(['cache'], fetchFunction, {
     onSuccess: (data) => {
@@ -31,17 +41,19 @@ const App: React.FC = (): JSX.Element => {
     }
   });
 
-
-
   // makes our target array
   // sets dashboard id 
   // generates all the panels in graf
   async function intializeDashboard() {
-    console.log('inside init d b');
+    // const jobsList = await fetch('/metric').then(data => {return data.json();});
+    // console.log(jobsList);
+    // const arr = makeTargetArray(jobsList.jobs, jobsList.targets);
+    // setTargetsArr(arr);
+
     const jobsList = await fetch('/metric').then(data => {return data.json();});
     console.log(jobsList);
     const arr = makeTargetArray(jobsList.jobs, jobsList.targets);
-    setTargetsArr(arr);
+    queryClient.setQueryData(['cache'], {...queryClient.getQueryData(['cache']), targetsArray: arr});
   
     const panelList = await fetch('/metric/genPanel', {
       method: 'POST',
@@ -65,7 +77,7 @@ const App: React.FC = (): JSX.Element => {
     })
       .then((data) => data.json())
       .then((result) => {
-        setDashId(result.ApiKey);
+        queryClient.setQueryData(['cache'], {...queryClient.getQueryData(['cache']), dashId: result.dashId});
       });
   }
   

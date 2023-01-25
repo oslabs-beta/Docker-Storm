@@ -8,12 +8,8 @@ import Signup from './signup.jsx';
 import useLogin from '../queries/useLogin.jsx';
 import fetchFunction from '../queries/cacheFetch.jsx';
 import {useQuery} from '@tanstack/react-query';
+// const {isLoading, error, data} = useQuery(['cache'], fetchFunction);
 
-
-interface ResponseObject {
-  grafUrl: string;
-  key: string;
-}
   
 const Login = () => {
   const [invalid, setInvalid] = useState(false);
@@ -25,7 +21,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const {isLoading, error, data} = useQuery(['cache'], fetchFunction);
 
 
 
@@ -190,7 +185,6 @@ const Login = () => {
         setOpenSuccessfulSignup={setOpenSuccessfulSignup}
         openSuccessfulSignup={openSuccessfulSignup}
       />}
-      {isLoading && <div>loading</div> || <div>{data.grafUrl.length}{data.apiKey.length}</div>}
     </>
 
   );
