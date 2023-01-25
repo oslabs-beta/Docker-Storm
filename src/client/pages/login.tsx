@@ -9,19 +9,13 @@ import useLogin from '../queries/useLogin.jsx';
 import fetchFunction from '../queries/cacheFetch.jsx';
 import {useQuery} from '@tanstack/react-query';
 
-interface Props {
-  setApiKey: React.Dispatch<React.SetStateAction<string>>;
-  setGrafUrl: React.Dispatch<React.SetStateAction<string>>;
-  grafUrl: string;
-  apiKey: string;
-}
 
 interface ResponseObject {
   grafUrl: string;
   key: string;
 }
   
-const Login = (props: Props) => {
+const Login = () => {
   const [invalid, setInvalid] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
@@ -30,11 +24,6 @@ const Login = (props: Props) => {
   // const [body, setBody] = useState('asdf');
 
   const navigate = useNavigate();
-
-  const setKeys = (apiKey: string, grafUrl: string) => {
-    props.setGrafUrl(grafUrl);
-    props.setApiKey(apiKey);
-  };
 
   const {isLoading, error, data} = useQuery(['cache'], fetchFunction);
 
@@ -196,20 +185,12 @@ const Login = (props: Props) => {
       
       </div>
       {openSignup && <Signup 
-        setApiKey={props.setApiKey} 
-        apiKey={props.apiKey} 
-        setGrafUrl={props.setGrafUrl}
-        grafUrl={props.grafUrl}
         openSignup={openSignup}
         setOpenSignup={setOpenSignup}
         setOpenSuccessfulSignup={setOpenSuccessfulSignup}
         openSuccessfulSignup={openSuccessfulSignup}
       />}
-      {isLoading && <div>loading</div> || <div>{data.grafUrl}{data.apiKey}</div>}
-      {/* <div>{body}</div>
-      {loginAttempt.isLoading && <div>LOADINGLOADINGLOADINGLOADING</div>}
-      <div>{loginAttempt.isError.toString()}</div>
-      <div>{loginAttempt.isError ? ( <p>Error occured</p> ) : <div>didnt work</div>}</div> */}
+      {isLoading && <div>loading</div> || <div>{data.grafUrl.length}{data.apiKey.length}</div>}
     </>
 
   );

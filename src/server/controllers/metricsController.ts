@@ -19,7 +19,7 @@ const metricsController: MetricsController = {
     const targets: TargetsArray = JSON.parse(fs.readFileSync('./prometheus/targets.json', 'utf-8'));
     const jobsArray : JobArray = [];
     const targetsArray: TargetIpArray = [];
-
+    
     targets.forEach((target: Target) => {
       jobsArray.push(target.labels);
       targetsArray.push(target.targets[0]);

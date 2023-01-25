@@ -7,6 +7,11 @@ import RenderViews from './RenderViews.jsx';
 import InitialSetup from './pages/initialSetup.jsx';
 //import PgInit from './pages/pgInit.jsx';
 import 'whatwg-fetch';
+import {useQuery} from '@tanstack/react-query';
+import {cacheData} from '../types.js';
+import { useQueryClient } from '@tanstack/react-query';
+import fetchFunction from './queries/cacheFetch.jsx';
+
 
 
 import '../../resources/styling/styles.css';
@@ -18,10 +23,23 @@ const App: React.FC = (): JSX.Element => {
   const [dashId, setDashId] = useState('');
   const [targetsArr, setTargetsArr] = useState<Target[]>([]);
   const [openSignup, setOpenSignup] = useState(false);
+  const {data} = useQuery(['cache'], fetchFunction, {
+    onSuccess: (data) => {
+      if(data.apiKey && data.grafUrl) {
+        intializeDashboard();
+      }
+    }
+  });
 
 
+
+  // makes our target array
+  // sets dashboard id 
+  // generates all the panels in graf
   async function intializeDashboard() {
+    console.log('inside init d b');
     const jobsList = await fetch('/metric').then(data => {return data.json();});
+    console.log(jobsList);
     const arr = makeTargetArray(jobsList.jobs, jobsList.targets);
     setTargetsArr(arr);
   
@@ -66,17 +84,16 @@ const App: React.FC = (): JSX.Element => {
     return result;
   };
   
-  useEffect(() => {
-    fetch('/init');
-    console.log('useeffect ran');
-    if(!apiKey || !grafUrl) return;
+  // useEffect(() => {
+  //   fetch('/init');
+  //   console.log('useeffect ran');
+  //   if(!apiKey || !grafUrl) return;
     
-    intializeDashboard();
-  }, [apiKey, grafUrl]);
+  //   intializeDashboard();
+  // }, [apiKey, grafUrl]);
 
   
   useEffect(() => {
-    console.log('Init DB ran');
     fetch('/init');
   }, []);
 
@@ -85,16 +102,6 @@ const App: React.FC = (): JSX.Element => {
     <HashRouter>
       <Routes>
         <Route path='/' element={<Login 
-          setApiKey={setApiKey}
-          apiKey={apiKey}
-          setGrafUrl={setGrafUrl}
-          grafUrl={grafUrl}
-        />}/>
-        <Route path='/setup' element={<InitialSetup 
-          setApiKey={setApiKey} 
-          apiKey={apiKey} 
-          setGrafUrl={setGrafUrl}
-          grafUrl={grafUrl}
         />}/>
         <Route path='/app/*' 
           element={<RenderViews 

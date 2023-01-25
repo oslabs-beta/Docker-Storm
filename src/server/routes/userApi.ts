@@ -28,7 +28,7 @@ router.post('/env', initController.updateEnv, (req, res) => {
 
 // Post request which manages signing up specifically the admin user
 router.post('/signupAdmin', userController.encrypt, userController.createAdminUser, userController.createAdminUserInfo, (req, res) => {
-  return res.status(200).json('successful');
+  return res.sendStatus(200);
 });
 
 // Post request which manages signing up a new user account and encrypting their password

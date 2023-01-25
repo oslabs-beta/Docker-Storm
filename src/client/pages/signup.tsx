@@ -9,12 +9,8 @@ import SignupSuccess from './signupSuccess.jsx';
 
 
 interface Props {
-    setApiKey: React.Dispatch<React.SetStateAction<string>>;
-    apiKey: string;
     openSignup: boolean;
     setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
-    setGrafUrl: React.Dispatch<React.SetStateAction<string>>;
-    grafUrl: string;
     setOpenSuccessfulSignup: React.Dispatch<React.SetStateAction<boolean>>;
     openSuccessfulSignup: boolean;
 }

@@ -1,39 +1,42 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
+import {cacheData} from '../../types.js';
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 
-interface Props {
-    setApiKey: (value: string) => void;
-    setGrafUrl: (value: string) => void;
-    grafUrl: string;
-    apiKey: string;
-  
-  }
 
-const InitialSetup = (props: Props) => {
-  const[currentApi, setCurrentApi] = useState(props.apiKey);
-  const[currentGrafUrl, setCurrentGrafUrl] = useState(props.grafUrl);
+const InitialSetup = () => {
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData(['cache']) as cacheData;
+  const setupInfo = useRef<HTMLFormElement>(null);
+  const[currentApi, setCurrentApi] = useState(data.apiKey);
+  const[currentGrafUrl, setCurrentGrafUrl] = useState(data.grafUrl);
   const[validInput, setValidInput] = useState(false);
   const navigate = useNavigate();
 
 
 
   useEffect(() => {
-    if(props.apiKey && props.grafUrl) navigate('/app');
+    if(data.apiKey && data.grafUrl) navigate('/app');
   }, []);
 
   const handleSubmit = () => {
-    if(!currentApi || !currentGrafUrl) {
+
+    const grafUrl = (setupInfo.current?.['graf-url']?.value);
+    const apiKey = (setupInfo.current?.['api-key']?.value);
+    console.log(grafUrl, apiKey, 'USEREF DATA HERE');
+    if(!grafUrl || !apiKey) {
       setValidInput(true);
       return;
     }
+  
 
     const body = {
-      apiKey: currentApi,
-      grafUrl: currentGrafUrl
+      apiKey: apiKey,
+      grafUrl: grafUrl
     };
     
-    props.setApiKey(currentApi);
-    props.setGrafUrl(currentGrafUrl);
+    queryClient.setQueryData(['cache'], {grafUrl, apiKey});
+    console.log(data.apiKey, data.grafUrl, 'CACHED DATA HERE');
 
     fetch('/user/env', {
       method: 'POST',
@@ -52,8 +55,7 @@ const InitialSetup = (props: Props) => {
         Please enter your Grafana Api Key
         <input type='text' 
           placeholder='Grafana Api Key' 
-          onChange={input => setCurrentApi(input.target.value)} 
-          value={currentApi}/>
+          id='api-key'/>
       </div>
     );
   };
@@ -65,11 +67,9 @@ const InitialSetup = (props: Props) => {
         Please enter in the form of http://localhost:XXXX/
          or http://[IP ADDRESS]/ or http://[URL]/ . <br></br>
         Please do not add anything after the final / .  
-      
         <input type='text' 
           placeholder='GRAFANA URL' 
-          onChange={input => setCurrentGrafUrl(input.target.value)} 
-          value={currentGrafUrl}/>
+          id='graf-url'/>
       </div>
     );
   };
@@ -77,9 +77,11 @@ const InitialSetup = (props: Props) => {
   return(
     <div>
 
-      <form onSubmit={(e) => e.preventDefault()}>
-        {!props.apiKey && renderApiKey()}
-        {!props.grafUrl && renderGrafUrl()}
+      <form onSubmit={(e) => e.preventDefault()}
+        ref={setupInfo}
+      >
+        {!data.apiKey && renderApiKey()}
+        {!data.grafUrl && renderGrafUrl()}
         <button onClick={handleSubmit}>SUBMIT</button>
         {validInput && <div>Please fill out field(s) before submitting</div>}
       </form>

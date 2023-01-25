@@ -26,7 +26,7 @@ const RenderViews = ({dashId, targetsArr, setTargetsArr, grafUrl}: Props) => {
       <Box sx={{backgroundColor:'#F7F8FC', width: '100%', height:'100vh', borderRadius: '40px 0px 0px 40px', paddingTop: '30px'}}>
         <Routes>
           <Route path='/settings' element={<Settings targetsArr={targetsArr} setTargetsArr={setTargetsArr} />}/>
-          <Route path='/metrics' element={<Metrics dashId={dashId} grafUrl={grafUrl} />}/>
+          <Route path='/metrics' element={<Metrics dashId={dashId} />}/>
           <Route path='/users' element={<Users/>}/>
         </Routes>
       </Box>

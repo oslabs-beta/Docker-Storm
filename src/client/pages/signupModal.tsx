@@ -3,15 +3,14 @@ import {TextField, Container, Box, Grid, Button, Typography } from '@mui/materia
 import { createPortal } from 'react-dom';
 import Tooltip from './tooltip.jsx';
 import theme from '../theme.jsx';
+import { QueryClient, useQueryClient, QueryCache } from '@tanstack/react-query';
+import {cacheData} from '../../types.js';
+
 
 interface Props {
   envSetup: {
-    setApiKey: React.Dispatch<React.SetStateAction<string>>;
-    apiKey: string;
     openSignup: boolean;
     setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
-    setGrafUrl: React.Dispatch<React.SetStateAction<string>>;
-    grafUrl: string;
     setOpenSuccessfulSignup: React.Dispatch<React.SetStateAction<boolean>>;
   }
 }
@@ -30,47 +29,73 @@ const SignupModal = ({envSetup} : Props) => {
     organization: '',
     jobTitle: '',
   }); 
-  
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData(['cache']) as cacheData;
+  const setupInfo = useRef<HTMLFormElement>(null);
   const [signupSuccess, setSignupSuccess] = useState(false);
-  const [currentApi, setCurrentApi] = useState(envSetup.apiKey);
-  const [currentGrafUrl, setCurrentGrafUrl] = useState(envSetup.grafUrl);
-
-  const height = (envSetup.apiKey && envSetup.grafUrl) ? '45%' : '56%';
+  const height = (data.apiKey && data.grafUrl) ? '45%' : '56%';
 
 
   const verifyRef = useRef<HTMLInputElement>(null);
 
+  const setConst = (gUrl:string, aKey:string) => {
+
+    const body = {
+      apiKey: gUrl,
+      grafUrl: aKey
+    };
+    
+    console.log(body);
+
+    queryClient.setQueryData(['cache'], {grafUrl: gUrl, apiKey: aKey});
+  
+    fetch('/user/env', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body),
+    });
+  };
+
+
+
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const newGrafUrl = (setupInfo.current?.['graf-url']?.value);
+    const newApiKey = (setupInfo.current?.['api-key']?.value);
 
     if(signupValues.password !== signupValues.verifyPassword) {
       verifyRef.current?.focus();
       return;
     }
 
+
     const body = {
-      ...signupValues
+      ...signupValues,
     };
 
     envSetup.setOpenSuccessfulSignup(true);
 
 
-    // const result = await fetch('/user/signupAdmin', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(body),
-    // });
+    const result = await fetch('/user/signupAdmin', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    
 
-    // if(result.status !== 200) {
-    //   setInvalid(true);
-    //   return;
-    // }
+    if(result.status !== 200) {
+      // setInvalid(true);
+      return;
+    }
 
-    // if(result.status == 200) {
-    //   setSignupSuccess(true);
-    //   envSetup();
-    //   return;
-    // }
+    if(result.status === 200) {
+      setConst(newGrafUrl, newApiKey);
+      setSignupSuccess(true);
+      return;
+    }
   };
 
 
@@ -82,6 +107,7 @@ const SignupModal = ({envSetup} : Props) => {
         <Box component="form"
           id="signup-form" 
           height={height}
+          ref={setupInfo}
           onSubmit={(event) => handleSignup(event)}
         >
           <Grid container id="signup-container"
@@ -106,7 +132,6 @@ const SignupModal = ({envSetup} : Props) => {
                 required
                 variant='outlined'
                 label="Username"  
-                // labelClassName={}
                 value={signupValues.username} 
                 onChange={input => setSignupValues({...signupValues, username:input.target.value})} 
                   
@@ -164,7 +189,7 @@ const SignupModal = ({envSetup} : Props) => {
                 onChange={input => setSignupValues({...signupValues, jobTitle:input.target.value})}  
                 placeholder="Job title"/>
             </Grid>
-            {!envSetup.grafUrl && <Grid 
+            {!data.grafUrl && <Grid 
               item 
               xs={6}
               display='flex'
@@ -173,13 +198,12 @@ const SignupModal = ({envSetup} : Props) => {
                 type="text" 
                 label="Grafana URL" 
                 required
+                id='graf-url'
                 className="env-text-field"
-                value={currentGrafUrl} 
-                onChange={input => setCurrentGrafUrl(input.target.value)} 
                 placeholder="Grafana URL"/>
               <Tooltip text={urlText}/>
             </Grid>}
-            {!envSetup.apiKey && <Grid 
+            {!data.apiKey && <Grid 
               item 
               xs={6}
               display="flex"
@@ -188,9 +212,8 @@ const SignupModal = ({envSetup} : Props) => {
                 type="text" 
                 label="Grafana API key" 
                 className="env-text-field"
+                id='api-key'
                 required
-                value={currentApi} 
-                onChange={input => setCurrentApi(input.target.value)} 
                 placeholder="Grafana API key"/>
               <Tooltip text={apiText}/>
             </Grid>}
